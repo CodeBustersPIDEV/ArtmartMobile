@@ -137,4 +137,5 @@ public void applyCustomProduct(int customProductId) {
     NetworkManager.getInstance().addToQueueAndWait(connection);
 }
 
+
 }

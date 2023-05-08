@@ -17,14 +17,16 @@ public class BaseForm extends com.codename1.ui.Form {
         logoContainer.setUIID("SideCommandLogo");
         tb.addComponentToSideMenu(logoContainer);
 
-        Label taglineLabel = new Label("Custom Products");
+        Label taglineLabel = new Label("ArtMart");
         taglineLabel.setUIID("SideCommandTagline");
         Container taglineContainer = BorderLayout.south(taglineLabel);
         taglineContainer.setUIID("SideCommand");
 
         tb.addComponentToSideMenu(taglineContainer);
-
-        tb.addMaterialCommandToSideMenu("Custom Products", FontImage.MATERIAL_HOME, e -> {
+      tb.addMaterialCommandToSideMenu("ArtMart", FontImage.MATERIAL_HOME, e -> {
+     
+        });
+        tb.addMaterialCommandToSideMenu("Custom Products", FontImage.MATERIAL_LIST, e -> {
             getCustomProductForm f = new getCustomProductForm();
             f.show();
         });
@@ -38,6 +40,10 @@ public class BaseForm extends com.codename1.ui.Form {
         });
         tb.addMaterialCommandToSideMenu("Add Categories", FontImage.MATERIAL_ADD, e -> {
             newCategorieForm f = new newCategorieForm();
+            f.show();
+        });
+               tb.addMaterialCommandToSideMenu("Applies", FontImage.MATERIAL_LIST, e -> {
+            getApplyForm f = new getApplyForm();
             f.show();
         });
     }

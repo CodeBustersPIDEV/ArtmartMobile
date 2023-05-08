@@ -1,5 +1,6 @@
 package artmart.forms;
 
+import artmart.entities.Apply;
 import com.codename1.l10n.ParseException;
 import com.codename1.ui.list.MultiList;
 import java.util.HashMap;
@@ -10,29 +11,30 @@ import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.list.DefaultListModel;
 import com.codename1.ui.util.Resources;
 import artmart.entities.Category;
+import artmart.service.ApplyWebService;
 import artmart.service.CategorieWebService;
+public class getApplyForm extends BaseForm  {
+      private MultiList eventList;
 
-public class getCategorieForm extends BaseForm {
-
-    private MultiList eventList;
-
-    public getCategorieForm() {
+    public getApplyForm() {
         this.init(Resources.getGlobalResources());
         eventList = new MultiList(new DefaultListModel<>());
         add(eventList);
-        getAllCats();
+        getAllApply();
     }
 
-    private void getAllCats() {
-        CategorieWebService service = new CategorieWebService();
-        List<Category> cats = service.getAllCategorie();
+    private void getAllApply() {
+        ApplyWebService service = new ApplyWebService();
+        List<Apply> cats = service.getAllApply();
         DefaultListModel<Map<String, Object>> model = (DefaultListModel<Map<String, Object>>) eventList.getModel();
         model.removeAll();
-        for (Category c : cats) {
+        for (Apply c : cats) {
             Map<String, Object> item = new HashMap<>();
-            item.put("Line1", c.getName());
-        
-            item.put("Line3", c.getCategoriesId());
+            item.put("Line2",  c.getStatus());
+  
+               item.put("Line1", c.getCustomproduct());
+                     item.put("Line4", c.getApplyId());
+     
             model.addItem(item);
         }
         eventList.addActionListener(new ActionListener() {
@@ -40,16 +42,16 @@ public class getCategorieForm extends BaseForm {
             public void actionPerformed(ActionEvent evt) {
                 try {
                     Map<String, Object> selectedItem = (Map<String, Object>) eventList.getSelectedItem();
-                    int catId = (int) selectedItem.get("Line3");
-                    Category selectedEvent = null;
-                    for (Category c : cats) {
-                        if (c.getCategoriesId() == catId) {
+                    int catId = (int) selectedItem.get("Line4");
+                    Apply selectedEvent = null;
+                    for (Apply c : cats) {
+                        if (c.getApplyId()== catId) {
                             selectedEvent = c;
                             break;
                         }
                     }
-                    editFormCategorie myForm2 = new editFormCategorie(selectedEvent);
-                    myForm2.show();
+                    editFormApply myForm2 = new editFormApply(selectedEvent);
+                       myForm2.show();
                 } catch (ParseException ex) {
                     System.out.println(ex);
                 }

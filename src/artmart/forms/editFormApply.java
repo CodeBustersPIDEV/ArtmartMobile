@@ -18,6 +18,7 @@ public class editFormApply extends BaseForm {
  
  Label cp = new Label("Custom Product Name: " + e.getCustomproduct());
 Label artist = new Label("Artist Name: " + e.getArtist());
+Label status = new Label("Status: " + e.getStatus());
 
 // set the style for the Labels
 
@@ -26,8 +27,10 @@ cp.getStyle().setFgColor(0x333333);
 
 artist.getStyle().setFgColor(0x333333);
 
+status.getStyle().setFgColor(0x333333);
+
 // create a BoxLayout container with Y_AXIS orientation
-Container labelsContainer = BoxLayout.encloseY(cp, artist);
+Container labelsContainer = BoxLayout.encloseY(cp, artist,status);
 
 // add the Labels container to the form
 this.add(labelsContainer);

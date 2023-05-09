@@ -11,7 +11,7 @@ public class BaseForm extends com.codename1.ui.Form {
 
         tb.getAllStyles().setBgColor(0xffffff);
 
-        Image logo = theme.getImage("logo.png");
+        Image logo = theme.getImage("img.png");
         Label logoLabel = new Label(logo);
         Container logoContainer = BorderLayout.center(logoLabel);
         logoContainer.setUIID("SideCommandLogo");

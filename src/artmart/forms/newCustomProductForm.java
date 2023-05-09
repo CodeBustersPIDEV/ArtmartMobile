@@ -65,6 +65,8 @@ public class newCustomProductForm extends BaseForm {
             newEvent.setIdCategorie(new Category(selectedCategorie.getCategoriesId()));
             CustomproductWebService service = new CustomproductWebService();
             service.newCp(newEvent);
+                  getCustomProductForm myForm = new getCustomProductForm();
+            myForm.show();
         }
         );
         this.add(submitButton);

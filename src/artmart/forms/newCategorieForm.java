@@ -26,6 +26,8 @@ public class newCategorieForm extends BaseForm {
       
             CategorieWebService service = new CategorieWebService();
             service.newCategorie(newCat);
+            getCategorieForm myForm = new getCategorieForm();
+            myForm.show();
         }
         );
         this.add(submitButton);

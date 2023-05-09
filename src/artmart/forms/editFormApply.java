@@ -46,6 +46,8 @@ Button applyButton = new Button("Cancel");
 applyButton.addActionListener(ee -> {
     ApplyWebService service = new ApplyWebService();
     service.applyCustomProduct(e.getApplyId()); 
+        getApplyForm myForm = new getApplyForm();
+    myForm.show();
 });
 
 Button deleteButton = new Button("Delete");

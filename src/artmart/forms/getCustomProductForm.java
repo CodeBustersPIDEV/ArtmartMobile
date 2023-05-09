@@ -22,9 +22,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import artmart.entities.CustomProduct;
 import com.codename1.io.FileSystemStorage;
+import static com.codename1.io.Log.e;
 import com.codename1.io.Storage;
 import java.io.IOException;
 import java.io.OutputStream;
+
 
 public class getCustomProductForm extends BaseForm {
 
@@ -32,9 +34,20 @@ public class getCustomProductForm extends BaseForm {
     private List<CustomProduct> customproduct;
     private TextField searchField;
     private Button statisticsButton;
+ 
 CustomProduct product = new CustomProduct();
 
-    public getCustomProductForm() {
+    public getCustomProductForm() throws IOException {
+        Button applyButton = new Button("Add");
+applyButton.addActionListener(ee -> {
+    newCustomProductForm f = null;
+            try {
+                f = new newCustomProductForm();
+            } catch (IOException ex) {
+            }
+            f.show();
+});
+
              searchField = new TextField("", "Enter Custom Product Name");
         Button searchButton = new Button("Search");
       statisticsButton = new Button("Show Statistics");
@@ -122,7 +135,8 @@ try (OutputStream os = fs.openOutputStream(filePath)) {
                 Dialog.show("Error", "Invalid ID", "OK", null);
             } catch (ParseException ex) {
                 System.out.println(ex);
-            }
+            }    catch (IOException ex) {
+                 }
         });
         this.add(statisticsButton);
         Container searchContainer = BorderLayout.west(searchField).add(BorderLayout.EAST, searchButton);
@@ -139,11 +153,13 @@ try (OutputStream os = fs.openOutputStream(filePath)) {
             });
             updateList();
         });
+        this.add(applyButton);
         addComponent(BorderLayout.south(sortButton));      
         cpList = new MultiList(new DefaultListModel<>());
         add(cpList);
         getAllCp();   
     }
+   
     private void getAllCp() {
         CustomproductWebService service = new CustomproductWebService();
         customproduct = service.getAllcp();
@@ -175,6 +191,7 @@ try (OutputStream os = fs.openOutputStream(filePath)) {
                     myForm2.show();
                 } catch (ParseException ex) {
                     System.out.println(ex);
+                } catch (IOException ex) {
                 }
             }
         });

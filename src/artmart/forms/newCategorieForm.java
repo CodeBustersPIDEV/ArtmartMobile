@@ -5,10 +5,11 @@ import com.codename1.ui.TextField;
 import com.codename1.ui.util.Resources;
 import artmart.entities.Category;
 import artmart.service.CategorieWebService;
+import java.io.IOException;
 
 public class newCategorieForm extends BaseForm {
 
-    public newCategorieForm() {
+    public newCategorieForm() throws IOException {
         this.init(Resources.getGlobalResources());
         TextField nomField = new TextField("", "Nom");
  
@@ -26,14 +27,22 @@ public class newCategorieForm extends BaseForm {
       
             CategorieWebService service = new CategorieWebService();
             service.newCategorie(newCat);
-            getCategorieForm myForm = new getCategorieForm();
+            getCategorieForm myForm = null;
+            try {
+                myForm = new getCategorieForm();
+            } catch (IOException ex) {
+            }
             myForm.show();
         }
         );
         this.add(submitButton);
         Button goToFormButton = new Button("Go Back");
         goToFormButton.addActionListener(e -> {
-            getCategorieForm myForm = new getCategorieForm();
+            getCategorieForm myForm = null;
+            try {
+                myForm = new getCategorieForm();
+            } catch (IOException ex) {
+            }
             myForm.show();
         });
         this.add(goToFormButton);

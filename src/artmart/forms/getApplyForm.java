@@ -21,10 +21,11 @@ import com.codename1.ui.Dialog;
 import com.codename1.ui.layouts.BorderLayout;
 import java.io.IOException;
 import java.io.OutputStream;
+
 public class getApplyForm extends BaseForm  {
       private MultiList eventList;
 
-    public getApplyForm() {
+    public getApplyForm() throws IOException {
         this.init(Resources.getGlobalResources());
         eventList = new MultiList(new DefaultListModel<>());
         add(eventList);
@@ -68,6 +69,7 @@ public class getApplyForm extends BaseForm  {
                        myForm2.show();
                 } catch (ParseException ex) {
                     System.out.println(ex);
+                } catch (IOException ex) {
                 }
             }
         });

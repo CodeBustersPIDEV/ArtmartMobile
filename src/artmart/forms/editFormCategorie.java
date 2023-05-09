@@ -6,11 +6,13 @@ import com.codename1.ui.TextField;
 import com.codename1.ui.util.Resources;
 import artmart.entities.Category;
 import artmart.service.CategorieWebService;
+import java.io.IOException;
+
 
 public class editFormCategorie extends BaseForm {
 
     CategorieWebService service = new CategorieWebService();
-    public editFormCategorie(Category e) throws ParseException {
+    public editFormCategorie(Category e) throws ParseException, IOException {
         this.init(Resources.getGlobalResources());
         TextField nomField = new TextField(e.getName(), "Nom");
     
@@ -26,19 +28,31 @@ public class editFormCategorie extends BaseForm {
    
             System.out.println(categorie);
             service.editCategorie(categorie);
-            getCategorieForm myForm = new getCategorieForm();
+            getCategorieForm myForm = null;
+            try {
+                myForm = new getCategorieForm();
+            } catch (IOException ex) {
+            }
             myForm.show();
         }
         );
         Button goToFormButton = new Button("Go back");
         goToFormButton.addActionListener(ee -> {
-            getCategorieForm myForm = new getCategorieForm();
+            getCategorieForm myForm = null;
+            try {
+                myForm = new getCategorieForm();
+            } catch (IOException ex) {
+            }
             myForm.show();
         });
         Button deleteButton = new Button("Delete");
         deleteButton.addActionListener(cc -> {
             service.delCategorie(e);
-            getCategorieForm myForm = new getCategorieForm();
+            getCategorieForm myForm = null;
+            try {
+                myForm = new getCategorieForm();
+            } catch (IOException ex) {
+            }
             myForm.show();
         });
         this.add(deleteButton);

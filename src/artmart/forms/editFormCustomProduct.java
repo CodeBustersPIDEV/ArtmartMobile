@@ -16,12 +16,13 @@ import artmart.service.CustomproductWebService;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.layouts.BoxLayout;
+import java.io.IOException;
 
 public class editFormCustomProduct extends BaseForm {
 
         CategorieWebService serviceCat = new CategorieWebService();
         CustomproductWebService service = new CustomproductWebService();
-    public editFormCustomProduct(CustomProduct e) throws ParseException {
+    public editFormCustomProduct(CustomProduct e) throws ParseException, IOException {
         this.init(Resources.getGlobalResources());
         System.out.println(e);
         TextField nomField = new TextField(e.getName(), "name");
@@ -79,18 +80,30 @@ public class editFormCustomProduct extends BaseForm {
             newEvent.setClient(client);
             newEvent.setIdCategorie(new Category(selectedCategorie.getCategoriesId()));
             service.editCp(newEvent);
-          getCustomProductForm myForm = new getCustomProductForm();
+          getCustomProductForm myForm = null;
+            try {
+                myForm = new getCustomProductForm();
+            } catch (IOException ex) {
+            }
             myForm.show();
         }
         );
         Button goToFormButton = new Button("Go back");
         goToFormButton.addActionListener(ee -> {
-            getCustomProductForm myForm = new getCustomProductForm();
+            getCustomProductForm myForm = null;
+            try {
+                myForm = new getCustomProductForm();
+            } catch (IOException ex) {
+            }
             myForm.show();
         });
         Button deleteButton = new Button("Delete");
         deleteButton.addActionListener(cc -> {
-            getCustomProductForm myForm = new getCustomProductForm();
+            getCustomProductForm myForm = null;
+            try {
+                myForm = new getCustomProductForm();
+            } catch (IOException ex) {
+            }
             service.delcp(e);
             myForm.show();
         });

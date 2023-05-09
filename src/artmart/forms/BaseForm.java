@@ -23,11 +23,19 @@ public class BaseForm extends com.codename1.ui.Form {
         taglineContainer.setUIID("SideCommand");
 
         tb.addComponentToSideMenu(taglineContainer);
-      tb.addMaterialCommandToSideMenu("ArtMart", FontImage.MATERIAL_HOME, e -> {
-     
+        tb.addMaterialCommandToSideMenu("ArtMart", FontImage.MATERIAL_HOME, e -> {
+
         });
         tb.addMaterialCommandToSideMenu("Custom Products", FontImage.MATERIAL_LIST, e -> {
             getCustomProductForm f = new getCustomProductForm();
+            f.show();
+        });
+        tb.addMaterialCommandToSideMenu("Blogs", FontImage.MATERIAL_LIST, e -> {
+            getBlogsForm f = new getBlogsForm();
+            f.show();
+        });
+        tb.addMaterialCommandToSideMenu("Blogs Categories", FontImage.MATERIAL_LIST, e -> {
+            getBlogCategoryForm f = new getBlogCategoryForm();
             f.show();
         });
         tb.addMaterialCommandToSideMenu("Add Custom Products", FontImage.MATERIAL_ADD, e -> {
@@ -42,7 +50,11 @@ public class BaseForm extends com.codename1.ui.Form {
             newCategorieForm f = new newCategorieForm();
             f.show();
         });
-               tb.addMaterialCommandToSideMenu("Applies", FontImage.MATERIAL_LIST, e -> {
+        tb.addMaterialCommandToSideMenu("Add Blog Category", FontImage.MATERIAL_ADD, e -> {
+            newBlogCategoryForm f = new newBlogCategoryForm();
+            f.show();
+        });
+        tb.addMaterialCommandToSideMenu("Applies", FontImage.MATERIAL_LIST, e -> {
             getApplyForm f = new getApplyForm();
             f.show();
         });

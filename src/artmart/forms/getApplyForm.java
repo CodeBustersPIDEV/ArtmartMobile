@@ -13,14 +13,29 @@ import com.codename1.ui.util.Resources;
 import artmart.entities.Category;
 import artmart.service.ApplyWebService;
 import artmart.service.CategorieWebService;
+import com.codename1.io.FileSystemStorage;
+import com.codename1.io.Storage;
+import com.codename1.ui.Button;
+import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
+import com.codename1.ui.layouts.BorderLayout;
+import java.io.IOException;
+import java.io.OutputStream;
+
 public class getApplyForm extends BaseForm  {
       private MultiList eventList;
 
-    public getApplyForm() {
+    public getApplyForm() throws IOException {
         this.init(Resources.getGlobalResources());
         eventList = new MultiList(new DefaultListModel<>());
         add(eventList);
         getAllApply();
+         // Create and add the "Download" button
+        Button downloadButton = new Button("Download as CSV");
+        downloadButton.addActionListener(e -> downloadCSV());
+        Container buttonContainer = new Container(new BorderLayout());
+        buttonContainer.add(BorderLayout.EAST, downloadButton);
+        add(buttonContainer);
     }
 
     private void getAllApply() {
@@ -54,9 +69,29 @@ public class getApplyForm extends BaseForm  {
                        myForm2.show();
                 } catch (ParseException ex) {
                     System.out.println(ex);
+                } catch (IOException ex) {
                 }
             }
         });
 
+    }
+    
+    private void downloadCSV() {
+        ApplyWebService service = new ApplyWebService();
+        List<Apply> applies = service.getAllApply();
+        String csvContent = "Apply ID,Custom Product,Status\n";
+        for (Apply apply : applies) {
+            csvContent += apply.getApplyId() + "," + apply.getCustomproduct() + "," + apply.getStatus() + "\n";
+        }
+        String fileName = "apply_list.csv";
+  FileSystemStorage fs = FileSystemStorage.getInstance();
+String[] roots = fs.getRoots();
+String filePath = roots[0] + fileName;
+        try (OutputStream os = Storage.getInstance().createOutputStream(filePath)) {
+            os.write(csvContent.getBytes("UTF-8"));
+            Dialog.show("Success", "File downloaded successfully", "OK", null);
+        } catch (IOException ex) {
+            Dialog.show("Error", "Failed to download the file", "OK", null);
+        }
     }
 }

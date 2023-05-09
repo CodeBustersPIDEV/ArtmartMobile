@@ -11,9 +11,12 @@ import artmart.service.CustomproductWebService;
 import com.codename1.ui.Container;
 import com.codename1.ui.Label;
 import com.codename1.ui.layouts.BoxLayout;
+import java.io.IOException;
+
+
 public class editFormApply extends BaseForm {
       ApplyWebService service = new ApplyWebService();
-    public editFormApply(Apply e) throws ParseException {
+    public editFormApply(Apply e) throws ParseException, IOException {
      this.init(Resources.getGlobalResources());
  
  Label cp = new Label("Custom Product Name: " + e.getCustomproduct());
@@ -38,7 +41,11 @@ this.add(labelsContainer);
 // create the buttons
 Button goToFormButton = new Button("Go back");
 goToFormButton.addActionListener(ee -> {
-    getApplyForm myForm = new getApplyForm();
+    getApplyForm myForm = null;
+         try {
+             myForm = new getApplyForm();
+         } catch (IOException ex) {
+         }
     myForm.show();
 });
 
@@ -46,12 +53,22 @@ Button applyButton = new Button("Cancel");
 applyButton.addActionListener(ee -> {
     ApplyWebService service = new ApplyWebService();
     service.applyCustomProduct(e.getApplyId()); 
+        getApplyForm myForm = null;
+         try {
+             myForm = new getApplyForm();
+         } catch (IOException ex) {
+         }
+    myForm.show();
 });
 
 Button deleteButton = new Button("Delete");
 deleteButton.addActionListener(cc -> {
     service.delApply(e);
-    getApplyForm myForm = new getApplyForm();
+    getApplyForm myForm = null;
+         try {
+             myForm = new getApplyForm();
+         } catch (IOException ex) {
+         }
     myForm.show();
 });
 

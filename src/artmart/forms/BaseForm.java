@@ -2,25 +2,30 @@ package artmart.forms;
 
 import com.codename1.ui.*;
 import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
+import java.io.IOException;
+
 
 public class BaseForm extends com.codename1.ui.Form {
 
-    public void init(Resources theme) {
+    public void init(Resources theme) throws IOException {
         Toolbar tb = getToolbar();
 
         tb.getAllStyles().setBgColor(0xffffff);
 
-        Image logo = theme.getImage("logo.png");
-        Label logoLabel = new Label(logo);
-        Container logoContainer = BorderLayout.center(logoLabel);
-        logoContainer.setUIID("SideCommandLogo");
-        tb.addComponentToSideMenu(logoContainer);
 
-        Label taglineLabel = new Label("ArtMart");
-        taglineLabel.setUIID("SideCommandTagline");
-        Container taglineContainer = BorderLayout.south(taglineLabel);
-        taglineContainer.setUIID("SideCommand");
+
+
+EncodedImage originalImg = EncodedImage.createFromImage(Image.createImage("/img.png"), false);
+EncodedImage scaledImg = (EncodedImage) originalImg.scaled(800, 500);
+Label taglineLabel = new Label(scaledImg);
+taglineLabel.setAlignment(CENTER);
+taglineLabel.setVerticalAlignment(CENTER);
+Container taglineContainer = BorderLayout.south(taglineLabel);
+taglineContainer.setUIID("SideCommand");
+
+
 
         tb.addComponentToSideMenu(taglineContainer);
         tb.addMaterialCommandToSideMenu("ArtMart", FontImage.MATERIAL_HOME, e -> {
@@ -40,22 +45,28 @@ public class BaseForm extends com.codename1.ui.Form {
         });
         tb.addMaterialCommandToSideMenu("Add Custom Products", FontImage.MATERIAL_ADD, e -> {
             newCustomProductForm f = new newCustomProductForm();
+            getCustomProductForm f = null;
+            try {
+                f = new getCustomProductForm();
+            } catch (IOException ex) {
+            }
             f.show();
         });
+   
         tb.addMaterialCommandToSideMenu("Categories", FontImage.MATERIAL_LIST, e -> {
-            getCategorieForm f = new getCategorieForm();
+            getCategorieForm f = null;
+            try {
+                f = new getCategorieForm();
+            } catch (IOException ex) {
+            }
             f.show();
         });
-        tb.addMaterialCommandToSideMenu("Add Categories", FontImage.MATERIAL_ADD, e -> {
-            newCategorieForm f = new newCategorieForm();
-            f.show();
-        });
-        tb.addMaterialCommandToSideMenu("Add Blog Category", FontImage.MATERIAL_ADD, e -> {
-            newBlogCategoryForm f = new newBlogCategoryForm();
-            f.show();
-        });
-        tb.addMaterialCommandToSideMenu("Applies", FontImage.MATERIAL_LIST, e -> {
-            getApplyForm f = new getApplyForm();
+               tb.addMaterialCommandToSideMenu("Applies", FontImage.MATERIAL_LIST, e -> {
+            getApplyForm f = null;
+            try {
+                f = new getApplyForm();
+            } catch (IOException ex) {
+            }
             f.show();
         });
     }

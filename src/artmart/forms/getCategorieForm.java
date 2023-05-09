@@ -11,12 +11,25 @@ import com.codename1.ui.list.DefaultListModel;
 import com.codename1.ui.util.Resources;
 import artmart.entities.Category;
 import artmart.service.CategorieWebService;
+import com.codename1.ui.Button;
+import java.io.IOException;
+
 
 public class getCategorieForm extends BaseForm {
 
     private MultiList eventList;
 
-    public getCategorieForm() {
+    public getCategorieForm() throws IOException {
+             Button applyButton = new Button("Add");
+applyButton.addActionListener(ee -> {
+    newCategorieForm f = null;
+            try {
+                f = new newCategorieForm();
+            } catch (IOException ex) {
+            }
+            f.show();
+});
+        this.add(applyButton);
         this.init(Resources.getGlobalResources());
         eventList = new MultiList(new DefaultListModel<>());
         add(eventList);
@@ -52,6 +65,7 @@ public class getCategorieForm extends BaseForm {
                     myForm2.show();
                 } catch (ParseException ex) {
                     System.out.println(ex);
+                } catch (IOException ex) {
                 }
             }
         });

@@ -11,11 +11,13 @@ import artmart.entities.Category;
 import artmart.entities.CustomProduct;
 import artmart.service.CategorieWebService;
 import artmart.service.CustomproductWebService;
+import java.io.IOException;
+
 
 public class newCustomProductForm extends BaseForm {
         CategorieWebService serviceCat = new CategorieWebService();
 
-    public newCustomProductForm() {
+    public newCustomProductForm() throws IOException {
         this.init(Resources.getGlobalResources());
 
    TextField nomField = new TextField("", "Nom");
@@ -65,12 +67,24 @@ public class newCustomProductForm extends BaseForm {
             newEvent.setIdCategorie(new Category(selectedCategorie.getCategoriesId()));
             CustomproductWebService service = new CustomproductWebService();
             service.newCp(newEvent);
+                  getCustomProductForm myForm = null;
+            try {
+                myForm = new getCustomProductForm();
+            } catch (IOException ex) {
+             
+            }
+            myForm.show();
         }
         );
         this.add(submitButton);
         Button goToFormButton = new Button("Go Back");
         goToFormButton.addActionListener(e -> {
-            getCustomProductForm myForm = new getCustomProductForm();
+            getCustomProductForm myForm = null;
+            try {
+                myForm = new getCustomProductForm();
+            } catch (IOException ex) {
+           
+            }
             myForm.show();
         });
         this.add(goToFormButton);

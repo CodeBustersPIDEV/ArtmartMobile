@@ -13,12 +13,16 @@ import artmart.entities.Category;
 import artmart.entities.CustomProduct;
 import artmart.service.CategorieWebService;
 import artmart.service.CustomproductWebService;
+import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
+import com.codename1.ui.layouts.BoxLayout;
+import java.io.IOException;
 
 public class editFormCustomProduct extends BaseForm {
 
         CategorieWebService serviceCat = new CategorieWebService();
         CustomproductWebService service = new CustomproductWebService();
-    public editFormCustomProduct(CustomProduct e) throws ParseException {
+    public editFormCustomProduct(CustomProduct e) throws ParseException, IOException {
         this.init(Resources.getGlobalResources());
         System.out.println(e);
         TextField nomField = new TextField(e.getName(), "name");
@@ -76,16 +80,30 @@ public class editFormCustomProduct extends BaseForm {
             newEvent.setClient(client);
             newEvent.setIdCategorie(new Category(selectedCategorie.getCategoriesId()));
             service.editCp(newEvent);
+          getCustomProductForm myForm = null;
+            try {
+                myForm = new getCustomProductForm();
+            } catch (IOException ex) {
+            }
+            myForm.show();
         }
         );
         Button goToFormButton = new Button("Go back");
         goToFormButton.addActionListener(ee -> {
-            getCustomProductForm myForm = new getCustomProductForm();
+            getCustomProductForm myForm = null;
+            try {
+                myForm = new getCustomProductForm();
+            } catch (IOException ex) {
+            }
             myForm.show();
         });
         Button deleteButton = new Button("Delete");
         deleteButton.addActionListener(cc -> {
-            getCustomProductForm myForm = new getCustomProductForm();
+            getCustomProductForm myForm = null;
+            try {
+                myForm = new getCustomProductForm();
+            } catch (IOException ex) {
+            }
             service.delcp(e);
             myForm.show();
         });
@@ -93,12 +111,15 @@ public class editFormCustomProduct extends BaseForm {
 applyButton.addActionListener(ee -> {
     CustomproductWebService service = new CustomproductWebService();
     service.applyCustomProduct(e.getCustomProductId()); // replace customProductId with the ID of the custom product you want to apply to
+              Dialog.show("Success", "Application successfully sent", "OK", null);
 });
+Container buttonContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
+buttonContainer.add(goToFormButton);
+buttonContainer.add(deleteButton);
+buttonContainer.add(submitButton);
+buttonContainer.add(applyButton);
+this.add(buttonContainer);
 
-this.add(deleteButton);
-this.add(goToFormButton);
-this.add(submitButton);
-this.add(applyButton);
 
     }
 

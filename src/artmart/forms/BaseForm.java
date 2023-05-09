@@ -7,6 +7,7 @@ import com.codename1.ui.util.Resources;
 import java.io.IOException;
 
 
+
 public class BaseForm extends com.codename1.ui.Form {
 
     public void init(Resources theme) throws IOException {
@@ -32,19 +33,6 @@ taglineContainer.setUIID("SideCommand");
 
         });
         tb.addMaterialCommandToSideMenu("Custom Products", FontImage.MATERIAL_LIST, e -> {
-            getCustomProductForm f = new getCustomProductForm();
-            f.show();
-        });
-        tb.addMaterialCommandToSideMenu("Blogs", FontImage.MATERIAL_LIST, e -> {
-            getBlogsForm f = new getBlogsForm();
-            f.show();
-        });
-        tb.addMaterialCommandToSideMenu("Blogs Categories", FontImage.MATERIAL_LIST, e -> {
-            getBlogCategoryForm f = new getBlogCategoryForm();
-            f.show();
-        });
-        tb.addMaterialCommandToSideMenu("Add Custom Products", FontImage.MATERIAL_ADD, e -> {
-            newCustomProductForm f = new newCustomProductForm();
             getCustomProductForm f = null;
             try {
                 f = new getCustomProductForm();
@@ -52,6 +40,23 @@ taglineContainer.setUIID("SideCommand");
             }
             f.show();
         });
+        tb.addMaterialCommandToSideMenu("Blogs", FontImage.MATERIAL_LIST, e -> {
+            getBlogsForm f = null;
+            try {
+                f = new getBlogsForm();
+            } catch (IOException ex) {
+            }
+            f.show();
+        });
+        tb.addMaterialCommandToSideMenu("Blogs Categories", FontImage.MATERIAL_LIST, e -> {
+            getBlogCategoryForm f = null;
+            try {
+                f = new getBlogCategoryForm();
+            } catch (IOException ex) {
+            }
+            f.show();
+        });
+  
    
         tb.addMaterialCommandToSideMenu("Categories", FontImage.MATERIAL_LIST, e -> {
             getCategorieForm f = null;

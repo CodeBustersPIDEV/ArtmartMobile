@@ -15,8 +15,11 @@ import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.list.DefaultListModel;
 import com.codename1.ui.util.Resources;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
+
+
 
 
 public class getBlogsForm extends BaseForm {
@@ -25,7 +28,7 @@ public class getBlogsForm extends BaseForm {
     private List<Blogs> blogs;
     private TextField searchField;
     
-    public getBlogsForm() {
+    public getBlogsForm() throws IOException {
              searchField = new TextField("", "Enter Blog Title");
         Button searchButton = new Button("Search");
         searchButton.addActionListener(e -> {
@@ -48,6 +51,7 @@ public class getBlogsForm extends BaseForm {
                 Dialog.show("Error", "Invalid ID", "OK", null);
             }    catch (ParseException ex) {
                     System.out.println(ex);
+                 } catch (IOException ex) {
                  }
         });
         Container searchContainer = BorderLayout.west(searchField).add(BorderLayout.EAST, searchButton);
@@ -102,6 +106,7 @@ public class getBlogsForm extends BaseForm {
                     myForm2.show();
                 } catch (ParseException ex) {
                     System.out.println(ex);
+                } catch (IOException ex) {
                 }
             }
         });

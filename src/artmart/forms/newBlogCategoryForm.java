@@ -5,10 +5,12 @@ import com.codename1.ui.TextField;
 import com.codename1.ui.util.Resources;
 import artmart.entities.BlogCategories;
 import artmart.service.BlogCategoriesWebService;
+import java.io.IOException;
+
 
 public class newBlogCategoryForm extends BaseForm {
 
-    public newBlogCategoryForm() {
+    public newBlogCategoryForm() throws IOException {
         this.init(Resources.getGlobalResources());
         TextField nomField = new TextField("", "Nom");
  
@@ -31,7 +33,11 @@ public class newBlogCategoryForm extends BaseForm {
         this.add(submitButton);
         Button goToFormButton = new Button("Go Back");
         goToFormButton.addActionListener(e -> {
-            getBlogCategoryForm myForm = new getBlogCategoryForm();
+            getBlogCategoryForm myForm = null;
+            try {
+                myForm = new getBlogCategoryForm();
+            } catch (IOException ex) {
+            }
             myForm.show();
         });
         this.add(goToFormButton);

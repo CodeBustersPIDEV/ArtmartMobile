@@ -12,12 +12,14 @@ import com.codename1.ui.util.Resources;
 import artmart.entities.BlogCategories;
 import artmart.service.BlogCategoriesWebService;
 import artmart.service.CategorieWebService;
+import java.io.IOException;
+
 
 public class getBlogCategoryForm extends BaseForm {
 
     private MultiList eventList;
 
-    public getBlogCategoryForm() {
+    public getBlogCategoryForm() throws IOException {
         this.init(Resources.getGlobalResources());
         eventList = new MultiList(new DefaultListModel<>());
         add(eventList);
@@ -53,6 +55,7 @@ public class getBlogCategoryForm extends BaseForm {
                     myForm2.show();
                 } catch (ParseException ex) {
                     System.out.println(ex);
+                } catch (IOException ex) {
                 }
             }
         });

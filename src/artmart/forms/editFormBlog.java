@@ -16,13 +16,15 @@ import artmart.service.CategorieWebService;
 import artmart.service.CustomproductWebService;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextArea;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+
 
 public class editFormBlog extends BaseForm {
 
        BlogsWebService service = new BlogsWebService();
-    public editFormBlog(Blogs e) throws ParseException {
+    public editFormBlog(Blogs e) throws ParseException, IOException {
         this.init(Resources.getGlobalResources());
         System.out.println(e);
         Label title = new Label(e.getTitle());        
@@ -41,12 +43,20 @@ public class editFormBlog extends BaseForm {
 
         Button goToFormButton = new Button("Go back");
         goToFormButton.addActionListener(ee -> {
-            getBlogsForm myForm = new getBlogsForm();
+            getBlogsForm myForm = null;
+            try {
+                myForm = new getBlogsForm();
+            } catch (IOException ex) {
+            }
             myForm.show();
         });
         Button deleteButton = new Button("Delete");
         deleteButton.addActionListener(cc -> {
-            getBlogsForm myForm = new getBlogsForm();
+            getBlogsForm myForm = null;
+            try {
+                myForm = new getBlogsForm();
+            } catch (IOException ex) {
+            }
             service.delBlog(e);
             myForm.updateList();
             myForm.show();

@@ -40,23 +40,7 @@ taglineContainer.setUIID("SideCommand");
             }
             f.show();
         });
-        tb.addMaterialCommandToSideMenu("Blogs", FontImage.MATERIAL_LIST, e -> {
-            getBlogsForm f = null;
-            try {
-                f = new getBlogsForm();
-            } catch (IOException ex) {
-            }
-            f.show();
-        });
-        tb.addMaterialCommandToSideMenu("Blogs Categories", FontImage.MATERIAL_LIST, e -> {
-            getBlogCategoryForm f = null;
-            try {
-                f = new getBlogCategoryForm();
-            } catch (IOException ex) {
-            }
-            f.show();
-        });
-  
+   
    
         tb.addMaterialCommandToSideMenu("Categories", FontImage.MATERIAL_LIST, e -> {
             getCategorieForm f = null;
@@ -74,5 +58,22 @@ taglineContainer.setUIID("SideCommand");
             }
             f.show();
         });
+                    tb.addMaterialCommandToSideMenu("Blogs", FontImage.MATERIAL_LIST, e -> {
+            getBlogsForm f = null;
+            try {
+                f = new getBlogsForm();
+            } catch (IOException ex) {
+            }
+            f.show();
+        });
+        tb.addMaterialCommandToSideMenu("Blogs Categories", FontImage.MATERIAL_LIST, e -> {
+            getBlogCategoryForm f = null;
+            try {
+                f = new getBlogCategoryForm();
+            } catch (IOException ex) {
+            }
+            f.show();
+        });
+  
     }
 }

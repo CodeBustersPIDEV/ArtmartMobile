@@ -1,5 +1,6 @@
 package artmart.forms;
 
+import artmart.forms.Event.AllEventsForm;
 import com.codename1.ui.*;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.FlowLayout;
@@ -74,6 +75,13 @@ taglineContainer.setUIID("SideCommand");
             }
             f.show();
         });
-  
+       tb.addMaterialCommandToSideMenu("Events", FontImage.MATERIAL_LIST, e -> {
+            AllEventsForm f = null;
+            try {
+                f = new AllEventsForm();
+            } catch (IOException ex) {
+            }
+            f.show();
+        });  
     }
 }

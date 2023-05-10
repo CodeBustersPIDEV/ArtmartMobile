@@ -50,7 +50,7 @@ if (inputText.equalsIgnoreCase("hi") || inputText.equalsIgnoreCase("hello") || i
     responseLabel.setText("ArtSmart: I am ArtSmart Your Personal Product Assistant");
 } else if (inputText.contains("material")) {
     responseLabel.setText("ArtSmart: Materials depend on your product");
-} else if (inputText.contains("fatouma")) {
+} else if (inputText.contains("funny")) {
     responseLabel.setText("ArtSmart: Fatouma is fufunny");
 } else if (inputText.contains("price")) {
     responseLabel.setText("ArtSmart: the price will be discussed via WhatsApp!");
@@ -84,5 +84,15 @@ if (inputText.equalsIgnoreCase("hi") || inputText.equalsIgnoreCase("hello") || i
         addComponent(inputContainer);
         addComponent(responseContainer);
         addComponent(sendButton);
+            Button goToFormButton = new Button("Go back");
+        goToFormButton.addActionListener(ee -> {
+            getCustomProductForm myForm = null;
+            try {
+                myForm = new getCustomProductForm();
+            } catch (IOException ex) {
+            }
+            myForm.show();
+        });
+        add(goToFormButton);
     }
 }

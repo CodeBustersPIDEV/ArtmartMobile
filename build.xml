@@ -5,8 +5,8 @@
     To learn more about Codename One go to https://www.codenameone.com/
     -->
         
-    <project name="ArtmartMobile" default="default" basedir=".">
-    <description>Builds, tests, and runs the project ArtmartMobile.</description>
+    <project name="AnasHammou" default="default" basedir=".">
+    <description>Builds, tests, and runs the project AnasHammou.</description>
     <import file="nbproject/build-impl.xml"/>
     <property file="codenameone_settings.properties"/>
     <property name="automated" value="false" />

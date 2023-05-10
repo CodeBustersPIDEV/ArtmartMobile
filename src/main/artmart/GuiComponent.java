@@ -11,7 +11,11 @@ public class GuiComponent extends Form  {
         initGuiBuilderComponents(resourceObjectInstance);
     }
 
+<<<<<<< HEAD
 ////////-- DON'T EDIT BELOW THIS LINE!!!
+=======
+//////-- DON'T EDIT BELOW THIS LINE!!!
+>>>>>>> main
 
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          

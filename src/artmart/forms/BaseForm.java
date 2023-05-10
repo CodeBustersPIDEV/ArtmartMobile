@@ -74,7 +74,7 @@ taglineContainer.setUIID("SideCommand");
             }
             f.show();
         });
-<<<<<<< HEAD
+
         
         tb.addMaterialCommandToSideMenu("Users list", FontImage.MATERIAL_LIST, e -> {
             GetUserForm f = null;
@@ -84,8 +84,7 @@ taglineContainer.setUIID("SideCommand");
             }
             f.show();
         });
-=======
->>>>>>> main
+
   
     }
 }

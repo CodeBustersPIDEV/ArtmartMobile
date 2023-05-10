@@ -10,7 +10,6 @@ import com.codename1.io.NetworkManager;
 import java.util.ArrayList;
 import java.util.List;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import artmart.entities.User;
 import com.codename1.l10n.DateFormat;

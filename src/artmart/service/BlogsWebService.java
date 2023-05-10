@@ -17,6 +17,8 @@ public class BlogsWebService {
 
     private static final String BASE_URL = "http://127.0.0.1:8000/api";
     private ConnectionRequest connection;
+    BlogCategories finalCategory = new BlogCategories();
+    BlogCategories notFoundcategory = new BlogCategories(0, "N/A");
 
     public BlogsWebService() {
         connection = new ConnectionRequest();
@@ -27,6 +29,7 @@ public class BlogsWebService {
         String url = BASE_URL + "/AllBlogs";
         this.connection.setUrl(url);
         this.connection.setHttpMethod("GET");
+        BlogCategoriesWebService serviceCat = new BlogCategoriesWebService();
         List<Blogs> blogs = new ArrayList<>();
         this.connection.addResponseListener(e -> {
             if (this.connection.getResponseCode() == 200) {
@@ -36,7 +39,6 @@ public class BlogsWebService {
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     for (int i = 0; i < jsonEvents.length(); i++) {
                         JSONObject jsonEvent = jsonEvents.getJSONObject(i);
-                        
                         float rating = jsonEvent.isNull("rating") ? 0 : jsonEvent.getFloat("rating");
                         int nbViews = jsonEvent.isNull("nbViews") ? 0 : jsonEvent.getInt("nbViews");
                         Blogs event = new Blogs(
@@ -46,8 +48,9 @@ public class BlogsWebService {
                                 dateFormat.parse(jsonEvent.getJSONObject("date").getString("date")),
                                 rating,
                                 nbViews,
-                                new BlogCategories(jsonEvent.getInt("category")),
-                                jsonEvent.getInt("author")
+                                serviceCat.getOneBlogCategory(jsonEvent.getInt("category")),
+                                jsonEvent.getInt("author"),
+                                jsonEvent.getString("image")
                         );
                         blogs.add(event);
                     }

@@ -7,23 +7,23 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import artmart.entities.BlogCategories;
+import artmart.entities.Tags;
 
-public class BlogCategoriesWebService {
+public class TagWebService {
 
     private static final String BASE_URL = "http://127.0.0.1:8000/api";
     private ConnectionRequest connection;
 
-    public BlogCategoriesWebService() {
+    public TagWebService() {
         connection = new ConnectionRequest();
         connection.setInsecure(true);
     }
 
-    public List<BlogCategories> getAllCategorie() {
-        String url = BASE_URL + "/BlogCategory";
+    public List<Tags> getAllCategorie() {
+        String url = BASE_URL + "/Tags";
         this.connection.setUrl(url);
         this.connection.setHttpMethod("GET");
-        List<BlogCategories> categories = new ArrayList<>();
+        List<Tags> categories = new ArrayList<>();
         this.connection.addResponseListener(e -> {
             if (this.connection.getResponseCode() == 200) {
                 String response = new String(this.connection.getResponseData());
@@ -31,8 +31,8 @@ public class BlogCategoriesWebService {
                     JSONArray jsonEvents = new JSONArray(response);
                     for (int i = 0; i < jsonEvents.length(); i++) {
                         JSONObject jsonEvent = jsonEvents.getJSONObject(i);
-                        BlogCategories categorie = new BlogCategories(
-                                jsonEvent.getInt("categoriesId"),
+                        Tags categorie = new Tags(
+                                jsonEvent.getInt("tagId"),
                                 jsonEvent.getString("name")
                         );
                         categories.add(categorie);
@@ -47,10 +47,11 @@ public class BlogCategoriesWebService {
         return categories;
     }
 
-    public BlogCategories getOneBlogCategory(int id) {
+    public Tags getOneBlogCategory(int id) {
+        String url = BASE_URL + "/OneTag/";
         this.connection.setUrl(BASE_URL + "/OneBlogCategory/" + id);
         this.connection.setHttpMethod("GET");
-        BlogCategories category = new BlogCategories();
+        Tags category = new Tags();
         this.connection.addResponseListener(e -> {
             if (this.connection.getResponseCode() == 200) {
                 String response = new String(this.connection.getResponseData());
@@ -58,8 +59,8 @@ public class BlogCategoriesWebService {
                     JSONArray jsonEvents = new JSONArray(response);
                     for (int i = 0; i < jsonEvents.length(); i++) {
                         JSONObject jsonEvent = jsonEvents.getJSONObject(i);
-                        if (jsonEvent.getInt("categoryId") == id) {
-                            category.setId(jsonEvent.getInt("categoryId"));
+                        if (jsonEvent.getInt("tagId") == id) {
+                            category.setId(jsonEvent.getInt("tagId"));
                             category.setName(jsonEvent.getString("name"));
                         }
                     }
@@ -73,10 +74,10 @@ public class BlogCategoriesWebService {
         return category;
     }
 
-    public void newCategorie(BlogCategories c) {
+    public void newCategorie(Tags c) {
         connection = new ConnectionRequest();
         connection.setInsecure(true);
-        this.connection.setUrl(BASE_URL + "/BlogCategory/add");
+        this.connection.setUrl(BASE_URL + "/Tag/add");
         this.connection.setHttpMethod("POST");
 
         connection.addArgument("name", c.getName());
@@ -84,10 +85,10 @@ public class BlogCategoriesWebService {
         NetworkManager.getInstance().addToQueue(connection);
     }
 
-    public void editCategorie(BlogCategories c) {
+    public void editCategorie(Tags c) {
         connection = new ConnectionRequest();
         connection.setInsecure(true);
-        this.connection.setUrl(BASE_URL + "/BlogCategory/" + c.getId());
+        this.connection.setUrl(BASE_URL + "/Tag/" + c.getId());
         this.connection.setHttpMethod("PUT");
 
         connection.addArgument("name", c.getName());
@@ -95,10 +96,10 @@ public class BlogCategoriesWebService {
         NetworkManager.getInstance().addToQueue(connection);
     }
 
-    public void delCategorie(BlogCategories c) {
+    public void delCategorie(Tags c) {
         connection = new ConnectionRequest();
         connection.setInsecure(true);
-        this.connection.setUrl(BASE_URL + "/BlogCategoryDel/" + c.getId());
+        this.connection.setUrl(BASE_URL + "/TagDel/" + c.getId());
         this.connection.setHttpMethod("DELETE");
         NetworkManager.getInstance().addToQueue(connection);
     }

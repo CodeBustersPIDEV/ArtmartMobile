@@ -74,6 +74,15 @@ taglineContainer.setUIID("SideCommand");
             }
             f.show();
         });
+        
+                tb.addMaterialCommandToSideMenu("Tags", FontImage.MATERIAL_LIST, e -> {
+            getTagsForm f = null;
+            try {
+                f = new getTagsForm();
+            } catch (IOException ex) {
+            }
+            f.show();
+        });
   
     }
 }

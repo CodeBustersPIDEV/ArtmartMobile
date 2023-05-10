@@ -3,14 +3,14 @@ package artmart.forms;
 import com.codename1.ui.Button;
 import com.codename1.ui.TextField;
 import com.codename1.ui.util.Resources;
-import artmart.entities.BlogCategories;
-import artmart.service.BlogCategoriesWebService;
+import artmart.entities.Tags;
+import artmart.service.TagWebService;
 import java.io.IOException;
 
 
-public class newBlogCategoryForm extends BaseForm {
+public class newTagsForm extends BaseForm {
 
-    public newBlogCategoryForm() throws IOException {
+    public newTagsForm() throws IOException {
         this.init(Resources.getGlobalResources());
         TextField nomField = new TextField("", "Nom");
  
@@ -23,14 +23,14 @@ public class newBlogCategoryForm extends BaseForm {
                 -> {
             String nom = nomField.getText();
 
-            BlogCategories newCat = new BlogCategories();
+            Tags newCat = new Tags();
             newCat.setName(nom);
       
-            BlogCategoriesWebService service = new BlogCategoriesWebService();
+            TagWebService service = new TagWebService();
             service.newCategorie(newCat);
-            getBlogCategoryForm myForm = null;
+            getTagsForm myForm = null;
             try {
-                myForm = new getBlogCategoryForm();
+                myForm = new getTagsForm();
             } catch (IOException ex) {
             }
             myForm.show();
@@ -39,9 +39,9 @@ public class newBlogCategoryForm extends BaseForm {
         this.add(submitButton);
         Button goToFormButton = new Button("Go Back");
         goToFormButton.addActionListener(e -> {
-            getBlogCategoryForm myForm = null;
+            getTagsForm myForm = null;
             try {
-                myForm = new getBlogCategoryForm();
+                myForm = new getTagsForm();
             } catch (IOException ex) {
             }
             myForm.show();

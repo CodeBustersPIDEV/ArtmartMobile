@@ -98,8 +98,8 @@ public class getBlogsForm extends BaseForm {
             item.put("Line4", b.getAuthor());
             item.put("Line3", b.getPublishDate());
             item.put("Line5", b.getId());
-
             model.addItem(item);
+//            System.out.println(b.getCategory().getName());
         }
         cpList.addActionListener(new ActionListener() {
             @Override
@@ -134,6 +134,7 @@ public class getBlogsForm extends BaseForm {
             item.put("Line2", b.getCategory().getName());
             item.put("Line4", b.getAuthor());
             item.put("Line3", b.getPublishDate());
+            item.put("Line5", b.getId());
 
             model.addItem(item);
         }

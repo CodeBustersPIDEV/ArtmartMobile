@@ -11,20 +11,23 @@ import artmart.entities.BlogCategories;
 import artmart.entities.Blogs;
 import artmart.service.BlogsWebService;
 import artmart.service.BlogCategoriesWebService;
+import com.codename1.components.ImageViewer;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
+import com.codename1.ui.EncodedImage;
+import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextArea;
+import com.codename1.ui.URLImage;
 import com.codename1.ui.layouts.BoxLayout;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-
 public class editFormBlog extends BaseForm {
 
-       BlogsWebService service = new BlogsWebService();       
-       BlogCategoriesWebService serviceCat = new BlogCategoriesWebService();
+    BlogsWebService service = new BlogsWebService();
+    BlogCategoriesWebService serviceCat = new BlogCategoriesWebService();
 
     public editFormBlog(Blogs e) throws ParseException, IOException {
 //        this.init(Resources.getGlobalResources());
@@ -68,30 +71,36 @@ public class editFormBlog extends BaseForm {
 //this.add(deleteButton);
 //this.add(goToFormButton);
 
-
-
-
-     this.init(Resources.getGlobalResources());
+        this.init(Resources.getGlobalResources());
         System.out.println(e);
-        TextField titleField = new TextField(e.getTitle(), "Title");
-        TextArea contentField = new TextArea(e.getContent());      
+        Label titleField = new Label(e.getTitle(), "Title");
+        TextArea contentField = new TextArea(e.getContent());
 //       TextField imagefield = new TextField(e.getImage(), "image");
-        ComboBox<BlogCategories> categorieField = new ComboBox<>();
-        List<BlogCategories> categories = serviceCat.getAllCategorie();
-        
-        for (BlogCategories categorie : categories) {
-            categorieField.addItem(categorie);
-        }
+        Label catField = new Label(e.getCategory().getName());
+//        ComboBox<BlogCategories> categorieField = new ComboBox<>();
+//        List<BlogCategories> categories = serviceCat.getAllCategorie();
 
+//        for (BlogCategories categorie : categories) {
+//            categorieField.addItem(categorie);
+//        }
+// Create an EncodedImage to hold the image data
+        EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(400, 400, 0xffcccccc), true);
+        String filename = e.getImage().substring(e.getImage().lastIndexOf("/") + 1);
+
+        System.out.println(filename);
+// Create a URLImage with the image URL and placeholder
+        URLImage imgUrl = URLImage.createToStorage(placeholder, filename, e.getImage());
+
+// Create an ImageViewer to display the image
+        ImageViewer imageViewer = new ImageViewer(imgUrl);
         this.add(titleField);
 
         this.add(contentField);
+        this.add(catField);
+        this.add(imageViewer);
 
-        this.add(categorieField);
-
-        Button submitButton = new Button("Submit");
-        
-        
+//        this.add(categorieField);
+//        Button submitButton = new Button("Submit");
 //        submitButton.addActionListener(s-> {
 //            String title = titleField.getText();
 //            String content = contentField.getText();
@@ -132,15 +141,12 @@ public class editFormBlog extends BaseForm {
             myForm.show();
         });
 
-Container buttonContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
-buttonContainer.add(goToFormButton);
-buttonContainer.add(deleteButton);
-buttonContainer.add(submitButton);
-this.add(buttonContainer);
-
-
-    }
+        Container buttonContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
+        buttonContainer.add(goToFormButton);
+        buttonContainer.add(deleteButton);
+//        buttonContainer.add(submitButton);
+        this.add(buttonContainer);
 
     }
 
-
+}

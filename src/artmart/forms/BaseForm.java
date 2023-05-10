@@ -8,6 +8,7 @@ import java.io.IOException;
 
 
 
+
 public class BaseForm extends com.codename1.ui.Form {
 
     public void init(Resources theme) throws IOException {
@@ -74,6 +75,6 @@ taglineContainer.setUIID("SideCommand");
             }
             f.show();
         });
-  
+
     }
 }

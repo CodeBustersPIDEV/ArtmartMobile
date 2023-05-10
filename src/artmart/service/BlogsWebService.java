@@ -1,5 +1,6 @@
 package artmart.service;
 
+import artmart.entities.BlogCategories;
 import com.codename1.io.ConnectionRequest;
 import com.codename1.io.NetworkManager;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class BlogsWebService {
         String url = BASE_URL + "/AllBlogs";
         this.connection.setUrl(url);
         this.connection.setHttpMethod("GET");
-        List<Blogs> events = new ArrayList<>();
+        List<Blogs> blogs = new ArrayList<>();
         this.connection.addResponseListener(e -> {
             if (this.connection.getResponseCode() == 200) {
                 String response = new String(this.connection.getResponseData());
@@ -35,6 +36,7 @@ public class BlogsWebService {
                     DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                     for (int i = 0; i < jsonEvents.length(); i++) {
                         JSONObject jsonEvent = jsonEvents.getJSONObject(i);
+                        
                         float rating = jsonEvent.isNull("rating") ? 0 : jsonEvent.getFloat("rating");
                         int nbViews = jsonEvent.isNull("nbViews") ? 0 : jsonEvent.getInt("nbViews");
                         Blogs event = new Blogs(
@@ -44,10 +46,10 @@ public class BlogsWebService {
                                 dateFormat.parse(jsonEvent.getJSONObject("date").getString("date")),
                                 rating,
                                 nbViews,
-                                jsonEvent.getString("category"),
+                                new BlogCategories(jsonEvent.getInt("category")),
                                 jsonEvent.getInt("author")
                         );
-                        events.add(event);
+                        blogs.add(event);
                     }
                 } catch (JSONException ex) {
                     ex.printStackTrace();
@@ -59,27 +61,22 @@ public class BlogsWebService {
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(this.connection);
-        return events;
+        return blogs;
     }
 
-//    public void newCp(CustomProduct e) {
-//        connection = new ConnectionRequest();
-//        connection.setInsecure(true);
-//        this.connection.setUrl(BASE_URL + "/customproduct/add");
-//        this.connection.setHttpMethod("POST");
-//
-//        connection.addArgument("name", e.getName());
-//        connection.addArgument("description", e.getDescription());
-//        connection.addArgument("dimensions", e.getDimensions());
-//        connection.addArgument("weight", e.getWeight() + "");
-//        connection.addArgument("material", e.getMaterial());
-//        connection.addArgument("image", e.getImage());
-//        connection.addArgument("client", e.getClient() + "");
-//        System.out.println(e.getIdCategorie().getCategoriesId());
-//        connection.addArgument("categoryId", e.getIdCategorie().getCategoriesId() + "");
-//
-//        NetworkManager.getInstance().addToQueue(connection);
-//    }
+    public void newBlog(Blogs e) {
+        connection = new ConnectionRequest();
+        connection.setInsecure(true);
+        this.connection.setUrl(BASE_URL + "/blogNew/add");
+        this.connection.setHttpMethod("POST");
+
+        connection.addArgument("title", e.getTitle());
+        connection.addArgument("content", e.getContent());
+        connection.addArgument("author", e.getAuthor() + "");
+        connection.addArgument("categoryId", e.getCategory() + "");
+
+        NetworkManager.getInstance().addToQueue(connection);
+    }
 //
 //    public void editCp(CustomProduct e) {
 //        connection = new ConnectionRequest();
@@ -100,6 +97,7 @@ public class BlogsWebService {
 //        NetworkManager.getInstance().addToQueue(connection);
 //    }
 //
+
     public void delBlog(Blogs e) {
         connection = new ConnectionRequest();
         connection.setInsecure(true);

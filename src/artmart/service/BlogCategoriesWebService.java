@@ -47,6 +47,35 @@ public class BlogCategoriesWebService {
         NetworkManager.getInstance().addToQueueAndWait(this.connection);
         return categories;
     }
+    
+    public BlogCategories getOneBlogCategory(int id){
+          String url = BASE_URL + "/OneBlogCategory/";
+        this.connection.setUrl(BASE_URL + "/OneBlogCategory/"+id);
+        this.connection.setHttpMethod("GET");
+        BlogCategories category = new BlogCategories();
+        this.connection.addResponseListener(e -> {
+            if (this.connection.getResponseCode() == 200) {
+                String response = new String(this.connection.getResponseData());
+                try {
+                    JSONArray jsonEvents = new JSONArray(response);
+                    for (int i = 0; i < jsonEvents.length(); i++) {
+                        JSONObject jsonEvent = jsonEvents.getJSONObject(i);
+                        if(jsonEvent.getInt("categoriesId")== id){
+                  category.setId(jsonEvent.getInt("categoriesId"));
+                  category.setName(jsonEvent.getString("name")); 
+                        }
+                    }
+                } catch (JSONException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(this.connection);
+        return category;
+    }
+                
+    
 
     public void newCategorie(BlogCategories c) {
         connection = new ConnectionRequest();

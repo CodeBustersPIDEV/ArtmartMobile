@@ -17,7 +17,7 @@ public class Blogs {
     private String content;
     private Date publishDate;
     private float rating;
-    private String Category;
+    private BlogCategories Category;
     private int nb_views;
     private int author;
 
@@ -51,7 +51,7 @@ public class Blogs {
         this.author = author;
     }
     
-        public Blogs(int id, String title, String content, Date publishDate,float rating, int nb_views,  String category,int author) {
+        public Blogs(int id, String title, String content, Date publishDate,float rating, int nb_views,  BlogCategories category,int author) {
         this.id = id;
         this.title = title;
         this.content = content;
@@ -82,7 +82,7 @@ public class Blogs {
         return title;
     }
     
-     public String getCategory() {
+     public BlogCategories getCategory() {
         return Category;
     }
 
@@ -110,7 +110,7 @@ public class Blogs {
         this.title = title;
     }
     
-    public void setCategory(String category) {
+    public void setCategory(BlogCategories category) {
         this.Category = category;
     }
 

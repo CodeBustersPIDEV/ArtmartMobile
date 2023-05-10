@@ -1,6 +1,7 @@
 package artmart.forms;
 
-import artmart.forms.Event.AllEventsForm;
+import artmart.forms.Event.Artist.AllEventsForm;
+import artmart.forms.Event.HomeEvent;
 import com.codename1.ui.*;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.FlowLayout;
@@ -76,9 +77,9 @@ taglineContainer.setUIID("SideCommand");
             f.show();
         });
        tb.addMaterialCommandToSideMenu("Events", FontImage.MATERIAL_LIST, e -> {
-            AllEventsForm f = null;
+            HomeEvent f = null;
             try {
-                f = new AllEventsForm();
+                f = new HomeEvent();
             } catch (IOException ex) {
             }
             f.show();

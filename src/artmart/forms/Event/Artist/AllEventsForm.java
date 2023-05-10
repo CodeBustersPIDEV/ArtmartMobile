@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package artmart.forms.Event;
+package artmart.forms.Event.Artist;
 
 import com.codename1.l10n.ParseException;
 import com.codename1.ui.Button;
@@ -26,7 +26,7 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class AllEventsForm extends BaseForm {
+    public class AllEventsForm extends BaseForm {
 
     private MultiList evList;
     private List<Event> events;
@@ -100,8 +100,10 @@ public class AllEventsForm extends BaseForm {
         for (Event event : events) {
             Map<String, Object> item = new HashMap<>();
             item.put("Line1", event.getName());
-            item.put("Line2", event.getDescription());
-            item.put("Line3", event.getEventid());
+            item.put("Line2", event.getType());
+            item.put("Line3", event.getLocation());
+            item.put("Line4", event.getStartdate() + " > " + event.getEnddate());
+            item.put("Line5", event.getEventid());
             model.addItem(item);
         }
         evList.addActionListener(new ActionListener() {
@@ -109,7 +111,7 @@ public class AllEventsForm extends BaseForm {
             public void actionPerformed(ActionEvent evt) {
                 try {
                     Map<String, Object> selectedItem = (Map<String, Object>) evList.getSelectedItem();
-                    int eventId = (int) selectedItem.get("Line3");
+                    int eventId = (int) selectedItem.get("Line5");
                     Event selectedEvent = null;
                     for (Event event : events) {
                         if (event.getEventid() == eventId) {
@@ -125,7 +127,6 @@ public class AllEventsForm extends BaseForm {
                 }
             }
         });
-
     }
 
     private void updateList() {

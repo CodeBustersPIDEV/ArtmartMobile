@@ -4,21 +4,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/marwe/OneDrive/Bureau/3A1/PIDEV/PI_Artmart/ArtmartMobile/src/artmart/service/BlogsWebService.java</file>
-            <file>file:/C:/Users/marwe/OneDrive/Bureau/3A1/PIDEV/PI_Artmart/ArtmartMobile/src/artmart/forms/editFormBlogCategories.java</file>
-            <file>file:/C:/Users/marwe/OneDrive/Bureau/3A1/PIDEV/PI_Artmart/ArtmartMobile/src/artmart/forms/newBlogCategoryForm.java</file>
-            <file>file:/C:/Users/marwe/OneDrive/Bureau/3A1/PIDEV/PI_Artmart/ArtmartMobile/src/artmart/forms/getCustomProductForm.java</file>
-            <file>file:/C:/Users/marwe/OneDrive/Bureau/3A1/PIDEV/PI_Artmart/ArtmartMobile/src/artmart/entities/CustomProduct.java</file>
-            <file>file:/C:/Users/marwe/OneDrive/Bureau/3A1/PIDEV/PI_Artmart/ArtmartMobile/src/artmart/forms/editFormCustomProduct.java</file>
-            <file>file:/C:/Users/marwe/OneDrive/Bureau/3A1/PIDEV/PI_Artmart/ArtmartMobile/src/artmart/forms/getBlogCategoryForm.java</file>
-            <file>file:/C:/Users/marwe/OneDrive/Bureau/3A1/PIDEV/PI_Artmart/ArtmartMobile/src/artmart/forms/newBlogForm.java</file>
-            <file>file:/C:/Users/marwe/OneDrive/Bureau/3A1/PIDEV/PI_Artmart/ArtmartMobile/src/artmart/service/CustomproductWebService.java</file>
-            <file>file:/C:/Users/marwe/OneDrive/Bureau/3A1/PIDEV/PI_Artmart/ArtmartMobile/src/artmart/entities/Blogs.java</file>
-            <file>file:/C:/Users/marwe/OneDrive/Bureau/3A1/PIDEV/PI_Artmart/ArtmartMobile/src/artmart/forms/editFormBlog.java</file>
-            <file>file:/C:/Users/marwe/OneDrive/Bureau/3A1/PIDEV/PI_Artmart/ArtmartMobile/src/artmart/forms/BaseForm.java</file>
-            <file>file:/C:/Users/marwe/OneDrive/Bureau/3A1/PIDEV/PI_Artmart/ArtmartMobile/src/artmart/forms/getBlogsForm.java</file>
-            <file>file:/C:/Users/marwe/OneDrive/Bureau/3A1/PIDEV/PI_Artmart/ArtmartMobile/src/artmart/service/BlogCategoriesWebService.java</file>
-            <file>file:/C:/Users/marwe/OneDrive/Bureau/3A1/PIDEV/PI_Artmart/ArtmartMobile/src/artmart/entities/BlogCategories.java</file>
+            <file>file:/C:/xampp/htdocs/ArtmartMobile/src/artmart/forms/BaseForm.java</file>
+            <file>file:/C:/xampp/htdocs/ArtmartMobile/src/artmart/forms/getReadyProductForm.java</file>
+            <file>file:/C:/xampp/htdocs/ArtmartMobile/src/artmart/forms/getProductReviewsForm.java</file>
+            <file>file:/C:/xampp/htdocs/ArtmartMobile/src/artmart/service/ProductReviewWebService.java</file>
+            <file>file:/C:/xampp/htdocs/ArtmartMobile/src/artmart/forms/editReadyProductForm.java</file>
+            <file>file:/C:/xampp/htdocs/ArtmartMobile/src/artmart/entities/ProductReview.java</file>
+            <file>file:/C:/xampp/htdocs/ArtmartMobile/src/artmart/forms/getCustomProductForm.java</file>
         </group>
     </open-files>
 </project-private>

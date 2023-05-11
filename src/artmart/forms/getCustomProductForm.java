@@ -47,6 +47,15 @@ applyButton.addActionListener(ee -> {
             }
             f.show();
 });
+  Button chat = new Button("ArtSmart");
+chat.addActionListener(ee -> {
+    chatbot f = null;
+            try {
+                f = new chatbot();
+            } catch (IOException ex) {
+            }
+            f.show();
+});
 
              searchField = new TextField("", "Enter Custom Product Name");
         Button searchButton = new Button("Search");
@@ -139,6 +148,7 @@ try (OutputStream os = fs.openOutputStream(filePath)) {
                  }
         });
         this.add(statisticsButton);
+           this.add(chat);
         Container searchContainer = BorderLayout.west(searchField).add(BorderLayout.EAST, searchButton);
         addComponent(searchContainer);
         

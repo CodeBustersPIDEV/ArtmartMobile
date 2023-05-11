@@ -46,6 +46,12 @@ public class getReadyProductForm extends BaseForm {
     ReadyProduct readyp = new ReadyProduct();
 
     public getReadyProductForm() throws IOException {
+        Label headingLabel = new Label("Ready Products");
+
+        headingLabel.getAllStyles().setFgColor(0x000000);
+
+        addComponent(BorderLayout.NORTH, headingLabel);
+
         Button addButton = new Button("Add");
         addButton.addActionListener(ee -> {
             newReadyProductForm f = null;
@@ -55,6 +61,7 @@ public class getReadyProductForm extends BaseForm {
             }
             f.show();
         });
+        addComponent(addButton);
         searchField = new TextField("", "Enter Product Name");
         Button searchButton = new Button("Search");
         searchField.setColumns(14);
@@ -96,7 +103,7 @@ public class getReadyProductForm extends BaseForm {
             List<ReadyProduct> filteredProducts = filterProductsByCategory(readyproduct, selectedCategory);
             updateCatList(filteredProducts);
         });
-        
+
         addComponent(categoryComboBox);
 
         this.init(Resources.getGlobalResources());
@@ -186,26 +193,26 @@ public class getReadyProductForm extends BaseForm {
             model.addItem(item);
         }
     }
-    
+
     private void updateCatList(List<ReadyProduct> products) {
-    DefaultListModel<Map<String, Object>> model = (DefaultListModel<Map<String, Object>>) rpList.getModel();
-    model.removeAll();
-    for (ReadyProduct p : products) {
-        Map<String, Object> item = new HashMap<>();
-        item.put("Line1", p.getName());
-        item.put("Line2", p.getDescription());
-        item.put("Line3", p.getPrice());
-        model.addItem(item);
-    }
-}
-    
-    private List<ReadyProduct> filterProductsByCategory(List<ReadyProduct> products, Category selectedCategory) {
-    List<ReadyProduct> filteredProducts = new ArrayList<>();
-    for (ReadyProduct product : products) {
-        if (product.getCategoryId().equals(selectedCategory)) {
-            filteredProducts.add(product);
+        DefaultListModel<Map<String, Object>> model = (DefaultListModel<Map<String, Object>>) rpList.getModel();
+        model.removeAll();
+        for (ReadyProduct p : products) {
+            Map<String, Object> item = new HashMap<>();
+            item.put("Line1", p.getName());
+            item.put("Line2", p.getDescription());
+            item.put("Line3", p.getPrice());
+            model.addItem(item);
         }
     }
-    return filteredProducts;
-}
+
+    private List<ReadyProduct> filterProductsByCategory(List<ReadyProduct> products, Category selectedCategory) {
+        List<ReadyProduct> filteredProducts = new ArrayList<>();
+        for (ReadyProduct product : products) {
+            if (product.getCategoryId().equals(selectedCategory)) {
+                filteredProducts.add(product);
+            }
+        }
+        return filteredProducts;
+    }
 }

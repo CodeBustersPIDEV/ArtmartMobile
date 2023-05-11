@@ -9,6 +9,7 @@ import com.codename1.io.Log;
 import com.codename1.ui.Toolbar;
 import artmart.forms.getCategorieForm;
 import artmart.forms.getCustomProductForm;
+import artmart.forms.getReadyProductForm;
 import java.io.IOException;
 
 /**
@@ -48,7 +49,7 @@ public class MyApplication {
             return;
         }
 
-        getCustomProductForm myForm = new getCustomProductForm();
+        getReadyProductForm myForm = new getReadyProductForm();
         myForm.show();
     }
 

@@ -38,7 +38,7 @@ public class getCustomProductForm extends BaseForm {
 CustomProduct product = new CustomProduct();
 
     public getCustomProductForm() throws IOException {
-        Button applyButton = new Button("Add");
+        Button applyButton = new Button("+");
 applyButton.addActionListener(ee -> {
     newCustomProductForm f = null;
             try {
@@ -56,9 +56,10 @@ chat.addActionListener(ee -> {
             }
             f.show();
 });
-
-             searchField = new TextField("", "Enter Custom Product Name");
-        Button searchButton = new Button("Search");
+     Button searchButton = new Button("Search");
+             searchField = new TextField("", "Enter Name");
+             
+   searchField.setColumns(15);
       statisticsButton = new Button("Show Statistics");
         statisticsButton.addActionListener(e -> {
    int totalProducts = customproduct.size();
@@ -163,8 +164,10 @@ try (OutputStream os = fs.openOutputStream(filePath)) {
             });
             updateList();
         });
+        
+       addComponent(BorderLayout.south(sortButton));   
         this.add(applyButton);
-        addComponent(BorderLayout.south(sortButton));      
+   
         cpList = new MultiList(new DefaultListModel<>());
         add(cpList);
         getAllCp();   

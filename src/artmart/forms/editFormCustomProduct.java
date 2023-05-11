@@ -13,8 +13,12 @@ import artmart.entities.Category;
 import artmart.entities.CustomProduct;
 import artmart.service.CategorieWebService;
 import artmart.service.CustomproductWebService;
+import com.codename1.components.ImageViewer;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
+import com.codename1.ui.EncodedImage;
+import com.codename1.ui.Image;
+import com.codename1.ui.URLImage;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.validation.LengthConstraint;
 import com.codename1.ui.validation.Validator;
@@ -54,8 +58,17 @@ public class editFormCustomProduct extends BaseForm {
 
         this.add(materialfield);
 
-     
-       this.add(imagefield);
+       EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(400, 400, 0xffcccccc), true);
+        String filename = e.getImage().substring(e.getImage().lastIndexOf("/") + 1);
+
+        System.out.println(filename);
+// Create a URLImage with the image URL and placeholder
+        URLImage imgUrl = URLImage.createToStorage(placeholder, filename, e.getImage());
+
+// Create an ImageViewer to display the image
+        ImageViewer imageViewer = new ImageViewer(imgUrl);
+    this.add(imageViewer);
+        this.add(imagefield);
         this.add(categorieField);
      Validator validator = new Validator();
         validator.addConstraint(nomField, new LengthConstraint(1, "Nom is required"));

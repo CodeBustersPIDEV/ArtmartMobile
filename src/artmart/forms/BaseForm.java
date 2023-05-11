@@ -1,5 +1,7 @@
 package artmart.forms;
 
+import artmart.forms.Event.Artist.AllEventsForm;
+import artmart.forms.Event.HomeEvent;
 import com.codename1.ui.*;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.FlowLayout;
@@ -73,6 +75,14 @@ public class BaseForm extends com.codename1.ui.Form {
             }
             f.show();
         });
+       tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
+            HomeEvent f = null;
+            try {
+                f = new HomeEvent();
+            } catch (IOException ex) {
+            }
+            f.show();
+        });  
 
                 tb.addMaterialCommandToSideMenu("Tags", FontImage.MATERIAL_CATCHING_POKEMON, e -> {
             getTagsForm f = null;

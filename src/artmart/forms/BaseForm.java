@@ -19,6 +19,7 @@ public class BaseForm extends com.codename1.ui.Form {
         taglineLabel.setAlignment(CENTER);
         taglineLabel.setVerticalAlignment(CENTER);
         Container taglineContainer = BorderLayout.south(taglineLabel);
+
         taglineContainer.setUIID("SideCommand");
 
         tb.addComponentToSideMenu(taglineContainer);

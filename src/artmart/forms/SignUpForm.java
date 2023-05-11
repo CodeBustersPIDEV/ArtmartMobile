@@ -12,6 +12,8 @@ import com.codename1.ui.ComboBox;
 import com.codename1.ui.PickerComponent;
 import com.codename1.ui.TextField;
 import com.codename1.ui.util.Resources;
+import com.codename1.ui.validation.LengthConstraint;
+import com.codename1.ui.validation.Validator;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
@@ -37,7 +39,13 @@ public class SignUpForm extends BaseForm {
         for (String role : roles) {
             roleField.addItem(role);
         }
-
+ Validator validator = new Validator();
+        validator.addConstraint(nomField, new LengthConstraint(1, "Nom is required"));
+                        validator.addConstraint(usernameField, new LengthConstraint(1, "Nom is required"));
+                                validator.addConstraint(pwdfield, new LengthConstraint(1, "Nom is required"));
+                                           validator.addConstraint(phoneNbrfield, new LengthConstraint(1, "Nom is required"));
+                                                validator.addConstraint(emailfield, new LengthConstraint(1, "Nom is required"));
+                                                         validator.addConstraint(roleField, new LengthConstraint(1, "Nom is required"));
         this
                 .add(nomField)
                 .add(usernameField)
@@ -50,6 +58,7 @@ public class SignUpForm extends BaseForm {
 
         submitButton.addActionListener(s
                 -> {
+                    if (validator.isValid()) {
             String nom = nomField.getText();
             String username = usernameField.getText();
             String email = emailfield.getText();
@@ -78,7 +87,7 @@ public class SignUpForm extends BaseForm {
         
 
            
-        }
+        }}
         );
         
         this.add(submitButton);

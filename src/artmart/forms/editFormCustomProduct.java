@@ -37,7 +37,7 @@ public class editFormCustomProduct extends BaseForm {
         TextField weightfield = new TextField(e.getWeight() + "", "weight");
       
         TextField clientfield = new TextField(e.getClient() + "", "client");
-    TextField materialfield = new TextField(e.getMaterial(), "materiel");
+        TextField materialfield = new TextField(e.getMaterial(), "materiel");
        TextField imagefield = new TextField(e.getImage(), "image");
         ComboBox<Category> categorieField = new ComboBox<>();
         List<Category> categories = serviceCat.getAllCategorie();
@@ -135,6 +135,7 @@ public class editFormCustomProduct extends BaseForm {
 applyButton.addActionListener(ee -> {
     CustomproductWebService service = new CustomproductWebService();
     service.applyCustomProduct(e.getCustomProductId()); // replace customProductId with the ID of the custom product you want to apply to
+    
               Dialog.show("Success", "Application successfully sent", "OK", null);
 });
 Container buttonContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));

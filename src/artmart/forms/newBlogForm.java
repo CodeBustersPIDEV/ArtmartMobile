@@ -49,8 +49,9 @@ public class newBlogForm extends BaseForm {
             newEvent.setTitle(title);
             newEvent.setContent(content);
             newEvent.setAuthor(author);
-            newEvent.setCategory(new BlogCategories(selectedCategorie.getId()));
+            newEvent.setCategory(selectedCategorie);
             BlogsWebService service = new BlogsWebService();
+//            System.out.println(newEvent.getCategory());
             service.newBlog(newEvent);
             getBlogsForm myForm = null;
             try {

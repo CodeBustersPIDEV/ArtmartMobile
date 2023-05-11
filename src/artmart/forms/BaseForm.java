@@ -74,6 +74,15 @@ public class BaseForm extends com.codename1.ui.Form {
             f.show();
         });
 
+                tb.addMaterialCommandToSideMenu("Tags", FontImage.MATERIAL_CATCHING_POKEMON, e -> {
+            getTagsForm f = null;
+            try {
+                f = new getTagsForm();
+            } catch (IOException ex) {
+            }
+            f.show();
+        });
+        
         tb.addMaterialCommandToSideMenu("Users list", FontImage.MATERIAL_PERSON, e -> {
             GetUserForm f = null;
             try {

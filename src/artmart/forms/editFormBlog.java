@@ -14,6 +14,7 @@ import artmart.service.BlogCategoriesWebService;
 import com.codename1.components.ImageViewer;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
+import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
@@ -21,6 +22,7 @@ import com.codename1.ui.TextArea;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.layouts.BoxLayout;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,47 +32,6 @@ public class editFormBlog extends BaseForm {
     BlogCategoriesWebService serviceCat = new BlogCategoriesWebService();
 
     public editFormBlog(Blogs e) throws ParseException, IOException {
-//        this.init(Resources.getGlobalResources());
-//        System.out.println(e);
-//        Label title = new Label(e.getTitle());        
-//        Label category = new Label(e.getCategory());
-//        Label content = new Label(e.getContent());       
-//        Label date = new Label(e.getPublishDate().toString());
-//
-//
-//        this.add(title);
-//
-//        this.add(category);
-//
-//        this.add(content);
-//
-//        this.add(date);
-//
-//        Button goToFormButton = new Button("Go back");
-//        goToFormButton.addActionListener(ee -> {
-//            getBlogsForm myForm = null;
-//            try {
-//                myForm = new getBlogsForm();
-//            } catch (IOException ex) {
-//            }
-//            myForm.show();
-//        });
-//        Button deleteButton = new Button("Delete");
-//        deleteButton.addActionListener(cc -> {
-//            getBlogsForm myForm = null;
-//            try {
-//                myForm = new getBlogsForm();
-//            } catch (IOException ex) {
-//            }
-//            service.delBlog(e);
-//            myForm.updateList();
-//            myForm.show();
-//        });
-//
-//
-//this.add(deleteButton);
-//this.add(goToFormButton);
-
         this.init(Resources.getGlobalResources());
         System.out.println(e);
         Label titleField = new Label(e.getTitle(), "Title");
@@ -83,16 +44,21 @@ public class editFormBlog extends BaseForm {
 //        for (BlogCategories categorie : categories) {
 //            categorieField.addItem(categorie);
 //        }
-// Create an EncodedImage to hold the image data
-        EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(400, 400, 0xffcccccc), true);
-        String filename = e.getImage().substring(e.getImage().lastIndexOf("/") + 1);
+        ImageViewer imageViewer = null;
+        URLImage imgUrl = null;
+        if (e.getImage().equals("N/A")) {
+            EncodedImage placeholder = EncodedImage.create(
+                    Display.getInstance().getResourceAsStream(getClass(), "/default-product.png")
+            );
+            imageViewer = new ImageViewer(placeholder);
+        } else {
+            EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(500, 500, 0xffcccccc), true);
+            String filename = e.getImage().substring(e.getImage().lastIndexOf("/") + 1);
 
-        System.out.println(filename);
-// Create a URLImage with the image URL and placeholder
-        URLImage imgUrl = URLImage.createToStorage(placeholder, filename, e.getImage());
-
-// Create an ImageViewer to display the image
-        ImageViewer imageViewer = new ImageViewer(imgUrl);
+            System.out.println(filename);
+            imgUrl = URLImage.createToStorage(placeholder, filename, e.getImage());
+            imageViewer = new ImageViewer(imgUrl);
+        }
         this.add(titleField);
 
         this.add(contentField);
@@ -125,20 +91,23 @@ public class editFormBlog extends BaseForm {
             getBlogsForm myForm = null;
             try {
                 myForm = new getBlogsForm();
+                myForm.updateList();
+                myForm.show();
             } catch (IOException ex) {
+                System.out.println(ex);
             }
-            myForm.updateList();
-            myForm.show();
         });
         Button deleteButton = new Button("Delete");
         deleteButton.addActionListener(cc -> {
-            getCustomProductForm myForm = null;
+            getBlogsForm myForm = null;
             try {
-                myForm = new getCustomProductForm();
+                myForm = new getBlogsForm();
+                service.delBlog(e);
+                myForm.updateList();
+                myForm.show();
             } catch (IOException ex) {
+                System.out.println(ex);
             }
-            service.delBlog(e);
-            myForm.show();
         });
 
         Container buttonContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));

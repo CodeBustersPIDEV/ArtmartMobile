@@ -13,6 +13,8 @@ import artmart.entities.Blogs;
 import artmart.entities.BlogCategories;
 import artmart.service.BlogCategoriesWebService;
 import artmart.service.BlogsWebService;
+import com.codename1.l10n.SimpleDateFormat;
+import com.codename1.ui.FontImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
@@ -29,11 +31,21 @@ public class getBlogsForm extends BaseForm {
     private TextField searchField;
 
     public getBlogsForm() throws IOException {
-        Button addButton = new Button("Add");
+        Button addButton = new Button(FontImage.MATERIAL_ADD);
+        Button resetBtn = new Button(FontImage.MATERIAL_RESTORE);
         addButton.addActionListener(ee -> {
             newBlogForm f = null;
             try {
                 f = new newBlogForm();
+            } catch (IOException ex) {
+            }
+            f.show();
+        });
+
+        resetBtn.addActionListener(ee -> {
+            getBlogsForm f = null;
+            try {
+                f = new getBlogsForm();
             } catch (IOException ex) {
             }
             f.show();
@@ -77,6 +89,7 @@ public class getBlogsForm extends BaseForm {
             updateList();
         });
         this.add(addButton);
+        this.add(resetBtn);
         addComponent(BorderLayout.south(sortButton));
         cpList = new MultiList(new DefaultListModel<>());
         add(cpList);
@@ -85,6 +98,7 @@ public class getBlogsForm extends BaseForm {
 
     private void getAllBlogs() {
         BlogsWebService service = new BlogsWebService();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 //        BlogCategoriesWebService serviceCat = new BlogCategoriesWebService();
         blogs = service.getAllBlogs();
 //        System.out.println(blogs);
@@ -92,14 +106,14 @@ public class getBlogsForm extends BaseForm {
         model.removeAll();
         for (Blogs b : blogs) {
 //        BlogCategories category =serviceCat.getOneBlogCategory(b.getCategory());
+            String newDateString = sdf.format(b.getPublishDate());
             Map<String, Object> item = new HashMap<>();
             item.put("Line1", b.getTitle());
             item.put("Line2", b.getCategory().getName());
             item.put("Line4", b.getAuthor());
-            item.put("Line3", b.getPublishDate());
+            item.put("Line3", newDateString);
             item.put("Line5", b.getId());
             model.addItem(item);
-//            System.out.println(b.getCategory().getName());
         }
         cpList.addActionListener(new ActionListener() {
             @Override
@@ -128,12 +142,14 @@ public class getBlogsForm extends BaseForm {
     public void updateList() {
         DefaultListModel<Map<String, Object>> model = (DefaultListModel<Map<String, Object>>) cpList.getModel();
         model.removeAll();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         for (Blogs b : blogs) {
+            String newDateString = sdf.format(b.getPublishDate());
             Map<String, Object> item = new HashMap<>();
             item.put("Line1", b.getTitle());
             item.put("Line2", b.getCategory().getName());
             item.put("Line4", b.getAuthor());
-            item.put("Line3", b.getPublishDate());
+            item.put("Line3", newDateString);
             item.put("Line5", b.getId());
 
             model.addItem(item);

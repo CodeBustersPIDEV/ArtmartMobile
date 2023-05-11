@@ -84,9 +84,9 @@ public class SignUpForm extends BaseForm {
         this.add(submitButton);
         Button goToFormButton = new Button("Go Back");
         goToFormButton.addActionListener(e -> {
-            GetUserForm myForm = null;
+            SignInForm myForm = null;
             try {
-                myForm = new GetUserForm();
+                myForm = new SignInForm(Resources.getGlobalResources());
             } catch (IOException ex) {
             }
             myForm.show();

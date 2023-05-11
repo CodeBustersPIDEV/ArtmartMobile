@@ -41,17 +41,7 @@ public class GetUserForm extends BaseForm {
 
     public GetUserForm() throws IOException {
         this.init(Resources.getGlobalResources());
-        Button signUp = new Button("SignUp");
-
-        signUp.addActionListener(e -> {
-            SignUpForm myForm = null;
-            try {
-                myForm = new SignUpForm();
-            } catch (IOException ex) {
-
-            }
-            myForm.show();
-        });
+      
         searchField = new TextField("", "Enter Username");
         Button searchButton = new Button("Search");
         searchButton.addActionListener(e -> {
@@ -91,7 +81,6 @@ public class GetUserForm extends BaseForm {
         });
         addComponent(BorderLayout.south(sortButton));
 
-        this.add(signUp);
         uList = new MultiList(new DefaultListModel<>());
         add(uList);
         getAllUs();

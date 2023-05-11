@@ -85,6 +85,13 @@ taglineContainer.setUIID("SideCommand");
             f.show();
         });
 
-  
+  tb.addMaterialCommandToSideMenu("SignIn", FontImage.MATERIAL_LIST, e -> {
+            SignInForm f = null;
+            try {
+                f = new SignInForm(theme);
+            } catch (IOException ex) {
+            }
+            f.show();
+        });
     }
 }

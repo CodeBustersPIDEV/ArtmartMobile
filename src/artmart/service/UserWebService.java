@@ -12,10 +12,18 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import artmart.entities.User;
+import artmart.forms.GetUserForm;
+import com.codename1.io.JSONParser;
 import com.codename1.l10n.DateFormat;
-import com.codename1.l10n.ParseException;
 import com.codename1.l10n.SimpleDateFormat;
-import java.util.Date;
+import com.codename1.ui.TextField;
+import com.codename1.ui.util.Resources;
+import java.util.Map;
+import artmart.forms.SessionManager;
+import com.codename1.ui.Dialog;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  *
@@ -29,6 +37,14 @@ public class UserWebService {
     public UserWebService() {
         connection = new ConnectionRequest();
         connection.setInsecure(true);
+    }
+    public static UserWebService instance = null;
+
+    public static UserWebService getInstance() {
+        if (instance == null) {
+            instance = new UserWebService();
+        }
+        return instance;
     }
 
     public List<User> getAllU() {
@@ -106,4 +122,48 @@ public class UserWebService {
         NetworkManager.getInstance().addToQueue(connection);
     }
 
-}
+   public void signin(TextField username, TextField password, Resources rs) {
+
+    connection = new ConnectionRequest() {
+        @Override
+        protected void readResponse(InputStream input) throws IOException {
+    JSONParser parser = new JSONParser();
+    Map<String, Object> response = parser.parseJSON(new InputStreamReader(input));
+
+    if (response != null && response.containsKey("success")) {
+       String successStr = (String) response.get("success");
+boolean success = Boolean.parseBoolean(successStr);
+
+        if (success) {
+             GetUserForm f = null;
+            try {
+                f = new GetUserForm();
+            } catch (IOException ex) {
+            }
+            f.show();
+        } else {
+            // Handle failed login
+            if (response.containsKey("message")) {
+                String errorMessage = (String) response.get("message");
+                Dialog.show("Login Failed", errorMessage, "OK", null);
+            } else {
+                Dialog.show("Login Failed", "Unknown error occurred", "OK", null);
+            }
+        }
+    } else {
+        Dialog.show("Login Failed", "Invalid server response", "OK", null);
+    }}};
+
+    // Set the URL for the login request
+    String loginUrl = BASE_URL + "/user/signin"+"?username="+username.getText().toString()+
+                "&password="+password.getText().toString(); // Replace with your authentication endpoint
+    this.connection.setUrl(loginUrl);
+    this.connection.setHttpMethod("POST");
+
+    // Add the username and password as request parameters
+    connection.addArgument("username", username.getText());
+    connection.addArgument("password", password.getText());
+
+    // Send the login request
+    NetworkManager.getInstance().addToQueue(this.connection);
+}}

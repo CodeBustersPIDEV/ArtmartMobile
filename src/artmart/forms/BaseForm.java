@@ -77,31 +77,32 @@ public class BaseForm extends com.codename1.ui.Form {
             f.show();
         });
 
-        
-                tb.addMaterialCommandToSideMenu("Tags", FontImage.MATERIAL_LIST, e -> {
+        tb.addMaterialCommandToSideMenu("Tags", FontImage.MATERIAL_LIST, e -> {
             getTagsForm f = null;
             try {
                 f = new getTagsForm();
-
-
-        tb.addMaterialCommandToSideMenu("Users list", FontImage.MATERIAL_LIST, e -> {
-            GetUserForm f = null;
-            try {
-                f = new GetUserForm();
             } catch (IOException ex) {
             }
             f.show();
         });
+            tb.addMaterialCommandToSideMenu("Users list", FontImage.MATERIAL_LIST, e -> {
+                GetUserForm f = null;
+                try {
+                    f = new GetUserForm();
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
 
-        tb.addMaterialCommandToSideMenu("SignIn", FontImage.MATERIAL_LIST, e -> {
-            SignInForm f = null;
-            try {
-                f = new SignInForm(theme);
+            tb.addMaterialCommandToSideMenu("SignIn", FontImage.MATERIAL_LIST, e -> {
+                SignInForm f = null;
+                try {
+                    f = new SignInForm(theme);
 
-            } catch (IOException ex) {
-            }
-            f.show();
-        });
-  
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
+
+        }
     }
-}

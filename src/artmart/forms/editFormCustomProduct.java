@@ -16,6 +16,8 @@ import artmart.service.CustomproductWebService;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.validation.LengthConstraint;
+import com.codename1.ui.validation.Validator;
 import java.io.IOException;
 
 public class editFormCustomProduct extends BaseForm {
@@ -55,11 +57,20 @@ public class editFormCustomProduct extends BaseForm {
      
        this.add(imagefield);
         this.add(categorieField);
-
+     Validator validator = new Validator();
+        validator.addConstraint(nomField, new LengthConstraint(1, "Nom is required"));
+             validator.addConstraint(dimfield, new LengthConstraint(1, "dimmension is required"));
+                    validator.addConstraint(weightfield, new LengthConstraint(1, "weight is required"));
+                           validator.addConstraint(clientfield, new LengthConstraint(1, "client is required"));
+                                  validator.addConstraint(materialfield, new LengthConstraint(1, "material is required"));
+                                      validator.addConstraint(imagefield, new LengthConstraint(1, "image is required"));
+                                          validator.addConstraint(categorieField, new LengthConstraint(1, "category is required"));
+                                          validator.addConstraint(descriptifField, new LengthConstraint(1, "description is required"));
         Button submitButton = new Button("Submit");
         
         
         submitButton.addActionListener(s-> {
+                 if (validator.isValid()) {
             String nom = nomField.getText();
             String descriptif = descriptifField.getText();
             String dim = dimfield.getText();
@@ -86,7 +97,7 @@ public class editFormCustomProduct extends BaseForm {
             } catch (IOException ex) {
             }
             myForm.show();
-        }
+        }}
         );
         Button goToFormButton = new Button("Go back");
         goToFormButton.addActionListener(ee -> {

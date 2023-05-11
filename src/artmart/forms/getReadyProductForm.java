@@ -55,8 +55,9 @@ public class getReadyProductForm extends BaseForm {
             }
             f.show();
         });
-        searchField = new TextField("", "Enter Ready Product Name");
+        searchField = new TextField("", "Enter Product Name");
         Button searchButton = new Button("Search");
+        searchField.setColumns(14);
 
         searchButton.addActionListener(e -> {
             try {

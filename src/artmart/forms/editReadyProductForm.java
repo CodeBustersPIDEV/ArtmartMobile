@@ -100,6 +100,7 @@ public class editReadyProductForm extends BaseForm {
             String dim = dimfield.getText();
             float weight = Float.parseFloat(weightfield.getText());
             int user = Integer.parseInt(userfield.getText());
+            int price = Integer.parseInt(pricefield.getText());
             String image = imagefield.getText();
             String material = materialfield.getText();
             Category selectedCategorie = categorieField.getSelectedItem();
@@ -113,6 +114,7 @@ public class editReadyProductForm extends BaseForm {
             newEvent.setMaterial(material);
             newEvent.setImage(image);
             newEvent.setUser(user);
+            newEvent.setPrice(price);
             newEvent.setCategoryId(new Category(selectedCategorie.getCategoriesId()));
             service.editReadyProduct(newEvent);
             getReadyProductForm myForm = null;

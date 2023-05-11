@@ -44,10 +44,27 @@ public class getProductReviewsForm extends BaseForm {
 
     ProductReview pr = new ProductReview();
     ProductReviewWebService serviceReviews = new ProductReviewWebService();
+    ReadyProductWebService serviceReady = new ReadyProductWebService();
 
     public getProductReviewsForm(int id) throws IOException {
         this.init(Resources.getGlobalResources());
         float averageRatings = serviceReviews.getAverageRatings(id);
+
+        Button goToFormButton = new Button("Go back");
+        goToFormButton.addActionListener(ee -> {
+            editReadyProductForm myForm = null;
+            try {
+                ReadyProduct selectedProduct = serviceReady.getReadyProductById(id);
+                myForm = new editReadyProductForm(selectedProduct);
+            } catch (IOException ex) {
+            } catch (ParseException ex) {
+                
+            }
+            myForm.show();
+        });
+        Container buttonContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
+        buttonContainer.add(goToFormButton);
+        this.add(buttonContainer);
 
         Label averageRatingsLabel = new Label("Average Ratings: " + averageRatings + " /10");
         averageRatingsLabel.getUnselectedStyle().setFgColor(0xe35d59);

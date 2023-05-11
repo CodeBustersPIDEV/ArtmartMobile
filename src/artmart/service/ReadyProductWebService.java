@@ -98,7 +98,7 @@ public class ReadyProductWebService {
         connection.addArgument("price", e.getPrice() + "");
         connection.addArgument("categoryId", e.getCategoryId().getCategoriesId() + "");
 
-        System.out.println(BASE_URL + "/readyproduct/" + e.getCategoryId());
+        System.out.println(BASE_URL + "/readyproduct/" + e.getReadyProductId());
         NetworkManager.getInstance().addToQueue(connection);
     }
 
@@ -108,6 +108,41 @@ public class ReadyProductWebService {
         this.connection.setUrl(BASE_URL + "/readyproduct/" + e.getReadyProductId());
         this.connection.setHttpMethod("DELETE");
         NetworkManager.getInstance().addToQueue(connection);
+    }
+
+    public ReadyProduct getReadyProductById(int id) {
+        String url = BASE_URL + "/readyproduct/" + id;
+        this.connection.setUrl(url);
+        this.connection.setHttpMethod("GET");
+        final ReadyProduct[] product = {null};
+
+        this.connection.addResponseListener(e -> {
+            if (this.connection.getResponseCode() == 200) {
+                String response = new String(this.connection.getResponseData());
+                try {
+                    JSONObject jsonProduct = new JSONObject(response);
+                    product[0] = new ReadyProduct(
+                            jsonProduct.getInt("readyProductId"),
+                            jsonProduct.getString("product"),
+                            jsonProduct.getString("product1"),
+                            jsonProduct.getString("product2"),
+                            jsonProduct.getFloat("product3"),
+                            jsonProduct.getString("product4"),
+                            jsonProduct.getString("product5"),
+                            jsonProduct.getInt("user"),
+                            jsonProduct.getInt("product6"),
+                            new Category(jsonProduct.getInt("product7"))
+                    );
+                } catch (JSONException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+                System.out.println("Ready Product not found !");
+            }
+        });
+
+        NetworkManager.getInstance().addToQueueAndWait(this.connection);
+        return product[0];
     }
 
 }

@@ -5,6 +5,8 @@ import com.codename1.ui.TextField;
 import com.codename1.ui.util.Resources;
 import artmart.entities.Category;
 import artmart.service.CategorieWebService;
+import com.codename1.ui.validation.LengthConstraint;
+import com.codename1.ui.validation.Validator;
 import java.io.IOException;
 
 public class newCategorieForm extends BaseForm {
@@ -14,12 +16,15 @@ public class newCategorieForm extends BaseForm {
         TextField nomField = new TextField("", "Nom");
  
         this.add(nomField);
+     Validator validator = new Validator();
+        validator.addConstraint(nomField, new LengthConstraint(1, "Nom is required"));
 
 
         Button submitButton = new Button("Submit");
 
         submitButton.addActionListener(s
                 -> {
+                 if (validator.isValid()) {
             String nom = nomField.getText();
 
             Category newCat = new Category();
@@ -33,7 +38,7 @@ public class newCategorieForm extends BaseForm {
             } catch (IOException ex) {
             }
             myForm.show();
-        }
+        }}
         );
         this.add(submitButton);
         Button goToFormButton = new Button("Go Back");

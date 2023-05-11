@@ -4,11 +4,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/ghzay/OneDrive/Documents/GitHub/ArtmartMobile/src/artmart/forms/Event/AllEventsForm.java</file>
-            <file>file:/C:/Users/ghzay/OneDrive/Documents/GitHub/ArtmartMobile/src/artmart/forms/Event/EditEventForm.java</file>
-            <file>file:/C:/Users/ghzay/OneDrive/Documents/GitHub/ArtmartMobile/src/artmart/entities/Event.java</file>
-            <file>file:/C:/Users/ghzay/OneDrive/Documents/GitHub/ArtmartMobile/src/artmart/forms/Event/AddEventForm.java</file>
-            <file>file:/C:/Users/ghzay/OneDrive/Documents/GitHub/ArtmartMobile/src/artmart/forms/BaseForm.java</file>
+            <file>file:/C:/xampp/htdocs/ArtmartMobile/src/artmart/forms/BaseForm.java</file>
+            <file>file:/C:/xampp/htdocs/ArtmartMobile/src/artmart/forms/getReadyProductForm.java</file>
+            <file>file:/C:/xampp/htdocs/ArtmartMobile/src/artmart/forms/getProductReviewsForm.java</file>
+            <file>file:/C:/xampp/htdocs/ArtmartMobile/src/artmart/service/ProductReviewWebService.java</file>
+            <file>file:/C:/xampp/htdocs/ArtmartMobile/src/artmart/forms/editReadyProductForm.java</file>
+            <file>file:/C:/xampp/htdocs/ArtmartMobile/src/artmart/entities/ProductReview.java</file>
+            <file>file:/C:/xampp/htdocs/ArtmartMobile/src/artmart/forms/getCustomProductForm.java</file>
         </group>
     </open-files>
 </project-private>

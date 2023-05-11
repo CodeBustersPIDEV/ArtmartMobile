@@ -75,7 +75,7 @@ public class BaseForm extends com.codename1.ui.Form {
             }
             f.show();
         });
-       tb.addMaterialCommandToSideMenu("Events", FontImage.MATERIAL_LIST, e -> {
+       tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
             HomeEvent f = null;
             try {
                 f = new HomeEvent();

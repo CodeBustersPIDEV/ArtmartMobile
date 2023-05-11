@@ -14,6 +14,7 @@ import com.codename1.components.SpanLabel;
 import com.codename1.l10n.ParseException;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
+import com.codename1.ui.Display;
 import com.codename1.ui.Label;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
@@ -38,30 +39,52 @@ public class ShowEventForm extends BaseForm {
     public ShowEventForm(Event e) throws ParseException, IOException {
         this.init(Resources.getGlobalResources());
         System.out.println(e);
-        SpanLabel nameLabel = new SpanLabel(e.getName());
-        SpanLabel locationLabel = new SpanLabel(e.getLocation());
-        SpanLabel typeLabel = new SpanLabel(e.getType());
-        SpanLabel descriptionLabel = new SpanLabel(e.getDescription());
-        SpanLabel entryfeeLabel = new SpanLabel(e.getEntryfee() + "");
-        SpanLabel capacityLabel = new SpanLabel(e.getCapacity() + "");
-        SpanLabel startdateLabel = new SpanLabel(e.getStartdate());
-        SpanLabel enddateLabel = new SpanLabel(e.getEnddate());
-        SpanLabel imageLabel = new SpanLabel(e.getImage());
-        SpanLabel statusLabel = new SpanLabel(e.getStatus());
-        SpanLabel userLabel = new SpanLabel(e.getUser() + "");
+        Label nameLabel = new Label("Event Name: " + e.getName());
+        Label locationLabel = new Label("Location: " + e.getLocation());
+        Label typeLabel = new Label("Event Type: " + e.getType());
+        Label descriptionLabel = new Label("Description: " + e.getDescription());
+        Label entryfeeLabel = new Label("Entry Fee: " + e.getEntryfee() + "");
+        Label capacityLabel = new Label("Capacity: " + e.getCapacity() + "");
+        Label startdateLabel = new Label("Start Date: " + e.getStartdate());
+        Label enddateLabel = new Label("End Date: " + e.getEnddate());
+        Label imageLabel = new Label("Image: " + e.getImage());
+        Label statusLabel = new Label("Status: " + e.getStatus());
+        Label userLabel = new Label("User: " + e.getUser() + "");
+
+// Set up label properties for text wrapping
+        descriptionLabel.setUIID("MultiLineLabel");
+        descriptionLabel.getAllStyles().setPadding(LEFT, 5);
+        descriptionLabel.getAllStyles().setPadding(RIGHT, 5);
+        descriptionLabel.getAllStyles().setPadding(TOP, 10);
+        descriptionLabel.getAllStyles().setPadding(BOTTOM, 10);
+// Get the current screen width
+int screenWidth = Display.getInstance().getDisplayWidth();
+
+// Set the preferred width of the label to be 500 pixels
+int preferredWidth = 500;
+if (screenWidth < preferredWidth) {
+    preferredWidth = screenWidth;
+}
+descriptionLabel.setWidth(preferredWidth);
+
+// Set the UIID to "MultiLine" to enable text wrapping
+descriptionLabel.setUIID("MultiLine");
+
+// Set up label properties for text wrapping
+        imageLabel.setUIID("MultiLineLabel");
 
         Container container = BoxLayout.encloseY().addAll(
-            nameLabel,
-            locationLabel,
-            typeLabel,
-            descriptionLabel,
-            entryfeeLabel,
-            capacityLabel,
-            startdateLabel,
-            enddateLabel,
-            imageLabel,
-            statusLabel,
-            userLabel
+                nameLabel,
+                locationLabel,
+                typeLabel,
+                descriptionLabel,
+                entryfeeLabel,
+                capacityLabel,
+                startdateLabel,
+                enddateLabel,
+                imageLabel,
+                statusLabel,
+                userLabel
         );
         addComponent(container);
 

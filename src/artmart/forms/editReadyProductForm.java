@@ -10,17 +10,23 @@ import artmart.entities.ReadyProduct;
 import artmart.service.CategorieWebService;
 import artmart.service.ProductReviewWebService;
 import artmart.service.ReadyProductWebService;
+import com.codename1.components.ImageViewer;
 import com.codename1.l10n.ParseException;
 import com.codename1.ui.Button;
 import com.codename1.ui.ComboBox;
 import com.codename1.ui.Container;
 import com.codename1.ui.Label;
 import com.codename1.ui.Dialog;
+import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Font;
+import com.codename1.ui.Image;
 import com.codename1.ui.TextField;
+import com.codename1.ui.URLImage;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.Border;
 import com.codename1.ui.util.Resources;
+import com.codename1.ui.validation.LengthConstraint;
+import com.codename1.ui.validation.Validator;
 import java.io.IOException;
 import java.util.List;
 
@@ -34,6 +40,28 @@ public class editReadyProductForm extends BaseForm {
     ReadyProductWebService service = new ReadyProductWebService();
 
     public editReadyProductForm(ReadyProduct e) throws ParseException, IOException {
+        Label headingLabel = new Label("Edit Product");
+        headingLabel.getUnselectedStyle().setFgColor(0xe35d59);
+        headingLabel.getUnselectedStyle().setFont(Font.createSystemFont(Font.FACE_MONOSPACE, Font.STYLE_BOLD, Font.SIZE_LARGE));
+
+        Container headContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
+        headContainer.add(headingLabel);
+        this.add(headContainer);
+        
+        Button viewReviewsButton = new Button("Check Reviews");
+        viewReviewsButton.addActionListener(evt -> {
+            try {
+                getProductReviewsForm reviewsForm = new getProductReviewsForm(e.getReadyProductId());
+                reviewsForm.show();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+       
+        Container checkContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
+        checkContainer.add(viewReviewsButton);
+        this.add(checkContainer);
+
         this.init(Resources.getGlobalResources());
         System.out.println(e);
         TextField nameField = new TextField(e.getName(), "name");
@@ -84,45 +112,63 @@ public class editReadyProductForm extends BaseForm {
         this.add(matLabel);
         this.add(materialfield);
 
-        Label imageLabel = new Label("Image");
-        this.add(imageLabel);
+        EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(400, 400, 0xffcccccc), true);
+        String filename = e.getImage().substring(e.getImage().lastIndexOf("/") + 1);
+
+        System.out.println(filename);
+        URLImage imgUrl = URLImage.createToStorage(placeholder, filename, e.getImage());
+
+        ImageViewer imageViewer = new ImageViewer(imgUrl);
+        this.add(imageViewer);
         this.add(imagefield);
 
         Label catLabel = new Label("Category");
         this.add(catLabel);
         this.add(categorieField);
 
+        Validator validator = new Validator();
+        validator.addConstraint(nameField, new LengthConstraint(1, "Name is required"));
+        validator.addConstraint(dimfield, new LengthConstraint(1, "Dimmension is required"));
+        validator.addConstraint(weightfield, new LengthConstraint(1, "Weight is required"));
+        validator.addConstraint(userfield, new LengthConstraint(1, "User is required"));
+        validator.addConstraint(materialfield, new LengthConstraint(1, "Material is required"));
+        validator.addConstraint(imagefield, new LengthConstraint(1, "Image is required"));
+        validator.addConstraint(categorieField, new LengthConstraint(1, "Category is required"));
+        validator.addConstraint(descriptifField, new LengthConstraint(1, "Description is required"));
         Button submitButton = new Button("Submit");
 
         submitButton.addActionListener(s -> {
-            String nom = nameField.getText();
-            String descriptif = descriptifField.getText();
-            String dim = dimfield.getText();
-            float weight = Float.parseFloat(weightfield.getText());
-            int user = Integer.parseInt(userfield.getText());
-            int price = Integer.parseInt(pricefield.getText());
-            String image = imagefield.getText();
-            String material = materialfield.getText();
-            Category selectedCategorie = categorieField.getSelectedItem();
+            if (validator.isValid()) {
+                String nom = nameField.getText();
+                String descriptif = descriptifField.getText();
+                String dim = dimfield.getText();
+                float weight = Float.parseFloat(weightfield.getText());
+                int user = Integer.parseInt(userfield.getText());
+                int price = Integer.parseInt(pricefield.getText());
+                String image = imagefield.getText();
+                String material = materialfield.getText();
+                Category selectedCategorie = categorieField.getSelectedItem();
 
-            ReadyProduct newEvent = new ReadyProduct();
-            newEvent.setReadyProductId(e.getReadyProductId());
-            newEvent.setName(nom);
-            newEvent.setDescription(descriptif);
-            newEvent.setDimensions(dim);
-            newEvent.setWeight(weight);
-            newEvent.setMaterial(material);
-            newEvent.setImage(image);
-            newEvent.setUser(user);
-            newEvent.setPrice(price);
-            newEvent.setCategoryId(new Category(selectedCategorie.getCategoriesId()));
-            service.editReadyProduct(newEvent);
-            getReadyProductForm myForm = null;
-            try {
-                myForm = new getReadyProductForm();
-            } catch (IOException ex) {
+                ReadyProduct newEvent = new ReadyProduct();
+                newEvent.setReadyProductId(e.getReadyProductId());
+                newEvent.setName(nom);
+                newEvent.setDescription(descriptif);
+                newEvent.setDimensions(dim);
+                newEvent.setWeight(weight);
+                newEvent.setMaterial(material);
+
+                newEvent.setImage(image);
+                newEvent.setUser(user);
+                newEvent.setPrice(price);
+                newEvent.setCategoryId(new Category(selectedCategorie.getCategoriesId()));
+                service.editReadyProduct(newEvent);
+                getReadyProductForm myForm = null;
+                try {
+                    myForm = new getReadyProductForm();
+                } catch (IOException ex) {
+                }
+                myForm.show();
             }
-            myForm.show();
         }
         );
         Button goToFormButton = new Button("Go back");
@@ -134,17 +180,6 @@ public class editReadyProductForm extends BaseForm {
             }
             myForm.show();
         });
-
-        Button viewReviewsButton = new Button("Check Reviews");
-        viewReviewsButton.addActionListener(evt -> {
-            try {
-                getProductReviewsForm reviewsForm = new getProductReviewsForm(e.getReadyProductId());
-                reviewsForm.show();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        });
-        this.add(viewReviewsButton);
 
         Button deleteButton = new Button("Delete");
         deleteButton.addActionListener(cc -> {

@@ -22,11 +22,8 @@ public class BaseForm extends com.codename1.ui.Form {
         taglineContainer.setUIID("SideCommand");
 
         tb.addComponentToSideMenu(taglineContainer);
+
         tb.addMaterialCommandToSideMenu("ArtMart", FontImage.MATERIAL_HOME, e -> {
-
-        });
-
-        tb.addMaterialCommandToSideMenu("Ready Products", FontImage.MATERIAL_INVENTORY, e -> {
             getReadyProductForm f = null;
             try {
                 f = new getReadyProductForm();
@@ -35,7 +32,7 @@ public class BaseForm extends com.codename1.ui.Form {
             f.show();
         });
 
-        tb.addMaterialCommandToSideMenu("Custom Products", FontImage.MATERIAL_LIST, e -> {
+        tb.addMaterialCommandToSideMenu("Custom Products", FontImage.MATERIAL_INVENTORY, e -> {
             getCustomProductForm f = null;
             try {
                 f = new getCustomProductForm();

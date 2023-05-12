@@ -1,5 +1,6 @@
 package artmart.forms;
 
+import com.codename1.io.Storage;
 import com.codename1.ui.*;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.util.Resources;
@@ -82,6 +83,7 @@ public class BaseForm extends com.codename1.ui.Form {
                 }
                 f.show();
             });
+<<<<<<< HEAD
 tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
             HomeEvent f = null;
             try {
@@ -123,16 +125,7 @@ tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
             }
             f.show();
         });
->>>>>>> parent of 83d4883 (Merge remote-tracking branch 'origin/gastonFakeBodyBuilder' into Meher)
 
-                tb.addMaterialCommandToSideMenu("Tags", FontImage.MATERIAL_CATCHING_POKEMON, e -> {
-            getTagsForm f = null;
-            try {
-                f = new getTagsForm();
-            } catch (IOException ex) {
-            }
-            f.show();
-        });
             tb.addMaterialCommandToSideMenu("Users list", FontImage.MATERIAL_LIST, e -> {
                 GetUserForm f = null;
                 try {

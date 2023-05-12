@@ -8,9 +8,7 @@ public class BlogCategories {
     public BlogCategories() {
 
     }
-public BlogCategories(int id) {
-        this.id = id;
-    }
+
     public BlogCategories(int id, String name) {
         this.id = id;
         this.name = name;

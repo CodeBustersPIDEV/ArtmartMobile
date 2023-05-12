@@ -12,24 +12,14 @@ import com.codename1.ui.util.Resources;
 import artmart.entities.BlogCategories;
 import artmart.service.BlogCategoriesWebService;
 import artmart.service.CategorieWebService;
-import com.codename1.ui.Button;
 import java.io.IOException;
+
 
 public class getBlogCategoryForm extends BaseForm {
 
     private MultiList eventList;
 
     public getBlogCategoryForm() throws IOException {
-        Button addButton = new Button("Add");
-        addButton.addActionListener(ee -> {
-            newBlogCategoryForm f = null;
-            try {
-                f = new newBlogCategoryForm();
-            } catch (IOException ex) {
-            }
-            f.show();
-        });
-        this.add(addButton);
         this.init(Resources.getGlobalResources());
         eventList = new MultiList(new DefaultListModel<>());
         add(eventList);
@@ -44,7 +34,7 @@ public class getBlogCategoryForm extends BaseForm {
         for (BlogCategories c : cats) {
             Map<String, Object> item = new HashMap<>();
             item.put("Line1", c.getName());
-
+        
             item.put("Line3", c.getId());
             model.addItem(item);
         }
@@ -71,16 +61,16 @@ public class getBlogCategoryForm extends BaseForm {
         });
 
     }
-
-    public void updateList() {
-        BlogCategoriesWebService service = new BlogCategoriesWebService();
+    
+     public void updateList() {
+                 BlogCategoriesWebService service = new BlogCategoriesWebService();
         DefaultListModel<Map<String, Object>> model = (DefaultListModel<Map<String, Object>>) eventList.getModel();
         model.removeAll();
-        List<BlogCategories> cats = service.getAllCategorie();
+                List<BlogCategories> cats = service.getAllCategorie();
         for (BlogCategories c : cats) {
             Map<String, Object> item = new HashMap<>();
             item.put("Line1", c.getName());
-
+        
             item.put("Line3", c.getId());
 
             model.addItem(item);

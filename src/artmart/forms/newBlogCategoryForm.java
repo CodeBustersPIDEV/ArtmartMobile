@@ -28,12 +28,6 @@ public class newBlogCategoryForm extends BaseForm {
       
             BlogCategoriesWebService service = new BlogCategoriesWebService();
             service.newCategorie(newCat);
-            getBlogCategoryForm myForm = null;
-            try {
-                myForm = new getBlogCategoryForm();
-            } catch (IOException ex) {
-            }
-            myForm.show();
         }
         );
         this.add(submitButton);

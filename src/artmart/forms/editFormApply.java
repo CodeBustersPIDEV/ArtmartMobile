@@ -49,7 +49,7 @@ goToFormButton.addActionListener(ee -> {
     myForm.show();
 });
 
-Button applyButton = new Button("Cancel");
+Button applyButton = new Button("done");
 applyButton.addActionListener(ee -> {
     ApplyWebService service = new ApplyWebService();
     service.applyCustomProduct(e.getApplyId()); 

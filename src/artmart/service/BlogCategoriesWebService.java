@@ -34,7 +34,6 @@ public class BlogCategoriesWebService {
                         BlogCategories categorie = new BlogCategories(
                                 jsonEvent.getInt("categoriesId"),
                                 jsonEvent.getString("name")
-                       
                         );
                         categories.add(categorie);
                     }
@@ -48,33 +47,58 @@ public class BlogCategoriesWebService {
         return categories;
     }
 
+    public BlogCategories getOneBlogCategory(int id) {
+        this.connection.setUrl(BASE_URL + "/OneBlogCategory/" + id);
+        this.connection.setHttpMethod("GET");
+        BlogCategories category = new BlogCategories();
+        this.connection.addResponseListener(e -> {
+            if (this.connection.getResponseCode() == 200) {
+                String response = new String(this.connection.getResponseData());
+                try {
+                    JSONArray jsonEvents = new JSONArray(response);
+                    for (int i = 0; i < jsonEvents.length(); i++) {
+                        JSONObject jsonEvent = jsonEvents.getJSONObject(i);
+                        if (jsonEvent.getInt("categoryId") == id) {
+                            category.setId(jsonEvent.getInt("categoryId"));
+                            category.setName(jsonEvent.getString("name"));
+                        }
+                    }
+                } catch (JSONException ex) {
+                    ex.printStackTrace();
+                }
+            } else {
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(this.connection);
+        return category;
+    }
+
     public void newCategorie(BlogCategories c) {
         connection = new ConnectionRequest();
         connection.setInsecure(true);
         this.connection.setUrl(BASE_URL + "/BlogCategory/add");
         this.connection.setHttpMethod("POST");
-        
+
         connection.addArgument("name", c.getName());
-    
 
         NetworkManager.getInstance().addToQueue(connection);
     }
-    
+
     public void editCategorie(BlogCategories c) {
         connection = new ConnectionRequest();
         connection.setInsecure(true);
-        this.connection.setUrl(BASE_URL + "/BlogCategory/"+c.getId());
+        this.connection.setUrl(BASE_URL + "/BlogCategory/" + c.getId());
         this.connection.setHttpMethod("PUT");
-        
+
         connection.addArgument("name", c.getName());
-  
+
         NetworkManager.getInstance().addToQueue(connection);
     }
-    
+
     public void delCategorie(BlogCategories c) {
         connection = new ConnectionRequest();
         connection.setInsecure(true);
-        this.connection.setUrl(BASE_URL + "/BlogCategoryDel/"+c.getId());
+        this.connection.setUrl(BASE_URL + "/BlogCategoryDel/" + c.getId());
         this.connection.setHttpMethod("DELETE");
         NetworkManager.getInstance().addToQueue(connection);
     }

@@ -17,9 +17,10 @@ public class Blogs {
     private String content;
     private Date publishDate;
     private float rating;
-    private String Category;
+    private BlogCategories Category;
     private int nb_views;
     private int author;
+    private String image; 
 
     public Blogs() {
     }
@@ -41,25 +42,31 @@ public class Blogs {
         this.author = author;
     }
 
-    public Blogs(int id, String title, String content, Date publishDate, float rating, int nb_views, int author) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-        this.publishDate = publishDate;
-        this.rating = rating;
-        this.nb_views = nb_views;
-        this.author = author;
-    }
+//    public Blogs(int id, String title, String content, Date publishDate, float rating, int nb_views, int author) {
+//        this.id = id;
+//        this.title = title;
+//        this.content = content;
     
-        public Blogs(int id, String title, String content, Date publishDate,float rating, int nb_views,  String category,int author) {
+        public void setImage(String image) {
+        this.image = image;
+    }
+
+//        this.publishDate = publishDate;
+//        this.rating = rating;
+//        this.nb_views = nb_views;
+//        this.author = author;
+//    }
+    public Blogs(int id, String title, String content, Date publishDate, float rating, int nb_views, BlogCategories category, int author,String image) {
         this.id = id;
         this.title = title;
         this.content = content;
-        this.Category=category;
         this.publishDate = publishDate;
         this.rating = rating;
         this.nb_views = nb_views;
-        this.author = author;
+        this.Category=category;
+        this.author = author;      
+        this.image = image;
+
     }
         
 
@@ -82,7 +89,7 @@ public class Blogs {
         return title;
     }
     
-     public String getCategory() {
+     public BlogCategories getCategory() {
         return Category;
     }
 
@@ -110,7 +117,7 @@ public class Blogs {
         this.title = title;
     }
     
-    public void setCategory(String category) {
+    public void setCategory(BlogCategories category) {
         this.Category = category;
     }
 
@@ -138,6 +145,14 @@ public class Blogs {
     public void setNb_views(int nb_views) {
         this.nb_views = nb_views;
     }
+    
+        public String getImage() {
+        return image;
+    }
+
+//    public void setImage(String image) {
+//        this.image = image;
+//    }
 
 }
 

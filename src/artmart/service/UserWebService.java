@@ -19,12 +19,12 @@ import com.codename1.l10n.SimpleDateFormat;
 import com.codename1.ui.TextField;
 import com.codename1.ui.util.Resources;
 import java.util.Map;
-import artmart.forms.SessionManager;
 import com.codename1.ui.Dialog;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
+import artmart.forms.SessionManager;
+ 
 /**
  *
  * @author 21697
@@ -108,7 +108,7 @@ public class UserWebService {
         connection = new ConnectionRequest();
         connection.setInsecure(true);
         this.connection.setUrl(BASE_URL + "/user/edit/" + e.getUser_id());
-        this.connection.setHttpMethod("PUT");
+            this.connection.setHttpMethod("POST");
 
         connection.addArgument("name", e.getName());
         connection.addArgument("username", e.getUsername());
@@ -129,12 +129,17 @@ public class UserWebService {
         protected void readResponse(InputStream input) throws IOException {
     JSONParser parser = new JSONParser();
     Map<String, Object> response = parser.parseJSON(new InputStreamReader(input));
-
+int id;
     if (response != null && response.containsKey("success")) {
        String successStr = (String) response.get("success");
 boolean success = Boolean.parseBoolean(successStr);
 
         if (success) {
+            
+            double data =(double)response.get("data");
+            id=(int)data;
+            SessionManager.getInstance().setUserId(id);
+            System.out.println(id);
              GetUserForm f = null;
             try {
                 f = new GetUserForm();

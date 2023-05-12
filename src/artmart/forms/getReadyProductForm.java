@@ -17,6 +17,7 @@ import java.util.Map;
 import artmart.entities.ReadyProduct;
 import artmart.service.CategorieWebService;
 import artmart.service.ReadyProductWebService;
+import com.codename1.components.ImageViewer;
 import com.codename1.ui.Label;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
@@ -30,6 +31,11 @@ import com.codename1.io.FileSystemStorage;
 import static com.codename1.io.Log.e;
 import com.codename1.io.Storage;
 import com.codename1.ui.ComboBox;
+import com.codename1.ui.EncodedImage;
+import com.codename1.ui.Font;
+import com.codename1.ui.FontImage;
+import com.codename1.ui.Image;
+import com.codename1.ui.URLImage;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -44,6 +50,11 @@ public class getReadyProductForm extends BaseForm {
     ReadyProduct readyp = new ReadyProduct();
 
     public getReadyProductForm() throws IOException {
+        Label headingLabel = new Label("Ready Products");
+        headingLabel.getUnselectedStyle().setFgColor(0xe35d59);
+        headingLabel.getUnselectedStyle().setFont(Font.createSystemFont(Font.FACE_MONOSPACE, Font.STYLE_BOLD, Font.SIZE_LARGE));
+        addComponent(headingLabel);
+
         Button addButton = new Button("Add");
         addButton.addActionListener(ee -> {
             newReadyProductForm f = null;
@@ -53,7 +64,6 @@ public class getReadyProductForm extends BaseForm {
             }
             f.show();
         });
-        addComponent(addButton);
         searchField = new TextField("", "Enter Product Name");
         Button searchButton = new Button("Search");
         searchField.setColumns(14);
@@ -82,7 +92,6 @@ public class getReadyProductForm extends BaseForm {
             }
         });
         Container searchContainer = BorderLayout.west(searchField).add(BorderLayout.EAST, searchButton);
-        addComponent(searchContainer);
 
         ComboBox<Category> categoryComboBox = new ComboBox<>();
         List<Category> categories = serviceCat.getAllCategorie();
@@ -96,8 +105,6 @@ public class getReadyProductForm extends BaseForm {
             updateCatList(filteredProducts);
         });
 
-        addComponent(categoryComboBox);
-
         this.init(Resources.getGlobalResources());
         Button sortButton = new Button("Price (asc)");
         sortButton.addActionListener(e -> {
@@ -109,7 +116,6 @@ public class getReadyProductForm extends BaseForm {
             });
             updateList();
         });
-        addComponent(BorderLayout.south(sortButton));
 
         this.init(Resources.getGlobalResources());
         Button sortButton2 = new Button("Price (desc)");
@@ -122,18 +128,35 @@ public class getReadyProductForm extends BaseForm {
             });
             updateList();
         });
-        addComponent(BorderLayout.south(sortButton2));
 
         this.init(Resources.getGlobalResources());
-        Button cancel = new Button("X");
+        Button cancel = new Button(FontImage.MATERIAL_CANCEL);
         cancel.addActionListener(e -> {
             getAllReadyProducts();
         });
-        addComponent(BorderLayout.south(cancel));
+
+        Container addContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
+        addContainer.add(addButton);
+        this.add(addContainer);
+
+        Container sContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
+        sContainer.add(searchContainer);
+        this.add(sContainer);
+
+        Container sortContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
+        sortContainer.add(sortButton);
+        sortContainer.add(sortButton2);
+        sortContainer.add(cancel);
+        this.add(sortContainer);
+
+        Container catContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
+        catContainer.add(categoryComboBox);
+        this.add(catContainer);
 
         rpList = new MultiList(new DefaultListModel<>());
         add(rpList);
         getAllReadyProducts();
+
     }
 
     private void getAllReadyProducts() {
@@ -144,9 +167,20 @@ public class getReadyProductForm extends BaseForm {
         model.removeAll();
         for (ReadyProduct rp : readyproduct) {
             Map<String, Object> item = new HashMap<>();
-            item.put("Line1", rp.getName());
-            item.put("Line2", rp.getDescription());
-            item.put("Line3", rp.getPrice());
+
+            // Create and add the image to the first column
+            EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(400, 400, 0xffcccccc), true);
+            String filename = rp.getImage().substring(rp.getImage().lastIndexOf("/") + 1);
+            URLImage imgUrl = URLImage.createToStorage(placeholder, filename, rp.getImage());
+            ImageViewer imageViewer = new ImageViewer(imgUrl);
+            Label label = new Label();
+            label.setIcon(imgUrl);
+            item.put("Line1", label);
+
+            // Add the name, description, and price to the second column
+            item.put("Line2", rp.getName());
+            item.put("Line3", rp.getDescription());
+            item.put("Line4", rp.getPrice());
             model.addItem(item);
         }
 
@@ -155,7 +189,7 @@ public class getReadyProductForm extends BaseForm {
             public void actionPerformed(ActionEvent evt) {
                 try {
                     Map<String, Object> selectedItem = (Map<String, Object>) rpList.getSelectedItem();
-                    int eventId = (int) selectedItem.get("Line3");
+                    int eventId = (int) selectedItem.get("Line4");
                     ReadyProduct selectedEvent = null;
                     for (ReadyProduct event : readyproduct) {
                         if (event.getPrice() == eventId) {

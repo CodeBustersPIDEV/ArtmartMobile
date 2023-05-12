@@ -79,7 +79,7 @@ public class editFormCustomProduct extends BaseForm {
         this.add(categorieField);
      Validator validator = new Validator();
         validator.addConstraint(nomField, new LengthConstraint(1, "Nom is required"));
-             validator.addConstraint(dimfield, new LengthConstraint(1, "dimmension is required"));
+             validator.addConstraint(dimfield, new LengthConstraint(1, "dimension is required"));
                     validator.addConstraint(weightfield, new LengthConstraint(1, "weight is required"));
                            validator.addConstraint(clientfield, new LengthConstraint(1, "client is required"));
                                   validator.addConstraint(materialfield, new LengthConstraint(1, "material is required"));

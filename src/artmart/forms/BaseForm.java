@@ -1,8 +1,5 @@
 package artmart.forms;
 
-import com.codename1.io.Storage;
-import artmart.forms.Event.Artist.AllEventsForm;
-import artmart.forms.Event.HomeEvent;
 import com.codename1.ui.*;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.util.Resources;
@@ -43,6 +40,7 @@ public class BaseForm extends com.codename1.ui.Form {
                 f.show();
             });
 
+<<<<<<< HEAD
             tb.addMaterialCommandToSideMenu("Custom Products", FontImage.MATERIAL_LIST, e -> {
                 getCustomProductForm f = null;
                 try {
@@ -92,6 +90,40 @@ tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
             }
             f.show();
         });  
+=======
+        tb.addMaterialCommandToSideMenu("Categories", FontImage.MATERIAL_CATEGORY, e -> {
+            getCategorieForm f = null;
+            try {
+                f = new getCategorieForm();
+            } catch (IOException ex) {
+            }
+            f.show();
+        });
+        tb.addMaterialCommandToSideMenu("Applies", FontImage.MATERIAL_APPROVAL, e -> {
+            getApplyForm f = null;
+            try {
+                f = new getApplyForm();
+            } catch (IOException ex) {
+            }
+            f.show();
+        });
+        tb.addMaterialCommandToSideMenu("Blogs", FontImage.MATERIAL_TEXT_SNIPPET, e -> {
+            getBlogsForm f = null;
+            try {
+                f = new getBlogsForm();
+            } catch (IOException ex) {
+            }
+            f.show();
+        });
+        tb.addMaterialCommandToSideMenu("Blogs Categories", FontImage.MATERIAL_CATCHING_POKEMON, e -> {
+            getBlogCategoryForm f = null;
+            try {
+                f = new getBlogCategoryForm();
+            } catch (IOException ex) {
+            }
+            f.show();
+        });
+>>>>>>> parent of 83d4883 (Merge remote-tracking branch 'origin/gastonFakeBodyBuilder' into Meher)
 
                 tb.addMaterialCommandToSideMenu("Tags", FontImage.MATERIAL_CATCHING_POKEMON, e -> {
             getTagsForm f = null;

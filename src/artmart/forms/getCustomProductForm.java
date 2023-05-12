@@ -44,6 +44,8 @@ public class getCustomProductForm extends BaseForm {
     private TextField searchField;
     private Button statisticsButton;
      private Timer messageTimer;
+     
+     
 CustomProduct product = new CustomProduct();
  
     public getCustomProductForm() throws IOException {
@@ -58,6 +60,7 @@ Toolbar toolbar = new Toolbar();
         showMessage("Welcome To Custom Product", 5000);
         Button applyButton = new Button("+");
 applyButton.addActionListener(ee -> {
+    
     newCustomProductForm f = null;
             try {
                 f = new newCustomProductForm();

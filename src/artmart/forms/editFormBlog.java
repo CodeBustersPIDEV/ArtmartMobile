@@ -48,7 +48,7 @@ public class editFormBlog extends BaseForm {
         Label catField = new Label(e.getCategory().getName());
         Label ratingField = new Label(String.valueOf(e.getRating()));
         Label nbViewsField = new Label(String.valueOf(e.getNb_views()));
-        ratingField.setFontIcon(FontImage.MATERIAL_STAR);
+        ratingField.setFontIcon(FontImage.MATERIAL_STAR_BORDER);
 
         ComboBox<Language> toComboBox = new ComboBox<>();
         toComboBox.setModel(new DefaultListModel<>(Language.values()));

@@ -13,8 +13,14 @@ import artmart.entities.Blogs;
 import artmart.entities.BlogCategories;
 import artmart.service.BlogCategoriesWebService;
 import artmart.service.BlogsWebService;
+import com.codename1.components.ImageViewer;
 import com.codename1.l10n.SimpleDateFormat;
+import com.codename1.ui.Display;
+import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
+import com.codename1.ui.Image;
+import com.codename1.ui.Label;
+import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
@@ -106,13 +112,37 @@ public class getBlogsForm extends BaseForm {
         model.removeAll();
         for (Blogs b : blogs) {
 //        BlogCategories category =serviceCat.getOneBlogCategory(b.getCategory());
+            ImageViewer imageViewer = null;
+            URLImage imgUrl = null;
+            if (b.getImage().equals("N/A")) {
+                EncodedImage placeholder;
+                try {
+                    placeholder = EncodedImage.create(
+                            Display.getInstance().getResourceAsStream(getClass(), "/default-product.png")
+                    );
+                    imageViewer = new ImageViewer(placeholder);
+                } catch (IOException ex) {
+                    System.out.println(ex);
+                }
+            } else {
+                EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(500, 500, 0xffcccccc), true);
+                String filename = b.getImage().substring(b.getImage().lastIndexOf("/") + 1);
+
+                System.out.println(filename);
+                imgUrl = URLImage.createToStorage(placeholder, filename, b.getImage());
+                imageViewer = new ImageViewer(imgUrl);
+            }
+//        BlogCategories category =serviceCat.getOneBlogCategory(b.getCategory());
             String newDateString = sdf.format(b.getPublishDate());
             Map<String, Object> item = new HashMap<>();
-            item.put("Line1", b.getTitle());
-            item.put("Line2", b.getCategory().getName());
-            item.put("Line4", b.getAuthor());
-            item.put("Line3", newDateString);
-  
+            Label label = new Label();
+            label.setIcon(imgUrl);
+            item.put("Line1", label);
+            item.put("Line2", b.getTitle());
+            item.put("Line3", b.getCategory().getName());
+            item.put("Line5", b.getAuthor());
+            item.put("Line4", newDateString);
+
             model.addItem(item);
         }
         cpList.addActionListener(new ActionListener() {

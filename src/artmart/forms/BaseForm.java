@@ -8,7 +8,6 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.util.Resources;
 import java.io.IOException;
 import artmart.forms.SessionManager;
-import artmart.service.PaymentShipWebService;
 
 public class BaseForm extends com.codename1.ui.Form {
 
@@ -52,23 +51,6 @@ public class BaseForm extends com.codename1.ui.Form {
                 }
                 f.show();
             });
-            tb.addMaterialCommandToSideMenu("Payment", FontImage.MATERIAL_LIST, e -> {
-                getpaymntsForm g = null;
-                try {
-                    g = new getpaymntsForm();
-                    g.show();
-                } catch (IOException ex) {
-                }
-            });
-
-            tb.addMaterialCommandToSideMenu("Orders", FontImage.MATERIAL_LIST, e -> {
-                GetWishlistForm f = null;
-                try {
-                    f = new GetWishlistForm();
-                } catch (IOException ex) {
-                }
-                f.show();
-            });
 
             tb.addMaterialCommandToSideMenu("Categories", FontImage.MATERIAL_LIST, e -> {
                 getCategorieForm f = null;
@@ -102,23 +84,23 @@ public class BaseForm extends com.codename1.ui.Form {
                 }
                 f.show();
             });
-            tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
-                HomeEvent f = null;
-                try {
-                    f = new HomeEvent();
-                } catch (IOException ex) {
-                }
-                f.show();
-            });
+tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
+            HomeEvent f = null;
+            try {
+                f = new HomeEvent();
+            } catch (IOException ex) {
+            }
+            f.show();
+        });  
 
-            tb.addMaterialCommandToSideMenu("Tags", FontImage.MATERIAL_CATCHING_POKEMON, e -> {
-                getTagsForm f = null;
-                try {
-                    f = new getTagsForm();
-                } catch (IOException ex) {
-                }
-                f.show();
-            });
+                tb.addMaterialCommandToSideMenu("Tags", FontImage.MATERIAL_CATCHING_POKEMON, e -> {
+            getTagsForm f = null;
+            try {
+                f = new getTagsForm();
+            } catch (IOException ex) {
+            }
+            f.show();
+        });
             tb.addMaterialCommandToSideMenu("Users list", FontImage.MATERIAL_LIST, e -> {
                 GetUserForm f = null;
                 try {
@@ -129,7 +111,7 @@ public class BaseForm extends com.codename1.ui.Form {
             });
             tb.addMaterialCommandToSideMenu("LogOut", FontImage.MATERIAL_LIST, e -> {
                 Storage.getInstance().writeObject("user_authenticated", false);
-                SessionManager.getInstance().clearSession();
+            SessionManager.getInstance().clearSession();
                 SignInForm f = null;
                 try {
                     f = new SignInForm(theme);

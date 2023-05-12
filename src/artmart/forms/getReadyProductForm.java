@@ -46,11 +46,6 @@ public class getReadyProductForm extends BaseForm {
     ReadyProduct readyp = new ReadyProduct();
 
     public getReadyProductForm() throws IOException {
-        Label headingLabel = new Label("Ready Products");
-
-        headingLabel.getAllStyles().setFgColor(0x000000);
-
-        addComponent(BorderLayout.NORTH, headingLabel);
 
         Button addButton = new Button("Add");
         addButton.addActionListener(ee -> {

@@ -91,5 +91,14 @@ public class BaseForm extends com.codename1.ui.Form {
             }
             f.show();
         });
+        
+        
+        tb.addMaterialCommandToSideMenu("Cart", FontImage.MATERIAL_LIST, e -> {
+            try {
+              GetWishlistForm f = new GetWishlistForm();
+                f.show();
+            } catch (IOException ex) {
+            }
+        });
     }
 }

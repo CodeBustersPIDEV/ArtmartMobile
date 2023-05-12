@@ -51,6 +51,15 @@ public class BaseForm extends com.codename1.ui.Form {
                 }
                 f.show();
             });
+            
+            tb.addMaterialCommandToSideMenu("Orders", FontImage.MATERIAL_LIST, e -> {
+                GetWishlistForm f = null;
+                try {
+                    f = new GetWishlistForm();
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
 
             tb.addMaterialCommandToSideMenu("Categories", FontImage.MATERIAL_LIST, e -> {
                 getCategorieForm f = null;
@@ -84,23 +93,23 @@ public class BaseForm extends com.codename1.ui.Form {
                 }
                 f.show();
             });
-tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
-            HomeEvent f = null;
-            try {
-                f = new HomeEvent();
-            } catch (IOException ex) {
-            }
-            f.show();
-        });  
+            tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
+                HomeEvent f = null;
+                try {
+                    f = new HomeEvent();
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
 
-                tb.addMaterialCommandToSideMenu("Tags", FontImage.MATERIAL_CATCHING_POKEMON, e -> {
-            getTagsForm f = null;
-            try {
-                f = new getTagsForm();
-            } catch (IOException ex) {
-            }
-            f.show();
-        });
+            tb.addMaterialCommandToSideMenu("Tags", FontImage.MATERIAL_CATCHING_POKEMON, e -> {
+                getTagsForm f = null;
+                try {
+                    f = new getTagsForm();
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
             tb.addMaterialCommandToSideMenu("Users list", FontImage.MATERIAL_LIST, e -> {
                 GetUserForm f = null;
                 try {
@@ -111,7 +120,7 @@ tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
             });
             tb.addMaterialCommandToSideMenu("LogOut", FontImage.MATERIAL_LIST, e -> {
                 Storage.getInstance().writeObject("user_authenticated", false);
-            SessionManager.getInstance().clearSession();
+                SessionManager.getInstance().clearSession();
                 SignInForm f = null;
                 try {
                     f = new SignInForm(theme);

@@ -81,4 +81,36 @@ public class PaymentShipWebService {
         NetworkManager.getInstance().addToQueueAndWait(this.connection);
         return list;
     }
+    
+    public void newPo(PaymentOption e) {
+        connection = new ConnectionRequest();
+        connection.setInsecure(true);
+        this.connection.setUrl(BASE_URL + "/paymentoption/add");
+        this.connection.setHttpMethod("POST");
+
+        connection.addArgument("name", e.getName());
+        connection.addArgument("country", e.getAvailablecountries());
+
+        NetworkManager.getInstance().addToQueue(connection);
+    }
+    
+    public void editPo(PaymentOption e) {
+        connection = new ConnectionRequest();
+        connection.setInsecure(true);
+        this.connection.setUrl(BASE_URL + "/paymentoption/"+e.getPaymentoptionId());
+        this.connection.setHttpMethod("PUT");
+
+        connection.addArgument("name", e.getName());
+        connection.addArgument("country", e.getAvailablecountries());
+
+        NetworkManager.getInstance().addToQueue(connection);
+    }
+
+    public void deletePO(PaymentOption e) {
+        connection = new ConnectionRequest();
+        connection.setInsecure(true);
+        this.connection.setUrl(BASE_URL + "/paymentoption/" + e.getPaymentoptionId());
+        this.connection.setHttpMethod("DELETE");
+        NetworkManager.getInstance().addToQueue(connection);
+    }
 }

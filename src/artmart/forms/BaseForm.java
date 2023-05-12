@@ -8,6 +8,7 @@ import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.util.Resources;
 import java.io.IOException;
 import artmart.forms.SessionManager;
+import artmart.service.PaymentShipWebService;
 
 public class BaseForm extends com.codename1.ui.Form {
 
@@ -51,7 +52,15 @@ public class BaseForm extends com.codename1.ui.Form {
                 }
                 f.show();
             });
-            
+            tb.addMaterialCommandToSideMenu("Payment", FontImage.MATERIAL_LIST, e -> {
+                getpaymntsForm g = null;
+                try {
+                    g = new getpaymntsForm();
+                    g.show();
+                } catch (IOException ex) {
+                }
+            });
+
             tb.addMaterialCommandToSideMenu("Orders", FontImage.MATERIAL_LIST, e -> {
                 GetWishlistForm f = null;
                 try {

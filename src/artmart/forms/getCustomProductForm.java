@@ -188,7 +188,7 @@ try (OutputStream os = fs.openOutputStream(filePath)) {
         
        addComponent(BorderLayout.south(sortButton));   
         this.add(applyButton);
-   
+        this.add(cancel);
         cpList = new MultiList(new DefaultListModel<>());
         add(cpList);
         getAllCp();   

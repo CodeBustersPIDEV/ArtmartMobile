@@ -1,6 +1,5 @@
 package main.artmart;
 
-import artmart.forms.SignInForm;
 import static com.codename1.ui.CN.*;
 import com.codename1.ui.Form;
 import com.codename1.ui.Dialog;
@@ -53,13 +52,6 @@ public class MyApplication {
         } catch (IOException ex) {
             System.out.println("ex");
         }
-
-         SignInForm f = null;
-                try {
-                    f = new SignInForm(theme);
-                } catch (IOException ex) {
-                }
-                f.show();
     }
 
     public void stop() {

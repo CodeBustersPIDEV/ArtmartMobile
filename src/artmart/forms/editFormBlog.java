@@ -16,6 +16,7 @@ import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
+import com.codename1.ui.FontImage;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextArea;
@@ -45,6 +46,10 @@ public class editFormBlog extends BaseForm {
 
 //       TextField imagefield = new TextField(e.getImage(), "image");
         Label catField = new Label(e.getCategory().getName());
+        Label ratingField = new Label(String.valueOf(e.getRating()));
+        Label nbViewsField = new Label(String.valueOf(e.getNb_views()));
+        ratingField.setFontIcon(FontImage.MATERIAL_STAR);
+
         ComboBox<Language> toComboBox = new ComboBox<>();
         toComboBox.setModel(new DefaultListModel<>(Language.values()));
 //        ComboBox<BlogCategories> categorieField = new ComboBox<>();
@@ -84,6 +89,8 @@ public class editFormBlog extends BaseForm {
 
         this.add(contentField);
         this.add(catField);
+        this.add(ratingField);
+        this.add(nbViewsField);
         this.add(imageViewer);
 
 //        this.add(categorieField);

@@ -112,7 +112,7 @@ public class getBlogsForm extends BaseForm {
             item.put("Line2", b.getCategory().getName());
             item.put("Line4", b.getAuthor());
             item.put("Line3", newDateString);
-            item.put("Line5", b.getId());
+  
             model.addItem(item);
         }
         cpList.addActionListener(new ActionListener() {
@@ -120,10 +120,10 @@ public class getBlogsForm extends BaseForm {
             public void actionPerformed(ActionEvent evt) {
                 try {
                     Map<String, Object> selectedItem = (Map<String, Object>) cpList.getSelectedItem();
-                    int eventId = (int) selectedItem.get("Line5");
+                    String eventId = (String) selectedItem.get("Line1");
                     Blogs selectedEvent = null;
                     for (Blogs event : blogs) {
-                        if (event.getId() == eventId) {
+                        if (event.getTitle() == eventId) {
                             selectedEvent = event;
                             break;
                         }

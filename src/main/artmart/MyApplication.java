@@ -7,6 +7,8 @@ import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
 import com.codename1.io.Log;
 import com.codename1.ui.Toolbar;
+import artmart.forms.getCategorieForm;
+import artmart.forms.getCustomProductForm;
 import artmart.forms.getReadyProductForm;
 import java.io.IOException;
 
@@ -41,19 +43,13 @@ public class MyApplication {
         });
     }
 
-    public void start() {
-        try {
-            if (current != null) {
-                current.show();
-                return;
-            }
-            getReadyProductForm myForm = new getReadyProductForm();
-            myForm.show();
-        } catch (IOException ex) {
-            System.out.println("ex");
+    public void start() throws IOException {
+        if (current != null) {
+            current.show();
+            return;
         }
 
-        getCustomProductForm myForm = new getCustomProductForm();
+        getReadyProductForm myForm = new getReadyProductForm();
         myForm.show();
     }
 

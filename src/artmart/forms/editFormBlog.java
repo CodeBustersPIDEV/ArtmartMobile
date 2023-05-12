@@ -16,34 +16,28 @@ import artmart.service.CategorieWebService;
 import artmart.service.CustomproductWebService;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextArea;
-import com.codename1.ui.URLImage;
-import com.codename1.ui.layouts.BoxLayout;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class editFormBlog extends BaseForm {
 
-    BlogsWebService service = new BlogsWebService();
-    BlogCategoriesWebService serviceCat = new BlogCategoriesWebService();
-
+       BlogsWebService service = new BlogsWebService();
     public editFormBlog(Blogs e) throws ParseException, IOException {
         this.init(Resources.getGlobalResources());
         System.out.println(e);
-        Label titleField = new Label(e.getTitle(), "Title");
-        TextArea contentField = new TextArea(e.getContent());
-//       TextField imagefield = new TextField(e.getImage(), "image");
-        Label catField = new Label(e.getCategory().getName());
-//        ComboBox<BlogCategories> categorieField = new ComboBox<>();
-//        List<BlogCategories> categories = serviceCat.getAllCategorie();
+        Label title = new Label(e.getTitle());        
+        Label category = new Label(e.getCategory());
+        Label content = new Label(e.getContent());       
+        Label date = new Label(e.getPublishDate().toString());
+
 
         this.add(title);
 
-            System.out.println(filename);
-            imgUrl = URLImage.createToStorage(placeholder, filename, e.getImage());
-            imageViewer = new ImageViewer(imgUrl);
-        }
-        this.add(titleField);
+        this.add(category);
+
+        this.add(content);
 
         this.add(date);
 
@@ -68,11 +62,9 @@ public class editFormBlog extends BaseForm {
             myForm.show();
         });
 
-        Container buttonContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
-        buttonContainer.add(goToFormButton);
-        buttonContainer.add(deleteButton);
-//        buttonContainer.add(submitButton);
-        this.add(buttonContainer);
+
+this.add(deleteButton);
+this.add(goToFormButton);
 
     }
 

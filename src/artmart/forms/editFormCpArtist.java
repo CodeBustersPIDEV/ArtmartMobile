@@ -152,8 +152,6 @@ applyButton.addActionListener(ee -> {
 });
 Container buttonContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
 buttonContainer.add(goToFormButton);
-buttonContainer.add(deleteButton);
-buttonContainer.add(submitButton);
 buttonContainer.add(applyButton);
 this.add(buttonContainer);
 

@@ -117,7 +117,7 @@ public class getReadyProductForm extends BaseForm {
             updateList();
         });
 
-        this.init(Resources.getGlobalResources());
+        //this.init(Resources.getGlobalResources());
         Button sortButton2 = new Button("Price (desc)");
         sortButton2.addActionListener(e -> {
             Collections.sort(readyproduct, new Comparator<ReadyProduct>() {
@@ -129,7 +129,7 @@ public class getReadyProductForm extends BaseForm {
             updateList();
         });
 
-        this.init(Resources.getGlobalResources());
+        //this.init(Resources.getGlobalResources());
         Button cancel = new Button(FontImage.MATERIAL_CANCEL);
         cancel.addActionListener(e -> {
             getAllReadyProducts();

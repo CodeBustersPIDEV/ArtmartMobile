@@ -44,7 +44,9 @@ public class getCustomProductForm extends BaseForm {
     private TextField searchField;
     private Button statisticsButton;
      private Timer messageTimer;
-     
+      String session = SessionManager.getInstance().getSession();
+    int userId = SessionManager.getInstance().getUserId();
+    String role = SessionManager.getInstance().getRole();
      
 CustomProduct product = new CustomProduct();
  
@@ -233,8 +235,13 @@ try (OutputStream os = fs.openOutputStream(filePath)) {
                             break;
                         }
                     }
+                    if(role.equals("client")||role.equals("admin")){
                     editFormCustomProduct myForm2 = new editFormCustomProduct(selectedEvent);
+                    myForm2.show();}else{
+                        
+                    editFormCpArtist myForm2 = new editFormCpArtist(selectedEvent);
                     myForm2.show();
+                    }
                 } catch (ParseException ex) {
                     System.out.println(ex);
                 } catch (IOException ex) {

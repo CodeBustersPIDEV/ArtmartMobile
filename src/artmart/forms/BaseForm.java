@@ -13,6 +13,7 @@ public class BaseForm extends com.codename1.ui.Form {
 
     String session = SessionManager.getInstance().getSession();
     int userId = SessionManager.getInstance().getUserId();
+    String role = SessionManager.getInstance().getRole();
 
     public void init(Resources theme) throws IOException {
         Toolbar tb = getToolbar();
@@ -34,7 +35,7 @@ public class BaseForm extends com.codename1.ui.Form {
 
             });
 
-            tb.addMaterialCommandToSideMenu("Ready Products", FontImage.MATERIAL_INVENTORY, e -> {
+            tb.addMaterialCommandToSideMenu("Ready Products", FontImage.MATERIAL_HOME, e -> {
                 getReadyProductForm f = null;
                 try {
                     f = new getReadyProductForm();
@@ -43,7 +44,7 @@ public class BaseForm extends com.codename1.ui.Form {
                 f.show();
             });
 
-            tb.addMaterialCommandToSideMenu("Custom Products", FontImage.MATERIAL_LIST, e -> {
+            tb.addMaterialCommandToSideMenu("Custom Products", FontImage.MATERIAL_INVENTORY, e -> {
                 getCustomProductForm f = null;
                 try {
                     f = new getCustomProductForm();
@@ -52,7 +53,7 @@ public class BaseForm extends com.codename1.ui.Form {
                 f.show();
             });
 
-            tb.addMaterialCommandToSideMenu("Categories", FontImage.MATERIAL_LIST, e -> {
+            tb.addMaterialCommandToSideMenu("Categories", FontImage.MATERIAL_CATEGORY, e -> {
                 getCategorieForm f = null;
                 try {
                     f = new getCategorieForm();
@@ -76,42 +77,46 @@ public class BaseForm extends com.codename1.ui.Form {
                 }
                 f.show();
             });
-            tb.addMaterialCommandToSideMenu("Blogs Categories", FontImage.MATERIAL_LIST, e -> {
-                getBlogCategoryForm f = null;
-                try {
-                    f = new getBlogCategoryForm();
-                } catch (IOException ex) {
-                }
-                f.show();
-            });
-tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
-            HomeEvent f = null;
-            try {
-                f = new HomeEvent();
-            } catch (IOException ex) {
-            }
-            f.show();
-        });  
 
-                tb.addMaterialCommandToSideMenu("Tags", FontImage.MATERIAL_CATCHING_POKEMON, e -> {
-            getTagsForm f = null;
-            try {
-                f = new getTagsForm();
-            } catch (IOException ex) {
-            }
-            f.show();
-        });
-            tb.addMaterialCommandToSideMenu("Users list", FontImage.MATERIAL_LIST, e -> {
-                GetUserForm f = null;
+            tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
+                HomeEvent f = null;
                 try {
-                    f = new GetUserForm();
+                    f = new HomeEvent();
                 } catch (IOException ex) {
                 }
                 f.show();
             });
+
+            if (role.equals("admin")) {
+                tb.addMaterialCommandToSideMenu("Users list", FontImage.MATERIAL_LIST, e -> {
+                    GetUserForm f = null;
+                    try {
+                        f = new GetUserForm();
+                    } catch (IOException ex) {
+                    }
+                    f.show();
+                });
+                tb.addMaterialCommandToSideMenu("Tags", FontImage.MATERIAL_CATCHING_POKEMON, e -> {
+                    getTagsForm f = null;
+                    try {
+                        f = new getTagsForm();
+                    } catch (IOException ex) {
+                    }
+                    f.show();
+                });
+                tb.addMaterialCommandToSideMenu("Blogs Categories", FontImage.MATERIAL_LIST, e -> {
+                    getBlogCategoryForm f = null;
+                    try {
+                        f = new getBlogCategoryForm();
+                    } catch (IOException ex) {
+                    }
+                    f.show();
+                });
+
+            }
             tb.addMaterialCommandToSideMenu("LogOut", FontImage.MATERIAL_LIST, e -> {
                 Storage.getInstance().writeObject("user_authenticated", false);
-            SessionManager.getInstance().clearSession();
+                SessionManager.getInstance().clearSession();
                 SignInForm f = null;
                 try {
                     f = new SignInForm(theme);

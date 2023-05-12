@@ -19,7 +19,6 @@ public class BaseForm extends com.codename1.ui.Form {
         taglineLabel.setAlignment(CENTER);
         taglineLabel.setVerticalAlignment(CENTER);
         Container taglineContainer = BorderLayout.south(taglineLabel);
-
         taglineContainer.setUIID("SideCommand");
 
         tb.addComponentToSideMenu(taglineContainer);
@@ -127,7 +126,7 @@ tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
             }
             f.show();
         });
-        tb.addMaterialCommandToSideMenu("Applies", FontImage.MATERIAL_DONE, e -> {
+        tb.addMaterialCommandToSideMenu("Applies", FontImage.MATERIAL_APPROVAL, e -> {
             getApplyForm f = null;
             try {
                 f = new getApplyForm();

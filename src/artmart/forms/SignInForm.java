@@ -18,7 +18,6 @@ import com.codename1.ui.util.Resources;
 public class SignInForm extends BaseForm {
 
     public SignInForm(Resources res) throws IOException {
-        this.init(Resources.getGlobalResources());
 
         EncodedImage originalImg = EncodedImage.createFromImage(Image.createImage("/img.png"), false);
         EncodedImage scaledImg = (EncodedImage) originalImg.scaled(800, 500);

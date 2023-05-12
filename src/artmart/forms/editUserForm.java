@@ -18,8 +18,6 @@ import com.codename1.ui.TextField;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.util.Resources;
-import com.codename1.ui.validation.LengthConstraint;
-import com.codename1.ui.validation.Validator;
 import java.io.IOException;
 
 /**
@@ -28,7 +26,6 @@ import java.io.IOException;
  */
 public class editUserForm extends BaseForm {
 
-  
     public editUserForm(User e) throws ParseException, IOException {
         this.init(Resources.getGlobalResources());
         System.out.println(e);
@@ -48,14 +45,7 @@ public class editUserForm extends BaseForm {
 // Create an ImageViewer to display the image
         ImageViewer imageViewer = new ImageViewer(imgUrl);
         UserWebService service = new UserWebService();
-      Validator validator = new Validator();
-        validator.addConstraint(nomField, new LengthConstraint(1, "Nom is required"));
-          
-                        validator.addConstraint(usernameField, new LengthConstraint(1, "Nom is required"));
-                                validator.addConstraint(emailfield, new LengthConstraint(1, "Nom is required"));
-                                  
-                                                validator.addConstraint(PNfield, new LengthConstraint(1, "Nom is required"));
-                                                   
+
         Label role = new Label(e.getRole());
         this.add(imageViewer);
 
@@ -74,7 +64,6 @@ public class editUserForm extends BaseForm {
         Button submitButton = new Button("Submit");
 
         submitButton.addActionListener(s -> {
-                          if (validator.isValid()) {
             String nom = nomField.getText();
             String username = usernameField.getText();
             String email = emailfield.getText();
@@ -100,7 +89,7 @@ public class editUserForm extends BaseForm {
             } catch (IOException ex) {
             }
             myForm.show();
-        }}
+        }
         );
         Button goToFormButton = new Button("Go Back");
         goToFormButton.addActionListener(b -> {

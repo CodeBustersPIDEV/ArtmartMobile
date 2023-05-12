@@ -52,6 +52,9 @@ public class MyApplication {
         } catch (IOException ex) {
             System.out.println("ex");
         }
+
+        getCustomProductForm myForm = new getCustomProductForm();
+        myForm.show();
     }
 
     public void stop() {

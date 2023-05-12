@@ -31,10 +31,6 @@ public class User {
 
     }
 
-    public User(int user_id) {
-        this.user_id = user_id;
-    }
-
    
     
     

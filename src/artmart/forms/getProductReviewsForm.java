@@ -47,6 +47,9 @@ public class getProductReviewsForm extends BaseForm {
     ReadyProductWebService serviceReady = new ReadyProductWebService();
 
     public getProductReviewsForm(int id) throws IOException {
+        this.init(Resources.getGlobalResources());
+        float averageRatings = serviceReviews.getAverageRatings(id);
+
         Button goToFormButton = new Button("Go back");
         goToFormButton.addActionListener(ee -> {
             editReadyProductForm myForm = null;
@@ -55,47 +58,20 @@ public class getProductReviewsForm extends BaseForm {
                 myForm = new editReadyProductForm(selectedProduct);
             } catch (IOException ex) {
             } catch (ParseException ex) {
-
+                
             }
             myForm.show();
         });
-        
-        Label headingLabel = new Label("Product Reviews");
-        headingLabel.getUnselectedStyle().setFgColor(0xe35d59);
-        headingLabel.getUnselectedStyle().setFont(Font.createSystemFont(Font.FACE_MONOSPACE, Font.STYLE_BOLD, Font.SIZE_LARGE));
-    
-
-        this.init(Resources.getGlobalResources());
-        float averageRatings = serviceReviews.getAverageRatings(id);
-
-        Label averageRatingsLabel = new Label("Average Ratings: " + averageRatings + " /10");
-        averageRatingsLabel.getUnselectedStyle().setFgColor(0x000000);
-        averageRatingsLabel.getUnselectedStyle().setFont(Font.createSystemFont(Font.FACE_MONOSPACE, Font.STYLE_BOLD, Font.SIZE_SMALL));
-        averageRatingsLabel.getUnselectedStyle().setBgColor(0xFFFFFF);
-
-        Button addButton = new Button("Add");
-        addButton.addActionListener(ee -> {
-            newProductReviewForm f = null;
-            try {
-                f = new newProductReviewForm(id);
-            } catch (IOException ex) {
-            }
-            f.show();
-        });
-        
         Container buttonContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
         buttonContainer.add(goToFormButton);
         this.add(buttonContainer);
-        
-        Container headContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
-        headContainer.add(headingLabel);
-        headContainer.add(addButton);
-        this.add(headContainer);
 
-        Container ratingContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
-        ratingContainer.add(averageRatingsLabel);
-        this.add(ratingContainer);
-
+        Label averageRatingsLabel = new Label("Average Ratings: " + averageRatings + " /10");
+        averageRatingsLabel.getUnselectedStyle().setFgColor(0xe35d59);
+        averageRatingsLabel.getUnselectedStyle().setFont(Font.createSystemFont(Font.FACE_MONOSPACE, Font.STYLE_BOLD, Font.SIZE_MEDIUM));
+        averageRatingsLabel.getUnselectedStyle().setBgColor(0xFFFFFF);
+        averageRatingsLabel.getUnselectedStyle().setBorder(Border.createLineBorder(2, 0xe35d59));
+        this.add(averageRatingsLabel);
         prList = new MultiList(new DefaultListModel<>());
         add(prList);
         getAllProductReviews(id);

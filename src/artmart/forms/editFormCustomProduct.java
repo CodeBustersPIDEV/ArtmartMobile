@@ -18,7 +18,6 @@ import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Image;
-import com.codename1.ui.Label;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.validation.LengthConstraint;
@@ -38,7 +37,7 @@ public class editFormCustomProduct extends BaseForm {
         TextField weightfield = new TextField(e.getWeight() + "", "weight");
       
         TextField clientfield = new TextField(e.getClient() + "", "client");
-        TextField materialfield = new TextField(e.getMaterial(), "materiel");
+    TextField materialfield = new TextField(e.getMaterial(), "materiel");
        TextField imagefield = new TextField(e.getImage(), "image");
         ComboBox<Category> categorieField = new ComboBox<>();
         List<Category> categories = serviceCat.getAllCategorie();
@@ -46,23 +45,17 @@ public class editFormCustomProduct extends BaseForm {
         for (Category categorie : categories) {
             categorieField.addItem(categorie);
         }
-        Label nameLabel = new Label("Name:");
-        this.add(nameLabel);
+
         this.add(nomField);
-        Label desc = new Label("Description:");
-        this.add(desc);
+
         this.add(descriptifField);
-     Label dims = new Label("Dimension:");
-        this.add(dims);
+
         this.add(dimfield);
-  Label weightss = new Label("Weight:");
-        this.add(weightss);
+
         this.add(weightfield);
-  Label clientss = new Label("Client:");
-        this.add(clientss);
+
         this.add(clientfield);
-  Label mat = new Label("Material:");
-        this.add(mat);
+
         this.add(materialfield);
 
        EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(400, 400, 0xffcccccc), true);
@@ -142,7 +135,6 @@ public class editFormCustomProduct extends BaseForm {
 applyButton.addActionListener(ee -> {
     CustomproductWebService service = new CustomproductWebService();
     service.applyCustomProduct(e.getCustomProductId()); // replace customProductId with the ID of the custom product you want to apply to
-    
               Dialog.show("Success", "Application successfully sent", "OK", null);
 });
 Container buttonContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));

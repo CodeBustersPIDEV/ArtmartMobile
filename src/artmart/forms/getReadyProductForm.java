@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package artmart.forms;
+
 import artmart.entities.Category;
 import com.codename1.l10n.ParseException;
 import com.codename1.ui.Button;
@@ -14,6 +15,7 @@ import com.codename1.ui.list.MultiList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 import artmart.entities.ReadyProduct;
 import artmart.service.CategorieWebService;
 import artmart.service.ReadyProductWebService;
@@ -50,10 +52,6 @@ public class getReadyProductForm extends BaseForm {
     ReadyProduct readyp = new ReadyProduct();
 
     public getReadyProductForm() throws IOException {
-        Label headingLabel = new Label("Ready Products");
-        headingLabel.getUnselectedStyle().setFgColor(0xe35d59);
-        headingLabel.getUnselectedStyle().setFont(Font.createSystemFont(Font.FACE_MONOSPACE, Font.STYLE_BOLD, Font.SIZE_LARGE));
-        addComponent(headingLabel);
 
         Button addButton = new Button("Add");
         addButton.addActionListener(ee -> {

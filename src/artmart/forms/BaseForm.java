@@ -1,12 +1,19 @@
 package artmart.forms;
 
+import com.codename1.io.Storage;
+import artmart.forms.Event.Artist.AllEventsForm;
+import artmart.forms.Event.HomeEvent;
 import com.codename1.ui.*;
 import com.codename1.ui.layouts.BorderLayout;
-import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.util.Resources;
 import java.io.IOException;
+import artmart.forms.SessionManager;
 
 public class BaseForm extends com.codename1.ui.Form {
+
+    String session = SessionManager.getInstance().getSession();
+    int userId = SessionManager.getInstance().getUserId();
+    String role = SessionManager.getInstance().getRole();
 
     public void init(Resources theme) throws IOException {
         Toolbar tb = getToolbar();
@@ -21,14 +28,14 @@ public class BaseForm extends com.codename1.ui.Form {
         Container taglineContainer = BorderLayout.south(taglineLabel);
 
         taglineContainer.setUIID("SideCommand");
+        if (userId != 0) {
 
-        tb.addComponentToSideMenu(taglineContainer);
+            tb.addComponentToSideMenu(taglineContainer);
+            tb.addMaterialCommandToSideMenu("ArtMart", FontImage.MATERIAL_HOME, e -> {
 
-        tb.addMaterialCommandToSideMenu("ArtMart", FontImage.MATERIAL_HOME, e -> {
+            });
 
-        });
-
-            tb.addMaterialCommandToSideMenu("Ready Products", FontImage.MATERIAL_INVENTORY, e -> {
+            tb.addMaterialCommandToSideMenu("Ready Products", FontImage.MATERIAL_HOME, e -> {
                 getReadyProductForm f = null;
                 try {
                     f = new getReadyProductForm();
@@ -37,7 +44,7 @@ public class BaseForm extends com.codename1.ui.Form {
                 f.show();
             });
 
-            tb.addMaterialCommandToSideMenu("Custom Products", FontImage.MATERIAL_LIST, e -> {
+            tb.addMaterialCommandToSideMenu("Custom Products", FontImage.MATERIAL_INVENTORY, e -> {
                 getCustomProductForm f = null;
                 try {
                     f = new getCustomProductForm();
@@ -45,17 +52,8 @@ public class BaseForm extends com.codename1.ui.Form {
                 }
                 f.show();
             });
-            
-            tb.addMaterialCommandToSideMenu("Orders", FontImage.MATERIAL_LIST, e -> {
-                GetWishlistForm f = null;
-                try {
-                    f = new GetWishlistForm();
-                } catch (IOException ex) {
-                }
-                f.show();
-            });
 
-            tb.addMaterialCommandToSideMenu("Categories", FontImage.MATERIAL_LIST, e -> {
+            tb.addMaterialCommandToSideMenu("Categories", FontImage.MATERIAL_CATEGORY, e -> {
                 getCategorieForm f = null;
                 try {
                     f = new getCategorieForm();
@@ -79,14 +77,7 @@ public class BaseForm extends com.codename1.ui.Form {
                 }
                 f.show();
             });
-            tb.addMaterialCommandToSideMenu("Blogs Categories", FontImage.MATERIAL_LIST, e -> {
-                getBlogCategoryForm f = null;
-                try {
-                    f = new getBlogCategoryForm();
-                } catch (IOException ex) {
-                }
-                f.show();
-            });
+
             tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
                 HomeEvent f = null;
                 try {
@@ -96,22 +87,33 @@ public class BaseForm extends com.codename1.ui.Form {
                 f.show();
             });
 
-            tb.addMaterialCommandToSideMenu("Tags", FontImage.MATERIAL_CATCHING_POKEMON, e -> {
-                getTagsForm f = null;
-                try {
-                    f = new getTagsForm();
-                } catch (IOException ex) {
-                }
-                f.show();
-            });
-            tb.addMaterialCommandToSideMenu("Users list", FontImage.MATERIAL_LIST, e -> {
-                GetUserForm f = null;
-                try {
-                    f = new GetUserForm();
-                } catch (IOException ex) {
-                }
-                f.show();
-            });
+            if (role.equals("admin")) {
+                tb.addMaterialCommandToSideMenu("Users list", FontImage.MATERIAL_LIST, e -> {
+                    GetUserForm f = null;
+                    try {
+                        f = new GetUserForm();
+                    } catch (IOException ex) {
+                    }
+                    f.show();
+                });
+                tb.addMaterialCommandToSideMenu("Tags", FontImage.MATERIAL_CATCHING_POKEMON, e -> {
+                    getTagsForm f = null;
+                    try {
+                        f = new getTagsForm();
+                    } catch (IOException ex) {
+                    }
+                    f.show();
+                });
+                tb.addMaterialCommandToSideMenu("Blogs Categories", FontImage.MATERIAL_LIST, e -> {
+                    getBlogCategoryForm f = null;
+                    try {
+                        f = new getBlogCategoryForm();
+                    } catch (IOException ex) {
+                    }
+                    f.show();
+                });
+
+            }
             tb.addMaterialCommandToSideMenu("LogOut", FontImage.MATERIAL_LIST, e -> {
                 Storage.getInstance().writeObject("user_authenticated", false);
                 SessionManager.getInstance().clearSession();
@@ -123,64 +125,36 @@ public class BaseForm extends com.codename1.ui.Form {
                 f.show();
             });
 
-        tb.addMaterialCommandToSideMenu("Custom Products", FontImage.MATERIAL_INVENTORY, e -> {
-            getCustomProductForm f = null;
-            try {
-                f = new getCustomProductForm();
-            } catch (IOException ex) {
-            }
-            f.show();
-        });
+        } else {
+            tb.addComponentToSideMenu(taglineContainer);
+            tb.addMaterialCommandToSideMenu("ArtMart", FontImage.MATERIAL_HOME, e -> {
 
-        tb.addMaterialCommandToSideMenu("Categories", FontImage.MATERIAL_CATEGORY, e -> {
-            getCategorieForm f = null;
-            try {
-                f = new getCategorieForm();
-            } catch (IOException ex) {
-            }
-            f.show();
-        });
-        tb.addMaterialCommandToSideMenu("Applies", FontImage.MATERIAL_DONE, e -> {
-            getApplyForm f = null;
-            try {
-                f = new getApplyForm();
-            } catch (IOException ex) {
-            }
-            f.show();
-        });
-        tb.addMaterialCommandToSideMenu("Blogs", FontImage.MATERIAL_TEXT_SNIPPET, e -> {
-            getBlogsForm f = null;
-            try {
-                f = new getBlogsForm();
-            } catch (IOException ex) {
-            }
-            f.show();
-        });
-        tb.addMaterialCommandToSideMenu("Blogs Categories", FontImage.MATERIAL_CATCHING_POKEMON, e -> {
-            getBlogCategoryForm f = null;
-            try {
-                f = new getBlogCategoryForm();
-            } catch (IOException ex) {
-            }
-            f.show();
-        });
+            });
+            tb.addMaterialCommandToSideMenu("Ready Products", FontImage.MATERIAL_INVENTORY, e -> {
+                getReadyProductForm f = null;
+                try {
+                    f = new getReadyProductForm();
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
 
-        tb.addMaterialCommandToSideMenu("Users list", FontImage.MATERIAL_PERSON, e -> {
-            GetUserForm f = null;
-            try {
-                f = new GetUserForm();
-            } catch (IOException ex) {
-            }
-            f.show();
-        });
-
-        tb.addMaterialCommandToSideMenu("SignIn", FontImage.MATERIAL_LIST, e -> {
-            SignInForm f = null;
-            try {
-                f = new SignInForm(theme);
-            } catch (IOException ex) {
-            }
-            f.show();
-        });
+            tb.addMaterialCommandToSideMenu("SignIn", FontImage.MATERIAL_LIST, e -> {
+                SignInForm f = null;
+                try {
+                    f = new SignInForm(theme);
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
+            tb.addMaterialCommandToSideMenu("Blogs", FontImage.MATERIAL_LIST, e -> {
+                getBlogsForm f = null;
+                try {
+                    f = new getBlogsForm();
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
+        }
     }
 }

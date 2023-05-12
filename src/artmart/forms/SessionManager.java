@@ -5,59 +5,64 @@
  */
 package artmart.forms;
 
-import com.codename1.io.Preferences;
+import artmart.entities.User;
 
 /**
  *
  * @author 21697
- */
-public class SessionManager {
-    
-public static Preferences pref ; // 3ibara memoire sghira nsajlo fiha data 
-    
-    
-    
-    // hethom données ta3 user lyt7b tsajlhom fi session  ba3d login 
-    private static int id ; 
-    private static String userName ; 
-    private static String password ;
-    
-    public static Preferences getPref() {
-        return pref;
+ */public class SessionManager {
+    private static SessionManager instance;
+    private String sessionData,role;
+    private int userId;
+    private User user;
+
+    private SessionManager() {
+        // Private constructor to prevent instantiation
     }
 
-    public static void setPref(Preferences pref) {
-        SessionManager.pref = pref;
+    public static synchronized SessionManager getInstance() {
+        if (instance == null) {
+            instance = new SessionManager();
+        }
+        return instance;
     }
 
-    public static int getId() {
-        return pref.get("id",id);// kif nheb njib id user connecté apres njibha men pref 
+    public void setSession(String data) {
+        sessionData = data;
     }
 
-    public static void setId(int id) {
-        pref.set("id",id);//nsajl id user connecté  w na3tiha identifiant "id";
+    public String getSession() {
+        return sessionData;
     }
 
-    public static String getUserName() {
-        return pref.get("username",userName);
+    public void setUserId(int id) {
+        userId = id;
     }
 
-    public static void setUserName(String userName) {
-         pref.set("username",userName);
+    public int getUserId() {
+        return userId;
     }
 
-
-    public static String getPassword() {
-        return pref.get("password",password);
+    public void clearSession() {
+        sessionData = null;
+        userId = 0;
     }
 
-    public static void setPassword(String password) {
-         pref.set("password",password);
+    public String getRole() {
+        return role;
     }
 
-   
-    
-    
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
     
 }
 

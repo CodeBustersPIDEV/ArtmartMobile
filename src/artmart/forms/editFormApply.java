@@ -18,7 +18,10 @@ public class editFormApply extends BaseForm {
       ApplyWebService service = new ApplyWebService();
     public editFormApply(Apply e) throws ParseException, IOException {
      this.init(Resources.getGlobalResources());
- 
+  String session = SessionManager.getInstance().getSession();
+    int userId = SessionManager.getInstance().getUserId();
+    String role = SessionManager.getInstance().getRole();
+     
  Label cp = new Label("Custom Product Name: " + e.getCustomproduct());
 Label artist = new Label("Artist Name: " + e.getArtist());
 Label status = new Label("Status: " + e.getStatus());
@@ -71,10 +74,11 @@ deleteButton.addActionListener(cc -> {
          }
     myForm.show();
 });
-
+this.add(goToFormButton);
 // add the buttons to the form
-this.addAll(goToFormButton, applyButton, deleteButton);
+if(role.equals("admin")||role.equals("artist")){
+this.addAll( applyButton, deleteButton);
 
-    
+}
 
 }}

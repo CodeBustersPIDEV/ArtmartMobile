@@ -26,14 +26,100 @@ public class BaseForm extends com.codename1.ui.Form {
 
         });
 
-        tb.addMaterialCommandToSideMenu("Ready Products", FontImage.MATERIAL_INVENTORY, e -> {
-            getReadyProductForm f = null;
-            try {
-                f = new getReadyProductForm();
-            } catch (IOException ex) {
-            }
-            f.show();
-        });
+            tb.addMaterialCommandToSideMenu("Ready Products", FontImage.MATERIAL_INVENTORY, e -> {
+                getReadyProductForm f = null;
+                try {
+                    f = new getReadyProductForm();
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
+
+            tb.addMaterialCommandToSideMenu("Custom Products", FontImage.MATERIAL_LIST, e -> {
+                getCustomProductForm f = null;
+                try {
+                    f = new getCustomProductForm();
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
+            
+            tb.addMaterialCommandToSideMenu("Orders", FontImage.MATERIAL_LIST, e -> {
+                GetWishlistForm f = null;
+                try {
+                    f = new GetWishlistForm();
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
+
+            tb.addMaterialCommandToSideMenu("Categories", FontImage.MATERIAL_LIST, e -> {
+                getCategorieForm f = null;
+                try {
+                    f = new getCategorieForm();
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
+            tb.addMaterialCommandToSideMenu("Applies", FontImage.MATERIAL_DONE, e -> {
+                getApplyForm f = null;
+                try {
+                    f = new getApplyForm();
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
+            tb.addMaterialCommandToSideMenu("Blogs", FontImage.MATERIAL_LIST, e -> {
+                getBlogsForm f = null;
+                try {
+                    f = new getBlogsForm();
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
+            tb.addMaterialCommandToSideMenu("Blogs Categories", FontImage.MATERIAL_LIST, e -> {
+                getBlogCategoryForm f = null;
+                try {
+                    f = new getBlogCategoryForm();
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
+            tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
+                HomeEvent f = null;
+                try {
+                    f = new HomeEvent();
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
+
+            tb.addMaterialCommandToSideMenu("Tags", FontImage.MATERIAL_CATCHING_POKEMON, e -> {
+                getTagsForm f = null;
+                try {
+                    f = new getTagsForm();
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
+            tb.addMaterialCommandToSideMenu("Users list", FontImage.MATERIAL_LIST, e -> {
+                GetUserForm f = null;
+                try {
+                    f = new GetUserForm();
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
+            tb.addMaterialCommandToSideMenu("LogOut", FontImage.MATERIAL_LIST, e -> {
+                Storage.getInstance().writeObject("user_authenticated", false);
+                SessionManager.getInstance().clearSession();
+                SignInForm f = null;
+                try {
+                    f = new SignInForm(theme);
+                } catch (IOException ex) {
+                }
+                f.show();
+            });
 
         tb.addMaterialCommandToSideMenu("Custom Products", FontImage.MATERIAL_LIST, e -> {
             getCustomProductForm f = null;

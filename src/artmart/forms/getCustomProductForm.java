@@ -21,11 +21,20 @@ import com.codename1.ui.util.Resources;
 import java.util.Collections;
 import java.util.Comparator;
 import artmart.entities.CustomProduct;
+import com.codename1.components.ImageViewer;
 import com.codename1.io.FileSystemStorage;
 import static com.codename1.io.Log.e;
 import com.codename1.io.Storage;
+import com.codename1.ui.Display;
+import com.codename1.ui.EncodedImage;
+import com.codename1.ui.FontImage;
+import com.codename1.ui.Image;
+import com.codename1.ui.Toolbar;
+import com.codename1.ui.URLImage;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class getCustomProductForm extends BaseForm {
@@ -34,12 +43,24 @@ public class getCustomProductForm extends BaseForm {
     private List<CustomProduct> customproduct;
     private TextField searchField;
     private Button statisticsButton;
- 
+     private Timer messageTimer;
+     
+     
 CustomProduct product = new CustomProduct();
-
+ 
     public getCustomProductForm() throws IOException {
+          Button cancel = new Button(FontImage.MATERIAL_RESTORE);
+        cancel.addActionListener(e -> {
+            getAllCp();
+        });
+Toolbar toolbar = new Toolbar();
+        setToolbar(toolbar);
+
+        // Show the welcome message for 5 seconds
+        showMessage("Welcome To Custom Product", 5000);
         Button applyButton = new Button("+");
 applyButton.addActionListener(ee -> {
+    
     newCustomProductForm f = null;
             try {
                 f = new newCustomProductForm();
@@ -181,10 +202,22 @@ try (OutputStream os = fs.openOutputStream(filePath)) {
         model.removeAll();
         for (CustomProduct cp : customproduct) {
             Map<String, Object> item = new HashMap<>();
-            item.put("Line1", cp.getName());  
-                   item.put("Line2", cp.getDescription());  
-                      ;  
-            item.put("Line3", cp.getCustomProductId());
+            
+             EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(400, 400, 0xffcccccc), true);
+        String filename = cp.getImage().substring(cp.getImage().lastIndexOf("/") + 1);
+
+        System.out.println(filename);
+// Create a URLImage with the image URL and placeholder
+        URLImage imgUrl = URLImage.createToStorage(placeholder, filename, cp.getImage());
+
+// Create an ImageViewer to display the image
+        ImageViewer imageViewer = new ImageViewer(imgUrl);
+        Label label=new Label();
+        label.setIcon(imgUrl);
+            item.put("Line1", label);  
+                   item.put("Line2", cp.getName());  
+                       item.put("Line3", cp.getDescription());  
+      
             model.addItem(item);
         }
         cpList.addActionListener(new ActionListener() {
@@ -192,10 +225,10 @@ try (OutputStream os = fs.openOutputStream(filePath)) {
             public void actionPerformed(ActionEvent evt) {
                 try {
                     Map<String, Object> selectedItem = (Map<String, Object>) cpList.getSelectedItem();
-                    int eventId = (int) selectedItem.get("Line3");
+                    String eventId = (String) selectedItem.get("Line3");
                     CustomProduct selectedEvent = null;
                     for (CustomProduct event : customproduct) {
-                        if (event.getCustomProductId() == eventId) {
+                        if (event.getDescription()== eventId) {
                             selectedEvent = event;
                             break;
                         }
@@ -211,15 +244,45 @@ try (OutputStream os = fs.openOutputStream(filePath)) {
 
    
     }
+private void showMessage(String message, int duration) {
+        if (messageTimer != null) {
+            messageTimer.cancel();
+        }
 
+        // Set the message in the toolbar title
+        getToolbar().setTitle(message);
+
+        // Create a timer to reset the title after the duration
+        messageTimer = new Timer();
+        messageTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                Display.getInstance().callSerially(() -> {
+                    // Reset the toolbar title
+                    getToolbar().setTitle("ArtMart");
+                });
+            }
+        }, duration);
+    }
     private void updateList() {
         DefaultListModel<Map<String, Object>> model = (DefaultListModel<Map<String, Object>>) cpList.getModel();
         model.removeAll();
         for (CustomProduct p : customproduct) {
             Map<String, Object> item = new HashMap<>();
-            item.put("Line1",   p.getName());
-            item.put("Line2", p.getDescription());  
-            item.put("Line3", p.getCustomProductId());
+       EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(400, 400, 0xffcccccc), true);
+        String filename = p.getImage().substring(p.getImage().lastIndexOf("/") + 1);
+
+        System.out.println(filename);
+// Create a URLImage with the image URL and placeholder
+        URLImage imgUrl = URLImage.createToStorage(placeholder, filename, p.getImage());
+
+// Create an ImageViewer to display the image
+        ImageViewer imageViewer = new ImageViewer(imgUrl);
+        Label label=new Label();
+        label.setIcon(imgUrl);
+            item.put("Line1", label);  
+                   item.put("Line2", p.getName());  
+                       item.put("Line3", p.getDescription());  
             model.addItem(item);
         }
     }

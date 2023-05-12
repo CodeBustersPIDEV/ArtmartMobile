@@ -14,6 +14,7 @@ import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Image;
+import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
@@ -95,11 +96,23 @@ public class GetUserForm extends BaseForm {
         model.removeAll();
         for (User u : user) {
             Map<String, Object> item = new HashMap<>();
+      
+             EncodedImage placeholder = EncodedImage.createFromImage(Image.createImage(400, 400, 0xffcccccc), true);
+        String filename = u.getPicture().substring(u.getPicture().lastIndexOf("/") + 1);
 
-            item.put("Line1", u.getUsername());
-            item.put("Line2", u.getName());
+        System.out.println(filename);
+// Create a URLImage with the image URL and placeholder
+        URLImage imgUrl = URLImage.createToStorage(placeholder, filename, u.getPicture());
+
+// Create an ImageViewer to display the image
+        ImageViewer imageViewer = new ImageViewer(imgUrl);
+        Label label=new Label();
+        label.setIcon(imgUrl);
+            item.put("Line1", label); 
+      
+            item.put("Line2", u.getUsername());
             item.put("Line3", u.getEmail());
-            item.put("Line4", u.getPhone_nbr());
+
             item.put("Line5", u.getUser_id());
 
             model.addItem(item);

@@ -25,20 +25,25 @@ import com.codename1.ui.validation.LengthConstraint;
 import com.codename1.ui.validation.Validator;
 import java.io.IOException;
 
-public class editFormCustomProduct extends BaseForm {
+public class editFormCpArtist extends BaseForm {
 
         CategorieWebService serviceCat = new CategorieWebService();
         CustomproductWebService service = new CustomproductWebService();
-    public editFormCustomProduct(CustomProduct e) throws ParseException, IOException {
+    public editFormCpArtist(CustomProduct e) throws ParseException, IOException {
         this.init(Resources.getGlobalResources());
         System.out.println(e);
         TextField nomField = new TextField(e.getName(), "name");
+        nomField.setEditable(false);
         TextField descriptifField = new TextField(e.getDescription(), "description");
+          descriptifField.setEditable(false);
         TextField dimfield = new TextField(e.getDimensions(), "dimensions");
+                  dimfield.setEditable(false);
         TextField weightfield = new TextField(e.getWeight() + "", "weight");
-      
+                      weightfield.setEditable(false);
         TextField clientfield = new TextField(e.getClient() + "", "client");
+                  clientfield.setEditable(false);
         TextField materialfield = new TextField(e.getMaterial(), "materiel");
+                     materialfield.setEditable(false);
        TextField imagefield = new TextField(e.getImage(), "image");
         ComboBox<Category> categorieField = new ComboBox<>();
         List<Category> categories = serviceCat.getAllCategorie();
@@ -75,7 +80,7 @@ public class editFormCustomProduct extends BaseForm {
 // Create an ImageViewer to display the image
         ImageViewer imageViewer = new ImageViewer(imgUrl);
     this.add(imageViewer);
-        this.add(imagefield);
+
         this.add(categorieField);
      Validator validator = new Validator();
         validator.addConstraint(nomField, new LengthConstraint(1, "Nom is required"));

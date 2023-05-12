@@ -5,15 +5,16 @@
  */
 package artmart.forms;
 
-import com.codename1.io.Preferences;
+import artmart.entities.User;
 
 /**
  *
  * @author 21697
  */public class SessionManager {
     private static SessionManager instance;
-    private String sessionData;
+    private String sessionData,role;
     private int userId;
+    private User user;
 
     private SessionManager() {
         // Private constructor to prevent instantiation
@@ -46,5 +47,22 @@ import com.codename1.io.Preferences;
         sessionData = null;
         userId = 0;
     }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+    
 }
 

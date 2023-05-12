@@ -24,7 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import artmart.forms.SessionManager;
- 
+import artmart.forms.getReadyProductForm;
+
 /**
  *
  * @author 21697
@@ -108,7 +109,7 @@ public class UserWebService {
         connection = new ConnectionRequest();
         connection.setInsecure(true);
         this.connection.setUrl(BASE_URL + "/user/edit/" + e.getUser_id());
-            this.connection.setHttpMethod("POST");
+        this.connection.setHttpMethod("POST");
 
         connection.addArgument("name", e.getName());
         connection.addArgument("username", e.getUsername());
@@ -122,53 +123,61 @@ public class UserWebService {
         NetworkManager.getInstance().addToQueue(connection);
     }
 
-   public void signin(TextField username, TextField password, Resources rs) {
+    public void signin(TextField username, TextField password, Resources rs) {
 
-    connection = new ConnectionRequest() {
-        @Override
-        protected void readResponse(InputStream input) throws IOException {
-    JSONParser parser = new JSONParser();
-    Map<String, Object> response = parser.parseJSON(new InputStreamReader(input));
-int id;
-    if (response != null && response.containsKey("success")) {
-       String successStr = (String) response.get("success");
-boolean success = Boolean.parseBoolean(successStr);
+        connection = new ConnectionRequest() {
+            @Override
+            protected void readResponse(InputStream input) throws IOException {
+                JSONParser parser = new JSONParser();
+                Map<String, Object> response = parser.parseJSON(new InputStreamReader(input));
+                int id;
+                if (response != null && response.containsKey("success")) {
+                    String successStr = (String) response.get("success");
+                    boolean success = Boolean.parseBoolean(successStr);
 
-        if (success) {
-            
-            double data =(double)response.get("data");
-            id=(int)data;
-            SessionManager.getInstance().setUserId(id);
-            System.out.println(id);
-             GetUserForm f = null;
-            try {
-                f = new GetUserForm();
-            } catch (IOException ex) {
+                    if (success) {
+
+                        double data = (double) response.get("data");
+                        String Role = (String) response.get("role");
+                        
+                        id = (int) data;
+                        SessionManager.getInstance().setUserId(id);
+                        SessionManager.getInstance().setRole(Role);
+
+                        System.out.println(id);
+                        getReadyProductForm f = null;
+                try {
+                    f = new getReadyProductForm();
+                } catch (IOException ex) {
+                }
+                f.show();
+
+                    } else {
+                        // Handle failed login
+                        if (response.containsKey("message")) {
+                            String errorMessage = (String) response.get("message");
+                            Dialog.show("Login Failed", errorMessage, "OK", null);
+                        } else {
+                            Dialog.show("Login Failed", "Unknown error occurred", "OK", null);
+                        }
+                    }
+                } else {
+                    Dialog.show("Login Failed", "Invalid server response", "OK", null);
+                }
             }
-            f.show();
-        } else {
-            // Handle failed login
-            if (response.containsKey("message")) {
-                String errorMessage = (String) response.get("message");
-                Dialog.show("Login Failed", errorMessage, "OK", null);
-            } else {
-                Dialog.show("Login Failed", "Unknown error occurred", "OK", null);
-            }
-        }
-    } else {
-        Dialog.show("Login Failed", "Invalid server response", "OK", null);
-    }}};
+        };
 
-    // Set the URL for the login request
-    String loginUrl = BASE_URL + "/user/signin"+"?username="+username.getText().toString()+
-                "&password="+password.getText().toString(); // Replace with your authentication endpoint
-    this.connection.setUrl(loginUrl);
-    this.connection.setHttpMethod("POST");
+        // Set the URL for the login request
+        String loginUrl = BASE_URL + "/user/signin" + "?username=" + username.getText().toString()
+                + "&password=" + password.getText().toString(); // Replace with your authentication endpoint
+        this.connection.setUrl(loginUrl);
+        this.connection.setHttpMethod("POST");
 
-    // Add the username and password as request parameters
-    connection.addArgument("username", username.getText());
-    connection.addArgument("password", password.getText());
+        // Add the username and password as request parameters
+        connection.addArgument("username", username.getText());
+        connection.addArgument("password", password.getText());
 
-    // Send the login request
-    NetworkManager.getInstance().addToQueue(this.connection);
-}}
+        // Send the login request
+        NetworkManager.getInstance().addToQueue(this.connection);
+    }
+}

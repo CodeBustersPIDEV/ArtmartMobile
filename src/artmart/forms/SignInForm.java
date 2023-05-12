@@ -16,8 +16,10 @@ import com.codename1.ui.util.Resources;
 public class SignInForm extends BaseForm {
 
      User user=new User(); // Variable to store the user ID
-      UserWebService  userservice = new UserWebService();
+
     public SignInForm(Resources res) throws IOException {
+        this.init(Resources.getGlobalResources());
+        UserWebService userservice = new UserWebService();
         EncodedImage originalImg = EncodedImage.createFromImage(Image.createImage("/img.png"), false);
         EncodedImage scaledImg = (EncodedImage) originalImg.scaled(800, 500);
 

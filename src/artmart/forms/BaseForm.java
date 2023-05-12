@@ -25,16 +25,22 @@ public class BaseForm extends com.codename1.ui.Form {
         taglineLabel.setAlignment(CENTER);
         taglineLabel.setVerticalAlignment(CENTER);
         Container taglineContainer = BorderLayout.south(taglineLabel);
+
         taglineContainer.setUIID("SideCommand");
         if (userId != 0) {
-        tb.addMaterialCommandToSideMenu("Cart", FontImage.MATERIAL_LIST, e -> {
-              GetWishlistForm f;
-            try {
-                f = new GetWishlistForm();
+
+            tb.addComponentToSideMenu(taglineContainer);
+            tb.addMaterialCommandToSideMenu("ArtMart", FontImage.MATERIAL_HOME, e -> {
+
+            });
+
+            tb.addMaterialCommandToSideMenu("Ready Products", FontImage.MATERIAL_INVENTORY, e -> {
+                getReadyProductForm f = null;
+                try {
+                    f = new getReadyProductForm();
+                } catch (IOException ex) {
+                }
                 f.show();
-            } catch (IOException ex) {
-                System.out.println(ex);
-            }
             });
 
             tb.addMaterialCommandToSideMenu("Custom Products", FontImage.MATERIAL_LIST, e -> {

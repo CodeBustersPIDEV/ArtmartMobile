@@ -158,7 +158,7 @@ boolean success = Boolean.parseBoolean(successStr);
     } else {
         Dialog.show("Login Failed", "Invalid server response", "OK", null);
     }}};
-    this.connection.setInsecure(true);
+
     // Set the URL for the login request
     String loginUrl = BASE_URL + "/user/signin"+"?username="+username.getText().toString()+
                 "&password="+password.getText().toString(); // Replace with your authentication endpoint

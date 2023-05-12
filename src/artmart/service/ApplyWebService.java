@@ -85,6 +85,7 @@ public void applyCustomProduct(int applyId) {
 
     NetworkManager.getInstance().addToQueueAndWait(connection);
 }
+
 public void delApply(Apply c) {
         connection = new ConnectionRequest();
         connection.setInsecure(true);

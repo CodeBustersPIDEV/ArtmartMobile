@@ -1,13 +1,13 @@
 package artmart.forms;
 
 import com.codename1.io.Storage;
-import artmart.forms.Event.Artist.AllEventsForm;
 import artmart.forms.Event.HomeEvent;
 import com.codename1.ui.*;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.util.Resources;
 import java.io.IOException;
-import artmart.forms.SessionManager;
+import artmart.service.UserWebService;
+import com.codename1.l10n.ParseException;
 
 public class BaseForm extends com.codename1.ui.Form {
 
@@ -84,11 +84,47 @@ public class BaseForm extends com.codename1.ui.Form {
                 }
                 f.show();
             });
-tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
-            HomeEvent f = null;
-            try {
-                f = new HomeEvent();
-            } catch (IOException ex) {
+
+            if (role.equals("admin")) {
+                tb.addMaterialCommandToSideMenu("Users list", FontImage.MATERIAL_LIST, e -> {
+                    GetUserForm f = null;
+                    try {
+                        f = new GetUserForm();
+                    } catch (IOException ex) {
+                    }
+                    f.show();
+                });
+                tb.addMaterialCommandToSideMenu("Tags", FontImage.MATERIAL_CATCHING_POKEMON, e -> {
+                    getTagsForm f = null;
+                    try {
+                        f = new getTagsForm();
+                    } catch (IOException ex) {
+                    }
+                    f.show();
+                });
+                tb.addMaterialCommandToSideMenu("Blogs Categories", FontImage.MATERIAL_LIST, e -> {
+                    getBlogCategoryForm f = null;
+                    try {
+                        f = new getBlogCategoryForm();
+                    } catch (IOException ex) {
+                    }
+                    f.show();
+                });
+
+            }  
+            if(role.equals("artist")||role.equals("client")){
+                UserWebService userv= new UserWebService();
+                 tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_LIST, e -> {
+                    editUserForm f = null;
+                    try {
+                        try {
+                            f = new editUserForm(userv.getUserInfo(userId));
+                        } catch (ParseException ex) {
+                        }
+                    } catch (IOException ex) {
+                    }
+                    f.show();
+                });
             }
             f.show();
         });  

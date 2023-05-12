@@ -47,6 +47,36 @@ public class UserWebService {
         }
         return instance;
     }
+     User user = null;
+
+public User getUserInfo(int id) {
+    String url = BASE_URL + "/user/user/" + id;
+    this.connection.setUrl(url);
+    this.connection.setHttpMethod("GET");
+
+   
+    this.connection.addResponseListener(e -> {
+        if (this.connection.getResponseCode() == 200) {
+            String response = new String(this.connection.getResponseData());
+
+            JSONObject jsonResponse = new JSONObject(response);
+            user = new User(
+                    jsonResponse.getInt("user_id"),
+                    jsonResponse.getInt("phonenumber"),
+                    jsonResponse.getString("name"),
+                    jsonResponse.getString("email"),
+                    jsonResponse.getString("username"),
+                    jsonResponse.getString("password"),
+                    jsonResponse.getString("role"),
+                    jsonResponse.getString("file")
+            );
+        }
+    });
+
+    NetworkManager.getInstance().addToQueueAndWait(this.connection);
+
+    return user;
+}
 
     public List<User> getAllU() {
         String url = BASE_URL + "/user";

@@ -1,13 +1,13 @@
 package artmart.forms;
 
 import com.codename1.io.Storage;
-import artmart.forms.Event.Artist.AllEventsForm;
 import artmart.forms.Event.HomeEvent;
 import com.codename1.ui.*;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.util.Resources;
 import java.io.IOException;
-import artmart.forms.SessionManager;
+import artmart.service.UserWebService;
+import com.codename1.l10n.ParseException;
 
 public class BaseForm extends com.codename1.ui.Form {
 
@@ -113,6 +113,20 @@ public class BaseForm extends com.codename1.ui.Form {
                     f.show();
                 });
 
+            }  
+            if(role.equals("artist")||role.equals("client")){
+                UserWebService userv= new UserWebService();
+                 tb.addMaterialCommandToSideMenu("Profile", FontImage.MATERIAL_LIST, e -> {
+                    editUserForm f = null;
+                    try {
+                        try {
+                            f = new editUserForm(userv.getUserInfo(userId));
+                        } catch (ParseException ex) {
+                        }
+                    } catch (IOException ex) {
+                    }
+                    f.show();
+                });
             }
             tb.addMaterialCommandToSideMenu("LogOut", FontImage.MATERIAL_LIST, e -> {
                 Storage.getInstance().writeObject("user_authenticated", false);

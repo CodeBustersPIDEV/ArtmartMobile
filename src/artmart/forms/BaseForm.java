@@ -89,32 +89,51 @@ public class BaseForm extends com.codename1.ui.Form {
                 f.show();
             });
 
-            tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
-                if (role.equals("admin")) {
+       if (role.equals("admin")) {
+
+                tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
                     AllEventsAdminForm f = null;
                     try {
                         f = new AllEventsAdminForm();
                     } catch (IOException ex) {
                     }
                     f.show();
-                }
-                if (role.equals("artist")) {
+                });
+                tb.addMaterialCommandToSideMenu(" Participations", FontImage.MATERIAL_EVENT, e -> {
+                    AllEventsAdminForm f = null;
+                    try {
+                        f = new AllEventsAdminForm();
+                    } catch (IOException ex) {
+                    }
+                    f.show();
+                });
+            } else if (role.equals("artist")) {
+                tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
                     AllEventsForm f = null;
                     try {
                         f = new AllEventsForm();
                     } catch (IOException ex) {
                     }
                     f.show();
-                }
-                if (role.equals("client")) {
+                });
+                tb.addMaterialCommandToSideMenu(" Participations", FontImage.MATERIAL_EVENT, e -> {
+                    AllEventsForm f = null;
+                    try {
+                        f = new AllEventsForm();
+                    } catch (IOException ex) {
+                    }
+                    f.show();
+                });
+            } else {
+                tb.addMaterialCommandToSideMenu(" Events", FontImage.MATERIAL_EVENT, e -> {
                     AllEventsClientForm f = null;
                     try {
                         f = new AllEventsClientForm();
                     } catch (IOException ex) {
                     }
                     f.show();
-                }
-            });
+                });
+            }
 
             if (role.equals("admin")) {
                 tb.addMaterialCommandToSideMenu("Users list", FontImage.MATERIAL_LIST, e -> {

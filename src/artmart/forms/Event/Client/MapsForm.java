@@ -1,6 +1,6 @@
+
 package artmart.forms.Event.Client;
 
-import artmart.forms.Event.Artist.AllEventsForm;
 import com.codename1.components.ToastBar;
 import com.codename1.googlemaps.MapContainer;
 import com.codename1.io.CharArrayReader;
@@ -20,10 +20,6 @@ import com.codename1.ui.plaf.Style;
 import java.io.IOException;
 import java.util.List;
 
-/**
- *
- * @author Chadi
- */
 public class MapsForm {
 
     Form f = new Form();
@@ -47,10 +43,10 @@ public class MapsForm {
             myForm.show();
         });
 
-        Button btnMoveCamera = new Button("Mon Pays");
-        btnMoveCamera.addActionListener(e -> {
-            cnt.setCameraPosition(new Coord(36.8189700, 10.1657900));
-        });
+//        Button btnMoveCamera = new Button("Mon Pays");
+//        btnMoveCamera.addActionListener(e -> {
+//            cnt.setCameraPosition(new Coord(36.8189700, 10.1657900));
+//        });
         Style s = new Style();
         s.setFgColor(0xff0000);
         s.setBgTransparency(0);
@@ -93,7 +89,8 @@ public class MapsForm {
         Container root = new Container();
         f.setLayout(new BorderLayout());
         f.addComponent(BorderLayout.CENTER, cnt);
-        f.addComponent(BorderLayout.SOUTH, btnMoveCamera);
+//        f.addComponent(BorderLayout.SOUTH, btnMoveCamera);
+        f.addComponent(BorderLayout.SOUTH, goToFormButton);
         f.show();
 //        f.getToolbar().addCommandToRightBar("back", null, (ev)->{ new AllEventsClientForm().show();});
 

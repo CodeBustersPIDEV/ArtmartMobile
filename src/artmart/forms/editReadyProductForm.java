@@ -181,11 +181,11 @@ public class editReadyProductForm extends BaseForm {
             myForm.show();
         });
 
-        Button deleteButton = new Button("Delete");
+      Button deleteButton = new Button("Delete");
         deleteButton.addActionListener(cc -> {
-            getCustomProductForm myForm = null;
+            getReadyProductForm myForm = null;
             try {
-                myForm = new getCustomProductForm();
+                myForm = new getReadyProductForm();
             } catch (IOException ex) {
             }
             service.deleteReadyProduct(e);

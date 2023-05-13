@@ -106,7 +106,37 @@ public class getProductReviewsForm extends BaseForm {
         prList = new MultiList(new DefaultListModel<>());
         add(prList);
         getAllProductReviews(id);
+ 
+if (role.equals("admin")) {
+            prList.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                    try {
+                        Map<String, Object> selectedItem = (Map<String, Object>) prList.getSelectedItem();
+                        float eventId = (float) selectedItem.get("Line3");
+                        ProductReview selectedEvent = null;
+                        for (ProductReview event : productreview) {
+                            if (event.getRating() == eventId) {
+                                selectedEvent = event;
+                                break;
+                            }
+                        }
+                        if (selectedEvent != null) {
+                            showProductReviewForm myForm2 = new showProductReviewForm(selectedEvent);
+                            myForm2.show();
+                        } else {
+                            System.out.println("Selected event not found!");
+                        }
+                    } catch (ClassCastException ex) {
+                        System.out.println("Invalid selected item format!");
+                    } catch (ParseException ex) {
+                    } catch (IOException ex) {
+                    }
+                    // Handle IOException
 
+                }
+            });
+        }
     }
 
     private void getAllProductReviews(int id) {
@@ -123,4 +153,5 @@ public class getProductReviewsForm extends BaseForm {
             model.addItem(item);
         }
     }
+   
 }

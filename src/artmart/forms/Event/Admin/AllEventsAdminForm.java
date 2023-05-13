@@ -14,6 +14,8 @@ import com.codename1.l10n.ParseException;
 import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
+import com.codename1.ui.Font;
+import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
@@ -39,7 +41,10 @@ public class AllEventsAdminForm extends BaseForm {
     private TextField searchField;
 
     public AllEventsAdminForm() throws IOException {
-
+        Label headingLabel = new Label("Events");
+        headingLabel.getUnselectedStyle().setFgColor(0xe35d59);
+        headingLabel.getUnselectedStyle().setFont(Font.createSystemFont(Font.FACE_MONOSPACE, Font.STYLE_BOLD, Font.SIZE_LARGE));
+        addComponent(headingLabel);
         Button addEventBtn = new Button("➕");
         addEventBtn.addActionListener(ee -> {
             AddEventForm f = null;
@@ -141,8 +146,10 @@ public class AllEventsAdminForm extends BaseForm {
         for (Event event : events) {
             Map<String, Object> item = new HashMap<>();
             item.put("Line1", event.getName());
-            item.put("Line2", event.getDescription());
-            item.put("Line3", event.getEventid());
+            item.put("Line2", event.getType());
+            item.put("Line3", event.getLocation());
+            item.put("Line4", event.getStartdate() + " > " + event.getEnddate());
+            item.put("Line5", event.getEventid());
             model.addItem(item);
         }
     }

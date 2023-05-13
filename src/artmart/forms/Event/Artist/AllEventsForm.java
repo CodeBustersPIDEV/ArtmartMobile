@@ -18,9 +18,12 @@ import artmart.entities.Event;
 import artmart.forms.BaseForm;
 import artmart.forms.SessionManager;
 import artmart.service.Event.EventWebService;
+import com.codename1.ui.Font;
+import com.codename1.ui.Label;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
+import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.list.DefaultListModel;
 import com.codename1.ui.util.Resources;
 import java.io.IOException;
@@ -37,7 +40,10 @@ public class AllEventsForm extends BaseForm {
     String role = SessionManager.getInstance().getRole();
 
     public AllEventsForm() throws IOException {
-
+        Label headingLabel = new Label("Events");
+        headingLabel.getUnselectedStyle().setFgColor(0xe35d59);
+        headingLabel.getUnselectedStyle().setFont(Font.createSystemFont(Font.FACE_MONOSPACE, Font.STYLE_BOLD, Font.SIZE_LARGE));
+        addComponent(headingLabel);
         Button addEventBtn = new Button("➕");
         addEventBtn.addActionListener(ee -> {
             AddEventForm f = null;
@@ -86,18 +92,20 @@ public class AllEventsForm extends BaseForm {
             });
             updateList();
         });
-        addComponent(BorderLayout.south(sortButton));
 
+        this.add(sortButton);
         this.add(addEventBtn);
 
         evList = new MultiList(new DefaultListModel<>());
-        add(evList);
+        Container sContainer = new Container(new BoxLayout(BoxLayout.Y_AXIS));
+        sContainer.add(evList);
+        this.add(sContainer);
         getAllEvents();
     }
 
     private void getAllEvents() {
         EventWebService service = new EventWebService();
-        events = service.getArtistEvents(4);
+        events = service.getArtistEvents(userId);
         System.out.println(events);
         DefaultListModel<Map<String, Object>> model = (DefaultListModel<Map<String, Object>>) evList.getModel();
         model.removeAll();
@@ -139,8 +147,10 @@ public class AllEventsForm extends BaseForm {
         for (Event event : events) {
             Map<String, Object> item = new HashMap<>();
             item.put("Line1", event.getName());
-            item.put("Line2", event.getDescription());
-            item.put("Line3", event.getEventid());
+            item.put("Line2", event.getType());
+            item.put("Line3", event.getLocation());
+            item.put("Line4", event.getStartdate() + " > " + event.getEnddate());
+            item.put("Line5", event.getEventid());
             model.addItem(item);
         }
     }

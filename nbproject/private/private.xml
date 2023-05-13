@@ -4,19 +4,34 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/solta/OneDrive/Bureau/Ronn/ArtmartMobile/src/artmart/forms/getpaymntsForm.java</file>
-            <file>file:/C:/Users/solta/OneDrive/Bureau/Ronn/ArtmartMobile/src/artmart/forms/Event/Artist/EditEventForm.java</file>
-            <file>file:/C:/Users/solta/OneDrive/Bureau/Ronn/ArtmartMobile/src/artmart/forms/newBlogForm.java</file>
-            <file>file:/C:/Users/solta/OneDrive/Bureau/Ronn/ArtmartMobile/src/artmart/forms/getBlogsForm.java</file>
-            <file>file:/C:/Users/solta/OneDrive/Bureau/Ronn/ArtmartMobile/src/artmart/service/UserWebService.java</file>
-            <file>file:/C:/Users/solta/OneDrive/Bureau/Ronn/ArtmartMobile/src/artmart/forms/Event/Artist/AddEventForm.java</file>
-            <file>file:/C:/Users/solta/OneDrive/Bureau/Ronn/ArtmartMobile/src/artmart/forms/getCustomProductForm.java</file>
-            <file>file:/C:/Users/solta/OneDrive/Bureau/Ronn/ArtmartMobile/src/artmart/forms/Event/Client/MapsForm.java</file>
-            <file>file:/C:/Users/solta/OneDrive/Bureau/Ronn/ArtmartMobile/src/artmart/service/Event/ParticipationWebService.java</file>
-            <file>file:/C:/Users/solta/OneDrive/Bureau/Ronn/ArtmartMobile/src/artmart/forms/editFormBlog.java</file>
-            <file>file:/C:/Users/solta/OneDrive/Bureau/Ronn/ArtmartMobile/src/artmart/forms/Event/Client/ShowEventForm.java</file>
-            <file>file:/C:/Users/solta/OneDrive/Bureau/Ronn/ArtmartMobile/src/artmart/service/WishlistWebService.java</file>
-            <file>file:/C:/Users/solta/OneDrive/Bureau/Ronn/ArtmartMobile/src/artmart/service/PaymentShipWebService.java</file>
+            <file>jar:file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/lib/CodenameOne_SRC.zip!/com/codename1/ui/Form.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/SignInForm.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/Event/Client/ShowEventForm.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/editFormBlogCategories.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/getCustomProductForm.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/entities/CustomProduct.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/BaseForm.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/chatbot.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/editFormBlog.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/newCustomProductForm.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/editReadyProductForm.java</file>
+            <file>jar:file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/lib/CodenameOne_SRC.zip!/com/codename1/ui/list/MultiList.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/service/CustomproductWebService.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/getReadyProductForm.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/service/CategorieWebService.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/Event/Client/MapsForm.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/main/artmart/MyApplication.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/getApplyForm.java</file>
+            <file>jar:file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/lib/CodenameOne_SRC.zip!/com/codename1/ui/util/Resources.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/entities/Category.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/getCategorieForm.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/editFormCustomProduct.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/service/BlogsWebService.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/newCategorieForm.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/editFormCpArtist.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/editFormApply.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/getProductReviewsForm.java</file>
+            <file>file:/C:/Users/solta/OneDrive/Bureau/Dewn/next%20page/pi/ArtmartMobile/src/artmart/forms/editFormCategorie.java</file>
         </group>
     </open-files>
 </project-private>

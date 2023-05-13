@@ -14,6 +14,8 @@ import java.util.Map;
 import artmart.entities.Event;
 import artmart.forms.BaseForm;
 import artmart.service.Event.EventWebService;
+import com.codename1.ui.Font;
+import com.codename1.ui.Label;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BorderLayout;
@@ -29,6 +31,11 @@ public class AllEventsClientForm extends BaseForm {
     private List<Event> events;
 
     public AllEventsClientForm() throws IOException {
+        Label headingLabel = new Label("Events");
+        headingLabel.getUnselectedStyle().setFgColor(0xe35d59);
+        headingLabel.getUnselectedStyle().setFont(Font.createSystemFont(Font.FACE_MONOSPACE, Font.STYLE_BOLD, Font.SIZE_LARGE));
+        addComponent(headingLabel);
+
         this.init(Resources.getGlobalResources());
         evList = new MultiList(new DefaultListModel<>());
         add(evList);

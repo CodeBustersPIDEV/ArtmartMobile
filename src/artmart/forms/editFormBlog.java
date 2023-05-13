@@ -9,8 +9,10 @@ import java.util.Date;
 import java.util.List;
 import artmart.entities.BlogCategories;
 import artmart.entities.Blogs;
+import artmart.entities.User;
 import artmart.service.BlogsWebService;
 import artmart.service.BlogCategoriesWebService;
+import artmart.service.UserWebService;
 import com.codename1.components.ImageViewer;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
@@ -33,10 +35,15 @@ import net.suuft.libretranslate.Translator;
 public class editFormBlog extends BaseForm {
 
     BlogsWebService service = new BlogsWebService();
+    UserWebService serviceU = new UserWebService();
     BlogCategoriesWebService serviceCat = new BlogCategoriesWebService();
     TextArea contentField = null;
+    String session = SessionManager.getInstance().getSession();
+    int userId = SessionManager.getInstance().getUserId();
+    String role = SessionManager.getInstance().getRole();
 
     public editFormBlog(Blogs e) throws ParseException, IOException {
+        User connectedUser = serviceU.getUserInfo(e.getAuthor());
         this.init(Resources.getGlobalResources());
         System.out.println(e);
         Label titleField = new Label(e.getTitle(), "Title");
@@ -46,10 +53,9 @@ public class editFormBlog extends BaseForm {
 
 //       TextField imagefield = new TextField(e.getImage(), "image");
         Label catField = new Label(e.getCategory().getName());
-        Label ratingField = new Label(String.valueOf(e.getRating()));
-        Label nbViewsField = new Label(String.valueOf(e.getNb_views()));
-        ratingField.setFontIcon(FontImage.MATERIAL_STAR_BORDER);
-
+        Label authorField = new Label("Posted By: " + connectedUser.getName());
+        Label ratingField = new Label("Rating: "+String.valueOf(e.getRating()));
+        Label nbViewsField = new Label("Views: "+String.valueOf(e.getNb_views()));
         ComboBox<Language> toComboBox = new ComboBox<>();
         toComboBox.setModel(new DefaultListModel<>(Language.values()));
 //        ComboBox<BlogCategories> categorieField = new ComboBox<>();
@@ -85,9 +91,19 @@ public class editFormBlog extends BaseForm {
             System.out.println(e.getId());
             Display.getInstance().execute(url);
         });
+        Button goToEditButton = new Button("Edit");
+        goToEditButton.addActionListener(ee -> {
+
+// Load the desired URL
+            String url = "http://localhost:8000/blogs/" + e.getId() + "/edit/"; // Replace with the desired website URL
+            System.out.println(e.getId());
+            Display.getInstance().execute(url);
+        });
+
         this.add(titleField);
 
         this.add(contentField);
+        this.add(authorField);
         this.add(catField);
         this.add(ratingField);
         this.add(nbViewsField);
@@ -145,8 +161,11 @@ public class editFormBlog extends BaseForm {
         buttonContainer2.add(toComboBox);
         buttonContainer2.add(translateButton);
         buttonContainer.add(goToFormButton);
-        buttonContainer.add(deleteButton);
         buttonContainer.add(goToCommentsButton);
+        if (userId == e.getAuthor()) {
+            buttonContainer.add(goToEditButton);
+            buttonContainer.add(deleteButton);
+        }
 
 //        buttonContainer.add(submitButton);
         this.add(buttonContainer2);

@@ -77,6 +77,7 @@ public class BlogsWebService {
         connection.addArgument("content", e.getContent());
         connection.addArgument("author", e.getAuthor() + "");
         connection.addArgument("categoryId", e.getCategory() + "");
+        connection.addArgument("image", e.getImage() + "");
 
         NetworkManager.getInstance().addToQueue(connection);
     }

@@ -19,7 +19,20 @@ public class User {
     public User() {
     }
 
-    public User(int user_id, int phone_nbr, String name, String email, String username, String pwd, String role,String picture) {
+    public User(int user_id, int phone_nbr, String name, String email, String username, String pwd, String role,String picture,boolean blocked) {
+        this.user_id = user_id;
+        this.phone_nbr = phone_nbr;
+        this.name = name;
+        this.email = email;
+        this.username = username;
+        this.pwd = pwd;
+        this.role = role;
+        this.picture=picture;
+        this.blocked=blocked;
+
+
+    }
+ public User(int user_id, int phone_nbr, String name, String email, String username, String pwd, String role,String picture) {
         this.user_id = user_id;
         this.phone_nbr = phone_nbr;
         this.name = name;
@@ -29,8 +42,8 @@ public class User {
         this.role = role;
         this.picture=picture;
 
-    }
 
+    }
     public User(int user_id) {
         this.user_id = user_id;
     }

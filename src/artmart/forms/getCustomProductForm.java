@@ -57,8 +57,6 @@ CustomProduct product = new CustomProduct();
         });
 Toolbar toolbar = new Toolbar();
         setToolbar(toolbar);
-
-        // Show the welcome message for 5 seconds
         showMessage("Welcome To Custom Product", 5000);
         Button applyButton = new Button("+");
 applyButton.addActionListener(ee -> {

@@ -12,7 +12,6 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import artmart.entities.User;
-import artmart.forms.GetUserForm;
 import com.codename1.io.JSONParser;
 import com.codename1.l10n.DateFormat;
 import com.codename1.l10n.SimpleDateFormat;
@@ -24,7 +23,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import artmart.forms.SessionManager;
+import artmart.forms.SignUpForm;
 import artmart.forms.getReadyProductForm;
+import artmart.forms.tokenVerificationForm;
 
 /**
  *
@@ -47,36 +48,36 @@ public class UserWebService {
         }
         return instance;
     }
-     User user = null;
+    User user = null;
 
-public User getUserInfo(int id) {
-    String url = BASE_URL + "/user/user/" + id;
-    this.connection.setUrl(url);
-    this.connection.setHttpMethod("GET");
+    public User getUserInfo(int id) {
+        String url = BASE_URL + "/user/user/" + id;
+        this.connection.setUrl(url);
+        this.connection.setHttpMethod("GET");
 
-   
-    this.connection.addResponseListener(e -> {
-        if (this.connection.getResponseCode() == 200) {
-            String response = new String(this.connection.getResponseData());
+        this.connection.addResponseListener(e -> {
+            if (this.connection.getResponseCode() == 200) {
+                String response = new String(this.connection.getResponseData());
+                JSONObject jsonResponse = new JSONObject(response);
+                System.out.println("Response: " + response); // Add this line to log the response
 
-            JSONObject jsonResponse = new JSONObject(response);
-            user = new User(
-                    jsonResponse.getInt("user_id"),
-                    jsonResponse.getInt("phonenumber"),
-                    jsonResponse.getString("name"),
-                    jsonResponse.getString("email"),
-                    jsonResponse.getString("username"),
-                    jsonResponse.getString("password"),
-                    jsonResponse.getString("role"),
-                    jsonResponse.getString("file")
-            );
-        }
-    });
+                user = new User(
+                        jsonResponse.getInt("user_id"),
+                        jsonResponse.getInt("phonenumber"),
+                        jsonResponse.getString("name"),
+                        jsonResponse.getString("email"),
+                        jsonResponse.getString("username"),
+                        jsonResponse.getString("password"),
+                        jsonResponse.getString("role"),
+                        jsonResponse.getString("file")
+                );
+            }
+        });
 
-    NetworkManager.getInstance().addToQueueAndWait(this.connection);
+        NetworkManager.getInstance().addToQueueAndWait(this.connection);
 
-    return user;
-}
+        return user;
+    }
 
     public List<User> getAllU() {
         String url = BASE_URL + "/user";
@@ -91,6 +92,9 @@ public User getUserInfo(int id) {
                 JSONArray jsonEvents = new JSONArray(response);
                 for (int i = 0; i < jsonEvents.length(); i++) {
                     JSONObject jsonEvent = jsonEvents.getJSONObject(i);
+                    String blockedString = jsonEvent.getString("blocked");
+                    boolean blocked = blockedString.equals("1");
+                    System.out.println(blocked);
                     User event = new User(
                             jsonEvent.getInt("user_id"),
                             jsonEvent.getInt("phonenumber"),
@@ -99,7 +103,8 @@ public User getUserInfo(int id) {
                             jsonEvent.getString("username"),
                             jsonEvent.getString("password"),
                             jsonEvent.getString("role"),
-                            jsonEvent.getString("file")
+                            jsonEvent.getString("file"),
+                            blocked
                     );
                     events.add(event);
                 }
@@ -123,7 +128,16 @@ public User getUserInfo(int id) {
         connection.addArgument("phonenumber", Integer.toString(e.getPhone_nbr()));
         connection.addArgument("birthday", e.getBirthday());
         connection.addArgument("role", e.getRole());
-
+        connection.addResponseListener(r -> {
+            if (connection.getResponseCode() == 201) {
+                SignUpForm f = null;
+                try {
+                    f = new SignUpForm();
+                } catch (IOException ex) {
+                }
+                f.show();
+            }
+        });
         NetworkManager.getInstance().addToQueue(connection);
     }
 
@@ -169,19 +183,34 @@ public User getUserInfo(int id) {
 
                         double data = (double) response.get("data");
                         String Role = (String) response.get("role");
-                        
-                        id = (int) data;
-                        SessionManager.getInstance().setUserId(id);
-                        SessionManager.getInstance().setRole(Role);
+                        String enableStr = (String) response.get("enabled");
+                        boolean enabled = Boolean.parseBoolean(enableStr);
 
-                        System.out.println(id);
-                        getReadyProductForm f = null;
-                try {
-                    f = new getReadyProductForm();
-                } catch (IOException ex) {
-                }
-                f.show();
-    
+                        String blockedStr = (String) response.get("blocked");
+
+                        boolean blocked = Boolean.parseBoolean(blockedStr);
+                        id = (int) data;
+                        if (enabled && !blocked) {
+                            SessionManager.getInstance().setUserId(id);
+                            SessionManager.getInstance().setRole(Role);
+
+                            System.out.println(id);
+                            getReadyProductForm f = null;
+                            try {
+                                f = new getReadyProductForm();
+                            } catch (IOException ex) {
+                            }
+                            f.show();
+                        } else if (!enabled && !blocked) {
+                            tokenVerificationForm f2 = null;
+                            try {
+                                f2 = new tokenVerificationForm(id);
+                            } catch (IOException ex) {
+                            }
+                            f2.show();
+                        } else {
+                            Dialog.show("Blocked", "This account is blocked", "OK", null);
+                        }
                     } else {
                         // Handle failed login
                         if (response.containsKey("message")) {
@@ -209,5 +238,65 @@ public User getUserInfo(int id) {
 
         // Send the login request
         NetworkManager.getInstance().addToQueue(this.connection);
+    }
+
+    public void verifT(TextField token, int id) {
+        connection = new ConnectionRequest() {
+            @Override
+            protected void readResponse(InputStream input) throws IOException {
+                JSONParser parser = new JSONParser();
+                Map<String, Object> response = parser.parseJSON(new InputStreamReader(input));
+                if (response != null && response.containsKey("success")) {
+                    String successStr = (String) response.get("success");
+                    boolean success = Boolean.parseBoolean(successStr);
+
+                    if (success) {
+
+                        SignUpForm f = null;
+                        try {
+                            f = new SignUpForm();
+                        } catch (IOException ex) {
+                        }
+                        f.show();
+
+                    } else {
+                        // Handle failed login
+                        if (response.containsKey("message")) {
+                            String errorMessage = (String) response.get("message");
+                            Dialog.show("Incorrect token", errorMessage, "OK", null);
+                        } else {
+                            Dialog.show("Failed Verification", "Unknown error occurred", "OK", null);
+                        }
+                    }
+                }
+            }
+        };
+
+        // Set the URL for the login request
+        String loginUrl = BASE_URL + "/user/verifyT/" + id + "?token=" + token.getText().toString(); // Replace with your authentication endpoint
+        this.connection.setUrl(loginUrl);
+        this.connection.setHttpMethod("POST");
+
+        // Add the username and password as request parameters
+        connection.addArgument("token", token.getText());
+
+        // Send the login request
+        NetworkManager.getInstance().addToQueue(this.connection);
+    }
+
+    public void block(int id) {
+        connection = new ConnectionRequest();
+        connection.setInsecure(true);
+        this.connection.setUrl(BASE_URL + "/user/block/" + id);
+        this.connection.setHttpMethod("POST");
+        NetworkManager.getInstance().addToQueue(connection);
+    }
+
+    public void unblock(int id) {
+        connection = new ConnectionRequest();
+        connection.setInsecure(true);
+        this.connection.setUrl(BASE_URL + "/user/unblock/" + id);
+        this.connection.setHttpMethod("POST");
+        NetworkManager.getInstance().addToQueue(connection);
     }
 }

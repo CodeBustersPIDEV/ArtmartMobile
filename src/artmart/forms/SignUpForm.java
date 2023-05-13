@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+
 /**
  *
  * @author 21697
@@ -28,7 +29,7 @@ public class SignUpForm extends BaseForm {
     public SignUpForm() throws IOException {
 
         this.init(Resources.getGlobalResources());
-        PickerComponent datePicker= PickerComponent.createDate(new Date());
+        PickerComponent datePicker = PickerComponent.createDate(new Date());
         TextField nomField = new TextField("", "Name");
         TextField usernameField = new TextField("", "Username");
         TextField emailfield = new TextField("", "Email");
@@ -39,13 +40,13 @@ public class SignUpForm extends BaseForm {
         for (String role : roles) {
             roleField.addItem(role);
         }
- Validator validator = new Validator();
+        Validator validator = new Validator();
         validator.addConstraint(nomField, new LengthConstraint(1, "Nom is required"));
-                        validator.addConstraint(usernameField, new LengthConstraint(1, "Nom is required"));
-                                validator.addConstraint(pwdfield, new LengthConstraint(1, "Nom is required"));
-                                           validator.addConstraint(phoneNbrfield, new LengthConstraint(1, "Nom is required"));
-                                                validator.addConstraint(emailfield, new LengthConstraint(1, "Nom is required"));
-                                                         validator.addConstraint(roleField, new LengthConstraint(1, "Nom is required"));
+        validator.addConstraint(usernameField, new LengthConstraint(1, "Nom is required"));
+        validator.addConstraint(pwdfield, new LengthConstraint(1, "Nom is required"));
+        validator.addConstraint(phoneNbrfield, new LengthConstraint(1, "Nom is required"));
+        validator.addConstraint(emailfield, new LengthConstraint(1, "Nom is required"));
+        validator.addConstraint(roleField, new LengthConstraint(1, "Nom is required"));
         this
                 .add(nomField)
                 .add(usernameField)
@@ -58,14 +59,14 @@ public class SignUpForm extends BaseForm {
 
         submitButton.addActionListener(s
                 -> {
-                    if (validator.isValid()) {
-            String nom = nomField.getText();
-            String username = usernameField.getText();
-            String email = emailfield.getText();
-            String pwd = pwdfield.getText();
-            int phoneNbr = Integer.parseInt(phoneNbrfield.getText());
-           String birthdayfield =datePicker.getPicker().getDate().toString();
-         
+            if (validator.isValid()) {
+                String nom = nomField.getText();
+                String username = usernameField.getText();
+                String email = emailfield.getText();
+                String pwd = pwdfield.getText();
+                int phoneNbr = Integer.parseInt(phoneNbrfield.getText());
+                String birthdayfield = datePicker.getPicker().getDate().toString();
+
                 String selectedRole = roleField.getSelectedItem();
 
                 User newEvent = new User();
@@ -78,18 +79,10 @@ public class SignUpForm extends BaseForm {
                 newEvent.setRole(selectedRole);
                 UserWebService service = new UserWebService();
                 service.newU(newEvent);
-                 GetUserForm myForm = null;
-            try {
-                myForm = new GetUserForm();
-            } catch (IOException ex) {
             }
-            myForm.show();
-        
-
-           
-        }}
+        }
         );
-        
+
         this.add(submitButton);
         Button goToFormButton = new Button("Go Back");
         goToFormButton.addActionListener(e -> {

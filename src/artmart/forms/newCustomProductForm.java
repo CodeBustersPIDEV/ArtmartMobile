@@ -11,17 +11,24 @@ import artmart.entities.Category;
 import artmart.entities.CustomProduct;
 import artmart.service.CategorieWebService;
 import artmart.service.CustomproductWebService;
+import com.codename1.ui.Display;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.plaf.UIManager;
+import com.codename1.ui.util.UITimer;
 import com.codename1.ui.validation.LengthConstraint;
 import com.codename1.ui.validation.Validator;
 import java.io.IOException;
 
 
 public class newCustomProductForm extends BaseForm {
+      
         CategorieWebService serviceCat = new CategorieWebService();
-
+           private TextField imageField;
     public newCustomProductForm() throws IOException {
+        
         this.init(Resources.getGlobalResources());
-
+     
    TextField nomField = new TextField("", "Nom");
         TextField descriptifField = new TextField("", "Description");
         TextField dimfield = new TextField("", "Dimentions");
@@ -29,7 +36,15 @@ public class newCustomProductForm extends BaseForm {
       
         TextField clientfield = new TextField("", "client");
     TextField materialfield = new TextField("", "materiel");
-       TextField imagefield = new TextField("", "imageURL");
+             imageField = new TextField("", "Image URL");
+        Button selectImageButton = new Button("Select Image");
+        selectImageButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                selectImage();
+            }
+        });
+
         ComboBox<Category> categorieField = new ComboBox<>();
         List<Category> categories = serviceCat.getAllCategorie();
         for (Category categorie : categories) {
@@ -40,21 +55,20 @@ public class newCustomProductForm extends BaseForm {
                 .add(descriptifField)
                 .add(dimfield)
                 .add(weightfield)
-                .add(clientfield)
                 .add(materialfield)
-                .add(imagefield)
+                .add(imageField)
                 .add(categorieField);
         Validator validator = new Validator();
         validator.addConstraint(nomField, new LengthConstraint(1, "Nom is required"));
              validator.addConstraint(dimfield, new LengthConstraint(1, "dimmension is required"));
                     validator.addConstraint(weightfield, new LengthConstraint(1, "weight is required"));
-                           validator.addConstraint(clientfield, new LengthConstraint(1, "client is required"));
                                   validator.addConstraint(materialfield, new LengthConstraint(1, "material is required"));
-                                      validator.addConstraint(imagefield, new LengthConstraint(1, "image is required"));
+                                      validator.addConstraint(imageField, new LengthConstraint(1, "image is required"));
                                           validator.addConstraint(categorieField, new LengthConstraint(1, "category is required"));
                                           validator.addConstraint(descriptifField, new LengthConstraint(1, "description is required"));
+                                     
+      
         Button submitButton = new Button("Submit");
-
         submitButton.addActionListener(s
                 -> {
              if (validator.isValid()) {
@@ -62,8 +76,8 @@ public class newCustomProductForm extends BaseForm {
             String descriptif = descriptifField.getText();
             String dim = dimfield.getText();
       float weight = Float.parseFloat(weightfield.getText());
-            int client = Integer.parseInt(clientfield.getText());
-               String image = imagefield.getText();
+      int client = 1;
+               String image = imageField.getText();
                         String material = materialfield.getText();
             Category selectedCategorie = categorieField.getSelectedItem();
 
@@ -88,6 +102,7 @@ public class newCustomProductForm extends BaseForm {
             myForm.show();
         }}
         );
+            this.add(selectImageButton);
         this.add(submitButton);
         Button goToFormButton = new Button("Go Back");
         goToFormButton.addActionListener(e -> {
@@ -101,5 +116,29 @@ public class newCustomProductForm extends BaseForm {
         });
         this.add(goToFormButton);
     }
+ private void selectImage() {
+        Display.getInstance().openGallery(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                if (evt.getSource() != null) {
+                    String imageUrl = (String) evt.getSource();
+                    imageField.setText(imageUrl);
+                }
+            }
+        }, Display.GALLERY_IMAGE);
+    }
 
+    public static void main(String[] args) {
+        UITimer.timer(200, true, () -> {
+            if (Display.getInstance().isInitialized()) {
+                try {
+                    Resources theme = UIManager.initFirstTheme("/theme");
+                    newCustomProductForm form = new newCustomProductForm();
+                    form.show();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
 }

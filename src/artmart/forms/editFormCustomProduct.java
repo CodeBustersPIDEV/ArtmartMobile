@@ -16,17 +16,20 @@ import artmart.service.CustomproductWebService;
 import com.codename1.components.ImageViewer;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
+import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.URLImage;
+import com.codename1.ui.events.ActionEvent;
+import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.validation.LengthConstraint;
 import com.codename1.ui.validation.Validator;
 import java.io.IOException;
 
 public class editFormCustomProduct extends BaseForm {
-
+ private TextField imagefield;
         CategorieWebService serviceCat = new CategorieWebService();
         CustomproductWebService service = new CustomproductWebService();
     public editFormCustomProduct(CustomProduct e) throws ParseException, IOException {
@@ -39,7 +42,15 @@ public class editFormCustomProduct extends BaseForm {
       
         TextField clientfield = new TextField(e.getClient() + "", "client");
         TextField materialfield = new TextField(e.getMaterial(), "materiel");
-       TextField imagefield = new TextField(e.getImage(), "image");
+   
+        imagefield =new TextField(e.getImage(), "image");
+        Button selectImageButton = new Button("Select Image");
+        selectImageButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                selectImage();
+            }
+        });
         ComboBox<Category> categorieField = new ComboBox<>();
         List<Category> categories = serviceCat.getAllCategorie();
         
@@ -59,8 +70,7 @@ public class editFormCustomProduct extends BaseForm {
         this.add(weightss);
         this.add(weightfield);
   Label clientss = new Label("Client:");
-        this.add(clientss);
-        this.add(clientfield);
+
   Label mat = new Label("Material:");
         this.add(mat);
         this.add(materialfield);
@@ -146,6 +156,7 @@ applyButton.addActionListener(ee -> {
               Dialog.show("Success", "Application successfully sent", "OK", null);
 });
 Container buttonContainer = new Container(new BoxLayout(BoxLayout.X_AXIS));
+buttonContainer.add(selectImageButton);
 buttonContainer.add(goToFormButton);
 buttonContainer.add(deleteButton);
 buttonContainer.add(submitButton);
@@ -153,5 +164,17 @@ this.add(buttonContainer);
 
 
     }
+     private void selectImage() {
+        Display.getInstance().openGallery(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                if (evt.getSource() != null) {
+                    String imageUrl = (String) evt.getSource();
+                    imagefield.setText(imageUrl);
+                }
+            }
+        }, Display.GALLERY_IMAGE);
+    }
+
 
 }
